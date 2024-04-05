@@ -5,13 +5,19 @@ public class HabilidadEntity {
     private String nombre;
     private String descripcion;
     private boolean certificacion_requerida;
-    /*
 
-    public long getId() {
+    public HabilidadEntity(Long id, String nombre, String descripcion, boolean certificacion_requerida) {
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.certificacion_requerida = certificacion_requerida;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -38,6 +44,5 @@ public class HabilidadEntity {
     public void setCertificacion_requerida(boolean certificacion_requerida) {
         this.certificacion_requerida = certificacion_requerida;
     }
-    */
 
 }

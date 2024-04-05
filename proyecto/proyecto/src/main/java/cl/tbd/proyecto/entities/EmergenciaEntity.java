@@ -10,7 +10,13 @@ public class EmergenciaEntity {
     private Date fecha_inicio;
     private Date fecha_fin;
 
-    /*
+    public EmergenciaEntity(Long id, String nombre, String descripcion, Date fecha_inicio, Date fecha_fin) {
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.fecha_inicio = fecha_inicio;
+        this.fecha_fin = fecha_fin;
+    }
 
     public Long getId() {
         return id;
@@ -52,5 +58,5 @@ public class EmergenciaEntity {
         this.fecha_fin = fecha_fin;
     }
 
-     */
+
 }

@@ -9,9 +9,18 @@ public class VoluntarioEntity {
         private String email;
         private String telefono;
 
-        /*
+        public VoluntarioEntity(Long id, String nombre, int edad, String direccion, String genero, String email, String telefono) {
+            this.id = id;
+            this.nombre = nombre;
+            this.edad = edad;
+            this.direccion = direccion;
+            this.genero = genero;
+            this.email = email;
+            this.telefono = telefono;
+        }
+
         public Long getId() {
-            return this.id;
+            return id;
         }
 
         public void setId(Long id) {
@@ -19,7 +28,7 @@ public class VoluntarioEntity {
         }
 
         public String getNombre() {
-            return this.nombre;
+            return nombre;
         }
 
         public void setNombre(String nombre) {
@@ -27,7 +36,7 @@ public class VoluntarioEntity {
         }
 
         public int getEdad() {
-            return this.edad;
+            return edad;
         }
 
         public void setEdad(int edad) {
@@ -35,7 +44,7 @@ public class VoluntarioEntity {
         }
 
         public String getDireccion() {
-            return this.direccion;
+            return direccion;
         }
 
         public void setDireccion(String direccion) {
@@ -43,7 +52,7 @@ public class VoluntarioEntity {
         }
 
         public String getGenero() {
-            return this.genero;
+            return genero;
         }
 
         public void setGenero(String genero) {
@@ -51,7 +60,7 @@ public class VoluntarioEntity {
         }
 
         public String getEmail() {
-            return this.email;
+            return email;
         }
 
         public void setEmail(String email) {
@@ -59,14 +68,12 @@ public class VoluntarioEntity {
         }
 
         public String getTelefono() {
-            return this.telefono;
+            return telefono;
         }
 
         public void setTelefono(String telefono) {
             this.telefono = telefono;
         }
 
-
-         */
 
 }

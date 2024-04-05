@@ -7,7 +7,14 @@ public class TareaEntity {
     private Long id_voluntario;
     private boolean completada;
 
-    /*
+    public TareaEntity(Long id, String descripcion, Long id_emergencia, Long id_voluntario, boolean completada) {
+        this.id = id;
+        this.descripcion = descripcion;
+        this.id_emergencia = id_emergencia;
+        this.id_voluntario = id_voluntario;
+        this.completada = completada;
+    }
+
     public Long getId() {
         return id;
     }
@@ -48,5 +55,4 @@ public class TareaEntity {
         this.completada = completada;
     }
 
-     */
 }

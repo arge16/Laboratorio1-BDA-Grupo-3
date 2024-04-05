@@ -5,7 +5,12 @@ public class Estado_tareaEntity {
     private String descripcion;
     private Long id_tarea;
 
-    /*
+    public Estado_tareaEntity(Long id, String descripcion, Long id_tarea) {
+        this.id = id;
+        this.descripcion = descripcion;
+        this.id_tarea = id_tarea;
+    }
+
     public Long getId() {
         return id;
     }
@@ -30,5 +35,4 @@ public class Estado_tareaEntity {
         this.id_tarea = id_tarea;
     }
 
-     */
 }

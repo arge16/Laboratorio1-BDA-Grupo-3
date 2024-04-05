@@ -5,7 +5,11 @@ public class Tarea_habilidadEntity {
     private Long id_habilidad;
     private Long id_tarea;
 
-    /*
+    public Tarea_habilidadEntity(Long id, Long id_habilidad, Long id_tarea) {
+        this.id = id;
+        this.id_habilidad = id_habilidad;
+        this.id_tarea = id_tarea;
+    }
 
     public Long getId() {
         return id;
@@ -31,5 +35,4 @@ public class Tarea_habilidadEntity {
         this.id_tarea = id_tarea;
     }
 
-     */
 }

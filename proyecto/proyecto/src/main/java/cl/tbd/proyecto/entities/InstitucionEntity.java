@@ -7,7 +7,14 @@ public class InstitucionEntity {
     private String telefono;
     private String ubicacion;
 
-    /*
+    public InstitucionEntity(Long id, String nombre, String email, String telefono, String ubicacion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.email = email;
+        this.telefono = telefono;
+        this.ubicacion = ubicacion;
+    }
+
     public Long getId() {
         return id;
     }
@@ -48,5 +55,4 @@ public class InstitucionEntity {
         this.ubicacion = ubicacion;
     }
 
-     */
 }

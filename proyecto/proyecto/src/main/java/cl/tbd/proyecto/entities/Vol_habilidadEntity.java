@@ -7,7 +7,13 @@ public class Vol_habilidadEntity {
     private Long id_habilidad;
     private Long nivel_proficiencia;
 
-    /*
+    public Vol_habilidadEntity(Long id, Long id_voluntario, Long id_habilidad, Long nivel_proficiencia) {
+        this.id = id;
+        this.id_voluntario = id_voluntario;
+        this.id_habilidad = id_habilidad;
+        this.nivel_proficiencia = nivel_proficiencia;
+    }
+
     public Long getId() {
         return id;
     }
@@ -40,5 +46,4 @@ public class Vol_habilidadEntity {
         this.nivel_proficiencia = nivel_proficiencia;
     }
 
-     */
 }
