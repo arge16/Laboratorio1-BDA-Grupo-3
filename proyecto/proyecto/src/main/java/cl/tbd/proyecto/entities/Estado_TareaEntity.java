@@ -1,13 +1,13 @@
 package cl.tbd.proyecto.entities;
 
-public class Tarea_habilidadEntity {
+public class Estado_TareaEntity {
     private Long id;
-    private Long id_habilidad;
+    private String descripcion;
     private Long id_tarea;
 
-    public Tarea_habilidadEntity(Long id, Long id_habilidad, Long id_tarea) {
+    public Estado_TareaEntity(Long id, String descripcion, Long id_tarea) {
         this.id = id;
-        this.id_habilidad = id_habilidad;
+        this.descripcion = descripcion;
         this.id_tarea = id_tarea;
     }
 
@@ -19,12 +19,12 @@ public class Tarea_habilidadEntity {
         this.id = id;
     }
 
-    public Long getId_habilidad() {
-        return id_habilidad;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setId_habilidad(Long id_habilidad) {
-        this.id_habilidad = id_habilidad;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public Long getId_tarea() {

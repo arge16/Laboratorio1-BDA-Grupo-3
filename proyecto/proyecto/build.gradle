@@ -18,6 +18,8 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.sql2o:sql2o:1.6.0' // Agrega esta línea para SQL2o
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc' // Dependencia que incluye DriverManagerDataSource
 }
 
 tasks.named('test') {

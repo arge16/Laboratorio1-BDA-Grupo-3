@@ -1,13 +1,13 @@
 package cl.tbd.proyecto.entities;
 
-public class Vol_habilidadEntity {
+public class Vol_HabilidadEntity {
 
     private Long id;
     private Long id_voluntario;
     private Long id_habilidad;
     private Long nivel_proficiencia;
 
-    public Vol_habilidadEntity(Long id, Long id_voluntario, Long id_habilidad, Long nivel_proficiencia) {
+    public Vol_HabilidadEntity(Long id, Long id_voluntario, Long id_habilidad, Long nivel_proficiencia) {
         this.id = id;
         this.id_voluntario = id_voluntario;
         this.id_habilidad = id_habilidad;
