@@ -1,10 +1,10 @@
 package cl.tbd.proyecto.repositories;
 
 import cl.tbd.proyecto.entities.Eme_HabilidadEntity;
-import cl.tbd.proyecto.entities.EmergenciaEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.sql2o.Connection;
+import org.sql2o.Query;
 import org.sql2o.Sql2o;
 
 import java.util.List;
@@ -37,8 +37,15 @@ public class Eme_HabilidadRepositoryImpl implements Eme_HabilidadRepository {
     }
 
     @Override
-    public void create(Eme_HabilidadEntity emergencia) {
-
+    public Eme_HabilidadEntity create(Eme_HabilidadEntity emergencia) {
+        String sqlQuery = "INSERT INTO eme_habilidad VALUES(:id, :id_emergencia, :id_habilidad)";
+        try (Connection con = sql2o.open()){
+            con.createQuery(sqlQuery).bind(emergencia).executeUpdate();
+            return findById(emergencia.getId());
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+            return null;
+        }
     }
 
 
