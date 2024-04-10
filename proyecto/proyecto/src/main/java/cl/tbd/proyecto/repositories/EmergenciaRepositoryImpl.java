@@ -38,17 +38,24 @@ public class EmergenciaRepositoryImpl implements EmergenciaRepository{
 
 
     @Override
-    public void create(EmergenciaEntity emergencia) {
-
+    public EmergenciaEntity create(EmergenciaEntity emergencia) {
+        String sqlInsertQuery =  "INSERT INTO emergencia VALUES(:id, :nombre, :descripcion, :fecha_inicio, :fecha_fin)";
+        try(Connection connection = sql2o.open()){
+            connection.createQuery(sqlInsertQuery).bind(emergencia).executeUpdate();
+            return findById(emergencia.getId()); // ver si es efectivo asi, si no, devolver emergencia
+        }catch (Exception e) {
+            System.out.println("Error: " + e);
+            return null;
+        }
     }
 
     @Override
-    public void update(EmergenciaEntity emergencia) {
-
+    public EmergenciaEntity update(EmergenciaEntity emergencia) {
+        return null;
     }
 
     @Override
-    public void delete(Long id) {
-
+    public Boolean delete(Long id) {
+        return null;
     }
 }

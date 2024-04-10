@@ -6,8 +6,8 @@ import java.util.List;
 public interface EmergenciaRepository {
 
     List<EmergenciaEntity> findAll();
-    void create(EmergenciaEntity emergencia);
     EmergenciaEntity findById(Long id);
-    void update(EmergenciaEntity emergencia);
-    void delete(Long id);
+    EmergenciaEntity create(EmergenciaEntity emergencia);
+    EmergenciaEntity update(EmergenciaEntity emergencia);
+    Boolean delete(Long id); // en caso de q de error da false
 }
