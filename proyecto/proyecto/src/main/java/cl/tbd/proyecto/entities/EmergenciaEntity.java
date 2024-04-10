@@ -4,26 +4,28 @@ import java.util.Date;
 import java.util.List;
 
 public class EmergenciaEntity {
-    private Long id;
+    private Long id_emergencia;
     private String nombre;
     private String descripcion;
     private Date fecha_inicio;
     private Date fecha_fin;
+    private Long id_institucion;
 
-    public EmergenciaEntity(Long id, String nombre, String descripcion, Date fecha_inicio, Date fecha_fin) {
-        this.id = id;
+    public EmergenciaEntity(Long id, String nombre, String descripcion, Date fecha_inicio, Date fecha_fin, Long id_institucion) {
+        this.id_emergencia = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.fecha_inicio = fecha_inicio;
         this.fecha_fin = fecha_fin;
+        this.id_institucion = id_institucion;
     }
 
     public Long getId() {
-        return id;
+        return id_emergencia;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.id_emergencia = id;
     }
 
     public String getNombre() {
@@ -56,6 +58,14 @@ public class EmergenciaEntity {
 
     public void setFecha_fin(Date fecha_fin) {
         this.fecha_fin = fecha_fin;
+    }
+
+    public Long getId_institucion() {
+        return id_institucion;
+    }
+
+    public void setId_institucion(Long id_institucion) {
+        this.id_institucion = id_institucion;
     }
 
 

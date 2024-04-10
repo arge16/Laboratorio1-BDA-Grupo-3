@@ -1,24 +1,24 @@
 package cl.tbd.proyecto.entities;
 
 public class HabilidadEntity {
-    private Long id;
+    private Long id_habilidad;
     private String nombre;
     private String descripcion;
-    private boolean certificacion_requerida;
+    private int certificacion_requerida;
 
-    public HabilidadEntity(Long id, String nombre, String descripcion, boolean certificacion_requerida) {
-        this.id = id;
+    public HabilidadEntity(Long id, String nombre, String descripcion, int certificacion_requerida) {
+        this.id_habilidad = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.certificacion_requerida = certificacion_requerida;
     }
 
     public Long getId() {
-        return id;
+        return id_habilidad;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.id_habilidad = id;
     }
 
     public String getNombre() {
@@ -37,11 +37,11 @@ public class HabilidadEntity {
         this.descripcion = descripcion;
     }
 
-    public boolean isCertificacion_requerida() {
+    public int isCertificacion_requerida() {
         return certificacion_requerida;
     }
 
-    public void setCertificacion_requerida(boolean certificacion_requerida) {
+    public void setCertificacion_requerida(int certificacion_requerida) {
         this.certificacion_requerida = certificacion_requerida;
     }
 

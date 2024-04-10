@@ -1,7 +1,7 @@
 package cl.tbd.proyecto.entities;
 
 public class VoluntarioEntity {
-        private Long id;
+        private Long id_voluntario;
         private String nombre;
         private int edad;
         private String direccion;
@@ -10,7 +10,7 @@ public class VoluntarioEntity {
         private String telefono;
 
         public VoluntarioEntity(Long id, String nombre, int edad, String direccion, String genero, String email, String telefono) {
-            this.id = id;
+            this.id_voluntario = id;
             this.nombre = nombre;
             this.edad = edad;
             this.direccion = direccion;
@@ -20,11 +20,11 @@ public class VoluntarioEntity {
         }
 
         public Long getId() {
-            return id;
+            return id_voluntario;
         }
 
         public void setId(Long id) {
-            this.id = id;
+            this.id_voluntario = id;
         }
 
         public String getNombre() {

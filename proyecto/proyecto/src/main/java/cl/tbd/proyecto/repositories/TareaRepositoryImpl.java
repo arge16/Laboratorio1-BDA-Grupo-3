@@ -25,11 +25,11 @@ public class TareaRepositoryImpl implements TareaRepository{
     }
 
     @Override
-    public TareaEntity findById(Long id) {
-        String sqlQuery = "SELECT * FROM tarea WHERE id = :id";
+    public TareaEntity findById(Long id_tarea) {
+        String sqlQuery = "SELECT * FROM tarea WHERE id_tarea = :id_tarea";
         try (Connection con = sql2o.open()) {
             return con.createQuery(sqlQuery)
-                    .addParameter("id", id)
+                    .addParameter("id_tarea", id_tarea)
                     .executeAndFetchFirst(TareaEntity.class);
         } catch (Exception e) {
             System.out.println("Error: " + e);

@@ -22,11 +22,11 @@ public class Vol_HabilidadRepositoryImpl implements Vol_HabilidadRepository {
     }
 
     @Override
-    public Vol_HabilidadEntity findById(Long id) {
-        String sqlQuery = "SELECT * FROM vol_habilidad WHERE id = :id";
+    public Vol_HabilidadEntity findById(Long id_vol_habilidad) {
+        String sqlQuery = "SELECT * FROM vol_habilidad WHERE id_vol_habilidad = :id_vol_habilidad";
         try (Connection con = sql2o.open()) {
             return con.createQuery(sqlQuery)
-                    .addParameter("id", id)
+                    .addParameter("id_vol_habilidad", id_vol_habilidad)
                     .executeAndFetchFirst(Vol_HabilidadEntity.class);
         } catch (Exception e) {
             System.out.println("Error: " + e);

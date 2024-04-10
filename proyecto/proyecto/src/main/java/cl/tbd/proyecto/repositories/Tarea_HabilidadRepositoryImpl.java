@@ -24,11 +24,11 @@ public class Tarea_HabilidadRepositoryImpl implements Tarea_HabilidadRepository{
     }
 
     @Override
-    public Tarea_HabilidadEntity findById(Long id) {
-        String sqlQuery = "SELECT * FROM tarea_habilidad WHERE id = :id";
+    public Tarea_HabilidadEntity findById(Long id_tarea_habilidad) {
+        String sqlQuery = "SELECT * FROM tarea_habilidad WHERE id_tarea_habilidad = :id_tarea_habilidad";
         try (Connection con = sql2o.open()) {
             return con.createQuery(sqlQuery)
-                    .addParameter("id", id)
+                    .addParameter("id_tarea_habilidad", id_tarea_habilidad)
                     .executeAndFetchFirst(Tarea_HabilidadEntity.class);
         } catch (Exception e) {
             System.out.println("Error: " + e);

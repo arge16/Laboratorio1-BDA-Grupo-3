@@ -1,22 +1,22 @@
 package cl.tbd.proyecto.entities;
 
 public class Estado_TareaEntity {
-    private Long id;
+    private Long id_estado_tarea;
     private String descripcion;
     private Long id_tarea;
 
     public Estado_TareaEntity(Long id, String descripcion, Long id_tarea) {
-        this.id = id;
+        this.id_estado_tarea = id;
         this.descripcion = descripcion;
         this.id_tarea = id_tarea;
     }
 
     public Long getId() {
-        return id;
+        return id_estado_tarea;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.id_estado_tarea = id;
     }
 
     public String getDescripcion() {

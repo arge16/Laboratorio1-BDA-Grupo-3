@@ -1,14 +1,14 @@
 package cl.tbd.proyecto.entities;
 
 public class TareaEntity {
-    private Long id;
+    private Long id_tarea;
     private String descripcion;
     private Long id_emergencia;
     private Long id_voluntario;
-    private boolean completada;
+    private int completada;
 
-    public TareaEntity(Long id, String descripcion, Long id_emergencia, Long id_voluntario, boolean completada) {
-        this.id = id;
+    public TareaEntity(Long id, String descripcion, Long id_emergencia, Long id_voluntario, int completada) {
+        this.id_tarea = id;
         this.descripcion = descripcion;
         this.id_emergencia = id_emergencia;
         this.id_voluntario = id_voluntario;
@@ -16,11 +16,11 @@ public class TareaEntity {
     }
 
     public Long getId() {
-        return id;
+        return id_tarea;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.id_tarea = id;
     }
 
     public String getDescripcion() {
@@ -47,11 +47,11 @@ public class TareaEntity {
         this.id_voluntario = id_voluntario;
     }
 
-    public boolean isCompletada() {
+    public int isCompletada() {
         return completada;
     }
 
-    public void setCompletada(boolean completada) {
+    public void setCompletada(int completada) {
         this.completada = completada;
     }
 

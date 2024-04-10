@@ -24,11 +24,11 @@ public class InstitucionRepositoryImpl implements InstitucionRepository{
     }
 
     @Override
-    public InstitucionEntity findById(Long id) {
-        String sqlQuery = "SELECT * FROM institucion WHERE id = :id";
+    public InstitucionEntity findById(Long id_institucion) {
+        String sqlQuery = "SELECT * FROM institucion WHERE id_institucion = :id_institucion";
         try (Connection con = sql2o.open()) {
             return con.createQuery(sqlQuery)
-                    .addParameter("id", id)
+                    .addParameter("id_institucion", id_institucion)
                     .executeAndFetchFirst(InstitucionEntity.class);
         } catch (Exception e) {
             System.out.println("Error: " + e);

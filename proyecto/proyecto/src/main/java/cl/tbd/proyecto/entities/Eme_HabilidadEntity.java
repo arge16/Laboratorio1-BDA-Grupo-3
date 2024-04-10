@@ -1,22 +1,22 @@
 package cl.tbd.proyecto.entities;
 
 public class Eme_HabilidadEntity {
-    private Long id;
+    private Long id_eme_habilidad;
     private Long id_emergencia;
     private Long id_habilidad;
 
     public Eme_HabilidadEntity(Long id, Long id_emergencia, Long id_habilidad) {
-        this.id = id;
+        this.id_eme_habilidad = id;
         this.id_emergencia = id_emergencia;
         this.id_habilidad = id_habilidad;
     }
 
     public Long getId() {
-        return id;
+        return id_eme_habilidad;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.id_eme_habilidad = id;
     }
 
     public Long getId_emergencia() {
@@ -38,7 +38,7 @@ public class Eme_HabilidadEntity {
     @Override
     public String toString() {
         return "Eme_HabilidadEntity{" +
-                "id_eme_habilidad=" + id +
+                "id_eme_habilidad=" + id_eme_habilidad +
                 ", id_emergencia=" + id_emergencia +
                 ", id_habilidad=" + id_habilidad +
                 '}';

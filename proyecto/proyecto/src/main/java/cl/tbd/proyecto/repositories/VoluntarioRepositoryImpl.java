@@ -23,11 +23,11 @@ public class VoluntarioRepositoryImpl implements VoluntarioRepository {
     }
 
     @Override
-    public VoluntarioEntity findById(Long id) {
-        String sqlQuery = "SELECT * FROM voluntario WHERE id = :id";
+    public VoluntarioEntity findById(Long id_voluntario) {
+        String sqlQuery = "SELECT * FROM voluntario WHERE id_voluntario = :id_voluntario";
         try (Connection con = sql2o.open()) {
             return con.createQuery(sqlQuery)
-                    .addParameter("id", id)
+                    .addParameter("id_voluntario", id_voluntario)
                     .executeAndFetchFirst(VoluntarioEntity.class);
         } catch (Exception e) {
             System.out.println("Error: " + e);

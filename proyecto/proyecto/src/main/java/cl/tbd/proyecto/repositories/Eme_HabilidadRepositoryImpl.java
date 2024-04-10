@@ -24,11 +24,11 @@ public class Eme_HabilidadRepositoryImpl implements Eme_HabilidadRepository {
     }
 
     @Override
-    public Eme_HabilidadEntity findById(Long id) {
-        String sqlQuery = "SELECT * FROM eme_habilidad WHERE id = :id";
+    public Eme_HabilidadEntity findById(Long id_eme_habilidad) {
+        String sqlQuery = "SELECT * FROM eme_habilidad WHERE id_eme_habilidad = :id_eme_habilidad";
         try (Connection con = sql2o.open()) {
             return con.createQuery(sqlQuery)
-                    .addParameter("id", id)
+                    .addParameter("id_eme_habilidad", id_eme_habilidad)
                     .executeAndFetchFirst(Eme_HabilidadEntity.class);
         } catch (Exception e) {
             System.out.println("Error: " + e);

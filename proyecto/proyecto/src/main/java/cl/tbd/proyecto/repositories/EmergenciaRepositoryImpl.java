@@ -24,11 +24,11 @@ public class EmergenciaRepositoryImpl implements EmergenciaRepository{
     }
 
     @Override
-    public EmergenciaEntity findById(Long id) {
-        String sqlQuery = "SELECT * FROM emergencia WHERE id = :id";
+    public EmergenciaEntity findById(Long id_emergencia) {
+        String sqlQuery = "SELECT * FROM emergencia WHERE id_emergencia = :id_emergencia";
         try (Connection con = sql2o.open()) {
             return con.createQuery(sqlQuery)
-                    .addParameter("id", id)
+                    .addParameter("id_emergencia", id_emergencia)
                     .executeAndFetchFirst(EmergenciaEntity.class);
         } catch (Exception e) {
             System.out.println("Error: " + e);
@@ -39,7 +39,7 @@ public class EmergenciaRepositoryImpl implements EmergenciaRepository{
 
     @Override
     public EmergenciaEntity create(EmergenciaEntity emergencia) {
-        String sqlInsertQuery =  "INSERT INTO emergencia VALUES(:id, :nombre, :descripcion, :fecha_inicio, :fecha_fin)";
+        String sqlInsertQuery =  "INSERT INTO emergencia VALUES(:id, :nombre, :descripcion, :fecha_inicio, :fecha_fin, :id_institucion)";
         try(Connection connection = sql2o.open()){
             connection.createQuery(sqlInsertQuery).bind(emergencia).executeUpdate();
             return findById(emergencia.getId()); // ver si es efectivo asi, si no, devolver emergencia
