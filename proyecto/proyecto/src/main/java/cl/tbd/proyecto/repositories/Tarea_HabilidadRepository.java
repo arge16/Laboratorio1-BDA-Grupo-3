@@ -8,9 +8,10 @@ public interface Tarea_HabilidadRepository {
 
     List<Tarea_HabilidadEntity> findAll();
     List<Tarea_HabilidadEntity> findAllPagination(int size, int page);
-
-    void create(Tarea_HabilidadEntity tarea_habilidad);
     Tarea_HabilidadEntity findById(Long id);
+
+
+    Tarea_HabilidadEntity create(Tarea_HabilidadEntity tarea_habilidad);
     void update(Tarea_HabilidadEntity tarea_habilidad);
     void delete(Long id);
 }

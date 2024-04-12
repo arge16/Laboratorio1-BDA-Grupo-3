@@ -25,7 +25,7 @@ public class EmergenciaRepositoryImpl implements EmergenciaRepository{
     }
 
     @Override
-    public List<EmergenciaEntity> findAllPagination(int page, int size){
+    public List<EmergenciaEntity> findAllPagination(int size, int page){
         String sqlQuery = "Select * FROM emergencia LIMIT :size OFFSET :offset";
         int offset = (page - 1) * size;
         try(Connection con = sql2o.open()){
@@ -53,10 +53,10 @@ public class EmergenciaRepositoryImpl implements EmergenciaRepository{
 
     @Override
     public EmergenciaEntity create(EmergenciaEntity emergencia) {
-        String sqlInsertQuery =  "INSERT INTO emergencia VALUES(:id, :nombre, :descripcion, :fecha_inicio, :fecha_fin, :id_institucion)";
+        String sqlInsertQuery =  "INSERT INTO emergencia(nombre, descripcion, fecha_inicio, fecha_fin, id_institucion) VALUES( :nombre, :descripcion, :fecha_inicio, :fecha_fin, :id_institucion)";
         try(Connection connection = sql2o.open()){
-            connection.createQuery(sqlInsertQuery).bind(emergencia).executeUpdate();
-            return findById(emergencia.getId()); // ver si es efectivo asi, si no, devolver emergencia
+            Long id = connection.createQuery(sqlInsertQuery).bind(emergencia).executeUpdate().getKey(Long.class);
+            return findById(id); // TODO: revisar si devolver entidad o key, o nada
         }catch (Exception e) {
             System.out.println("Error: " + e);
             return null;

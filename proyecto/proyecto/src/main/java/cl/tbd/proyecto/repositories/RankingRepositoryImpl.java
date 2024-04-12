@@ -26,7 +26,7 @@ public class RankingRepositoryImpl implements RankingRepository {
     }
 
     @Override
-    public List<RankingEntity> findAllPagination(int page, int size){
+    public List<RankingEntity> findAllPagination(int size, int page){
         String sqlQuery = "Select * FROM ranking LIMIT :size OFFSET :offset";
         int offset = (page - 1) * size;
         try(Connection con = sql2o.open()){
@@ -52,8 +52,15 @@ public class RankingRepositoryImpl implements RankingRepository {
 
 
     @Override
-    public void create(RankingEntity ranking) {
-
+    public RankingEntity create(RankingEntity ranking) {
+        String sqlInsertQuery = "INSERT INTO ranking(id_voluntario, id_tarea, puntuacion) VALUES(:id_voluntario, :id_tarea, :puntuacion)";
+        try (Connection con = sql2o.open()){
+            Long id = con.createQuery(sqlInsertQuery).bind(ranking).executeUpdate().getKey(Long.class);
+            return findById(id);
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+            return null;
+        }
     }
 
 

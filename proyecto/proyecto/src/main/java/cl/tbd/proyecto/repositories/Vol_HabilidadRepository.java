@@ -7,9 +7,9 @@ public interface Vol_HabilidadRepository {
 
     List<Vol_HabilidadEntity> findAll();
     List<Vol_HabilidadEntity> findAllPagination(int size, int page);
-
-    void create(Vol_HabilidadEntity vol_habilidad);
     Vol_HabilidadEntity findById(Long id);
+
+    Vol_HabilidadEntity create(Vol_HabilidadEntity vol_habilidad);
     void update(Vol_HabilidadEntity vol_habilidad);
     void delete(Long id);
 }

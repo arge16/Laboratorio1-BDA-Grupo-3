@@ -25,7 +25,7 @@ public class VoluntarioRepositoryImpl implements VoluntarioRepository {
 
 
     @Override
-    public List<VoluntarioEntity> findAllPagination(int page, int size){
+    public List<VoluntarioEntity> findAllPagination(int size, int page){
         String sqlQuery = "Select * FROM voluntario LIMIT :size OFFSET :offset";
         int offset = (page - 1) * size;
         try(Connection con = sql2o.open()){

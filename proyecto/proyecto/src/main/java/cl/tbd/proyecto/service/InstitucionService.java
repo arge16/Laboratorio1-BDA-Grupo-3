@@ -5,22 +5,28 @@ import cl.tbd.proyecto.repositories.InstitucionRepository;
 import cl.tbd.proyecto.repositories.InstitucionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@CrossOrigin("*")
+import java.util.List;
+
+@Service
 public class InstitucionService{
     @Autowired
     InstitucionRepository institucionRepository;
 
-    @PostMapping("/institucion")
-    public ResponseEntity<?> HelloWorld(@RequestBody InstitucionEntity institucion) {
-        InstitucionEntity institucionEntity = institucionRepository.create(institucion);
-        if (institucionEntity!=null)
-            return ResponseEntity.ok(institucionEntity);
-        return ResponseEntity.badRequest().build();
+    public List<InstitucionEntity> getAllInstituciones(){
+        return institucionRepository.findAll();
+    }
+
+    public List<InstitucionEntity> getPageInstituciones(int size, int page){
+        return institucionRepository.findAllPagination(size, page);
+    }
+
+    public InstitucionEntity createInstitucion(InstitucionEntity institucion){
+        return institucionRepository.create(institucion);
     }
 }

@@ -25,7 +25,7 @@ public class InstitucionRepositoryImpl implements InstitucionRepository{
     }
 
     @Override
-    public List<InstitucionEntity> findAllPagination(int page, int size){
+    public List<InstitucionEntity> findAllPagination(int size, int page){
         String sqlQuery = "Select * FROM institucion LIMIT :size OFFSET :offset";
         int offset = (page - 1) * size;
         try(Connection con = sql2o.open()){

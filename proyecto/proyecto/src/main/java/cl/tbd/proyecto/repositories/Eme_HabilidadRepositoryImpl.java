@@ -27,7 +27,7 @@ public class Eme_HabilidadRepositoryImpl implements Eme_HabilidadRepository {
     }
 
      @Override
-     public List<Eme_HabilidadEntity> findAllPagination(int page, int size){
+     public List<Eme_HabilidadEntity> findAllPagination(int size, int page){
         String sqlQuery = "Select * FROM eme_habilidad LIMIT :size OFFSET :offset";
         int offset = (page - 1) * size;
         try(Connection con = sql2o.open()){
@@ -54,10 +54,10 @@ public class Eme_HabilidadRepositoryImpl implements Eme_HabilidadRepository {
 
     @Override
     public Eme_HabilidadEntity create(Eme_HabilidadEntity eme_habilidad) {
-        String sqlInsertQuery = "INSERT INTO eme_habilidad VALUES(:id, :id_emergencia, :id_habilidad)";
+        String sqlInsertQuery = "INSERT INTO eme_habilidad(id_emergencia, id_habilidad) VALUES(:id_emergencia, :id_habilidad)";
         try (Connection con = sql2o.open()){
-            con.createQuery(sqlInsertQuery).bind(eme_habilidad).executeUpdate();
-            return findById(eme_habilidad.getId());
+            Long id = con.createQuery(sqlInsertQuery).bind(eme_habilidad).executeUpdate().getKey(Long.class);
+            return findById(id);
         } catch (Exception e) {
             System.out.println("Error: " + e);
             return null;

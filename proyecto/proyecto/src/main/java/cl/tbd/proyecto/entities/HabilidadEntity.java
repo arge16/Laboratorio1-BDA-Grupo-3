@@ -37,7 +37,7 @@ public class HabilidadEntity {
         this.descripcion = descripcion;
     }
 
-    public int isCertificacion_requerida() {
+    public int getCertificacion_requerida() {
         return certificacion_requerida;
     }
 

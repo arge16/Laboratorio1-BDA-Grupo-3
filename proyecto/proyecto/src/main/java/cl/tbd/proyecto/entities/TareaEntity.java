@@ -47,7 +47,7 @@ public class TareaEntity {
         this.id_voluntario = id_voluntario;
     }
 
-    public int isCompletada() {
+    public int getCompletada() {
         return completada;
     }
 

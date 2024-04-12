@@ -9,7 +9,7 @@ public interface TareaRepository {
     List<TareaEntity> findAll();
     List<TareaEntity> findAllPagination(int size, int page);
 
-    void create(TareaEntity tarea);
+    TareaEntity create(TareaEntity tarea);
     TareaEntity findById(Long id);
     void update(TareaEntity tarea);
     void delete(Long id);

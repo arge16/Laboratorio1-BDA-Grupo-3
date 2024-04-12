@@ -8,9 +8,10 @@ public interface RankingRepository {
 
     List<RankingEntity> findAll();
     List<RankingEntity> findAllPagination(int size, int page);
-
-    void create(RankingEntity ranking);
     RankingEntity findById(Long id);
+
+
+    RankingEntity create(RankingEntity ranking);
     void update(RankingEntity ranking);
     void delete(Long id);
 }

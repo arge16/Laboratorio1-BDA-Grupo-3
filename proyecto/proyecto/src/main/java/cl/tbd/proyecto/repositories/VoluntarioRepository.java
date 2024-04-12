@@ -8,9 +8,10 @@ public interface VoluntarioRepository {
 
     List<VoluntarioEntity> findAllPagination(int size, int page);
 
+    VoluntarioEntity findById(Long id);
+
     VoluntarioEntity create(VoluntarioEntity voluntario);
 
-    VoluntarioEntity findById(Long id);
 
     void update(VoluntarioEntity voluntario);
 

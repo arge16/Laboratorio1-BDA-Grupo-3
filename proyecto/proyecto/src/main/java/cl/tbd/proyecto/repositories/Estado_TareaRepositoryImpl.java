@@ -26,7 +26,7 @@ public class Estado_TareaRepositoryImpl implements Estado_TareaRepository {
     }
 
     @Override
-    public List<Estado_TareaEntity> findAllPagination(int page, int size){
+    public List<Estado_TareaEntity> findAllPagination(int size, int page){
         String sqlQuery = "Select * FROM estado_tarea LIMIT :size OFFSET :offset";
         int offset = (page - 1) * size;
         try(Connection con = sql2o.open()){
@@ -42,7 +42,7 @@ public class Estado_TareaRepositoryImpl implements Estado_TareaRepository {
         String sqlQuery = "SELECT * FROM estado_tarea WHERE id_estado_tarea = :id_estado_tarea";
         try (Connection con = sql2o.open()) {
             return con.createQuery(sqlQuery)
-                    .addParameter("id", id_estado_tarea)
+                    .addParameter("id_estado_tarea", id_estado_tarea)
                     .executeAndFetchFirst(Estado_TareaEntity.class);
         } catch (Exception e) {
             System.out.println("Error: " + e);
@@ -52,8 +52,15 @@ public class Estado_TareaRepositoryImpl implements Estado_TareaRepository {
 
 
     @Override
-    public void create(Estado_TareaEntity estado_tarea) {
-
+    public Estado_TareaEntity create(Estado_TareaEntity estado_tarea) {
+        String sqlInsertQuery = "INSERT INTO estado_tarea(descripcion, id_tarea) VALUES(:descripcion, :id_tarea)";
+        try (Connection connection = sql2o.open()){
+            Long id = connection.createQuery(sqlInsertQuery).bind(estado_tarea).executeUpdate().getKey(Long.class);
+            return findById(id);
+        } catch (Exception e){
+            System.out.println("Error: " + e );
+            return null;
+        }
     }
 
 

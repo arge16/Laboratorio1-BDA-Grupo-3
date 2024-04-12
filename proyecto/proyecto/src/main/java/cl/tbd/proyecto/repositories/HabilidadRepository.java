@@ -9,7 +9,7 @@ public interface HabilidadRepository {
     List<HabilidadEntity> findAll();
     List<HabilidadEntity> findAllPagination(int size, int page);
 
-    void create(HabilidadEntity habilidad);
+    HabilidadEntity create(HabilidadEntity habilidad);
     HabilidadEntity findById(Long id);
     void update(HabilidadEntity habilidad);
     void delete(Long id);

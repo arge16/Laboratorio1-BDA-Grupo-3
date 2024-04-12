@@ -24,7 +24,7 @@ public class Tarea_HabilidadRepositoryImpl implements Tarea_HabilidadRepository{
         }
     }
     @Override
-    public List<Tarea_HabilidadEntity> findAllPagination(int page, int size){
+    public List<Tarea_HabilidadEntity> findAllPagination(int size, int page){
         String sqlQuery = "Select * FROM tarea_habilidad LIMIT :size OFFSET :offset";
         int offset = (page - 1) * size;
         try(Connection con = sql2o.open()){
@@ -49,8 +49,15 @@ public class Tarea_HabilidadRepositoryImpl implements Tarea_HabilidadRepository{
     }
 
     @Override
-    public void create(Tarea_HabilidadEntity tarea_habilidad) {
-
+    public Tarea_HabilidadEntity create(Tarea_HabilidadEntity tarea_habilidad) {
+        String sqlInsertQuery = "INSERT INTO tarea_habilidad(id_tarea, id_habilidad) VALUES(:id_tarea, :id_habilidad)";
+        try (Connection con = sql2o.open()){
+            Long id = con.createQuery(sqlInsertQuery).bind(tarea_habilidad).executeUpdate().getKey(Long.class);
+            return findById(id);
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+            return null;
+        }
     }
 
 
