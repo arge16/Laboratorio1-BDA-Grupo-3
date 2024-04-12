@@ -1,5 +1,6 @@
 package cl.tbd.proyecto.repositories;
 
+import cl.tbd.proyecto.entities.Eme_HabilidadEntity;
 import cl.tbd.proyecto.entities.TareaEntity;
 import cl.tbd.proyecto.entities.VoluntarioEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,18 @@ public class TareaRepositoryImpl implements TareaRepository{
         try (Connection connection = sql2o.open()) {
             String query = "SELECT * FROM tarea";
             return connection.createQuery(query).executeAndFetch(TareaEntity.class);
+        }
+    }
+    @Override
+    public List<TareaEntity> findAllPagination(int page, int size){
+        String sqlQuery = "Select * FROM tarea LIMIT :size OFFSET :offset";
+        int offset = (page - 1) * size;
+        try(Connection con = sql2o.open()){
+            return con.createQuery(sqlQuery).addParameter("size", size)
+                    .addParameter("offset",offset).executeAndFetch(TareaEntity.class);
+        }catch (Exception e) {
+            System.out.println("Error: " + e);
+            return null;
         }
     }
 

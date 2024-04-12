@@ -1,5 +1,6 @@
 package cl.tbd.proyecto.repositories;
 
+import cl.tbd.proyecto.entities.Eme_HabilidadEntity;
 import cl.tbd.proyecto.entities.EmergenciaEntity;
 import cl.tbd.proyecto.entities.Estado_TareaEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,19 @@ public class EmergenciaRepositoryImpl implements EmergenciaRepository{
         try (Connection connection = sql2o.open()) {
             String query = "SELECT * FROM emergencia";
             return connection.createQuery(query).executeAndFetch(EmergenciaEntity.class);
+        }
+    }
+
+    @Override
+    public List<EmergenciaEntity> findAllPagination(int page, int size){
+        String sqlQuery = "Select * FROM emergencia LIMIT :size OFFSET :offset";
+        int offset = (page - 1) * size;
+        try(Connection con = sql2o.open()){
+            return con.createQuery(sqlQuery).addParameter("size", size)
+                    .addParameter("offset",offset).executeAndFetch(EmergenciaEntity.class);
+        }catch (Exception e) {
+            System.out.println("Error: " + e);
+            return null;
         }
     }
 

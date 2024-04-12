@@ -1,4 +1,5 @@
 package cl.tbd.proyecto.repositories;
+import cl.tbd.proyecto.entities.EmergenciaEntity;
 import cl.tbd.proyecto.entities.RankingEntity;
 import cl.tbd.proyecto.entities.Tarea_HabilidadEntity;
 
@@ -6,6 +7,8 @@ import java.util.List;
 public interface RankingRepository {
 
     List<RankingEntity> findAll();
+    List<RankingEntity> findAllPagination(int size, int page);
+
     void create(RankingEntity ranking);
     RankingEntity findById(Long id);
     void update(RankingEntity ranking);

@@ -20,8 +20,24 @@ public class Eme_HabilidadRepositoryImpl implements Eme_HabilidadRepository {
         try (Connection connection = sql2o.open()){
             String query = "SELECT * FROM eme_habilidad";
             return connection.createQuery(query).executeAndFetch(Eme_HabilidadEntity.class);
+        }catch (Exception e) {
+            System.out.println("Error: " + e);
+            return null;
         }
     }
+
+     @Override
+     public List<Eme_HabilidadEntity> findAllPagination(int page, int size){
+        String sqlQuery = "Select * FROM eme_habilidad LIMIT :size OFFSET :offset";
+        int offset = (page - 1) * size;
+        try(Connection con = sql2o.open()){
+            return con.createQuery(sqlQuery).addParameter("size", size)
+                    .addParameter("offset",offset).executeAndFetch(Eme_HabilidadEntity.class);
+        }catch (Exception e) {
+            System.out.println("Error: " + e);
+            return null;
+        }
+     }
 
     @Override
     public Eme_HabilidadEntity findById(Long id_eme_habilidad) {

@@ -1,5 +1,6 @@
 package cl.tbd.proyecto.repositories;
 
+import cl.tbd.proyecto.entities.Eme_HabilidadEntity;
 import cl.tbd.proyecto.entities.InstitucionEntity;
 import cl.tbd.proyecto.entities.RankingEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,19 @@ public class InstitucionRepositoryImpl implements InstitucionRepository{
     }
 
     @Override
+    public List<InstitucionEntity> findAllPagination(int page, int size){
+        String sqlQuery = "Select * FROM institucion LIMIT :size OFFSET :offset";
+        int offset = (page - 1) * size;
+        try(Connection con = sql2o.open()){
+            return con.createQuery(sqlQuery).addParameter("size", size)
+                    .addParameter("offset",offset).executeAndFetch(InstitucionEntity.class);
+        }catch (Exception e) {
+            System.out.println("Error: " + e);
+            return null;
+        }
+    }
+
+    @Override
     public InstitucionEntity findById(Long id_institucion) {
         String sqlQuery = "SELECT * FROM institucion WHERE id_institucion = :id_institucion";
         try (Connection con = sql2o.open()) {
@@ -37,8 +51,15 @@ public class InstitucionRepositoryImpl implements InstitucionRepository{
     }
 
     @Override
-    public void create(InstitucionEntity institucion) {
-
+    public InstitucionEntity create(InstitucionEntity institucion) {
+        String sqlInsertQuery = "INSERT INTO institucion(nombre, email, telefono, ubicacion) VALUES(:nombre, :email, :telefono, :ubicacion)";
+        try (Connection con = sql2o.open()){
+            Long id = con.createQuery(sqlInsertQuery).bind(institucion).executeUpdate().getKey(Long.class);
+            return findById(id);
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+            return null;
+        }
     }
 
 

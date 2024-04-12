@@ -1,5 +1,6 @@
 package cl.tbd.proyecto.repositories;
 
+import cl.tbd.proyecto.entities.Eme_HabilidadEntity;
 import cl.tbd.proyecto.entities.TareaEntity;
 import cl.tbd.proyecto.entities.Tarea_HabilidadEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,18 @@ public class Tarea_HabilidadRepositoryImpl implements Tarea_HabilidadRepository{
             return connection.createQuery(query).executeAndFetch(Tarea_HabilidadEntity.class);
         }
     }
-
+    @Override
+    public List<Tarea_HabilidadEntity> findAllPagination(int page, int size){
+        String sqlQuery = "Select * FROM tarea_habilidad LIMIT :size OFFSET :offset";
+        int offset = (page - 1) * size;
+        try(Connection con = sql2o.open()){
+            return con.createQuery(sqlQuery).addParameter("size", size)
+                    .addParameter("offset",offset).executeAndFetch(Tarea_HabilidadEntity.class);
+        }catch (Exception e) {
+            System.out.println("Error: " + e);
+            return null;
+        }
+    }
     @Override
     public Tarea_HabilidadEntity findById(Long id_tarea_habilidad) {
         String sqlQuery = "SELECT * FROM tarea_habilidad WHERE id_tarea_habilidad = :id_tarea_habilidad";

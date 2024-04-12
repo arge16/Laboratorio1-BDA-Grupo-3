@@ -1,5 +1,6 @@
 package cl.tbd.proyecto.repositories;
 
+import cl.tbd.proyecto.entities.Eme_HabilidadEntity;
 import cl.tbd.proyecto.entities.HabilidadEntity;
 import cl.tbd.proyecto.entities.InstitucionEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,19 @@ public class HabilidadRepositoryImpl implements HabilidadRepository {
         try (Connection connection = sql2o.open()) {
             String query = "SELECT * FROM habilidad";
             return connection.createQuery(query).executeAndFetch(HabilidadEntity.class);
+        }
+    }
+
+    @Override
+    public List<HabilidadEntity> findAllPagination(int page, int size){
+        String sqlQuery = "Select * FROM habilidad LIMIT :size OFFSET :offset";
+        int offset = (page - 1) * size;
+        try(Connection con = sql2o.open()){
+            return con.createQuery(sqlQuery).addParameter("size", size)
+                    .addParameter("offset",offset).executeAndFetch(HabilidadEntity.class);
+        }catch (Exception e) {
+            System.out.println("Error: " + e);
+            return null;
         }
     }
 

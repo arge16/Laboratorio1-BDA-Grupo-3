@@ -1,5 +1,6 @@
 package cl.tbd.proyecto.repositories;
 
+import cl.tbd.proyecto.entities.Eme_HabilidadEntity;
 import cl.tbd.proyecto.entities.VoluntarioEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.core.Authentication;
@@ -22,6 +23,19 @@ public class VoluntarioRepositoryImpl implements VoluntarioRepository {
         }
     }
 
+
+    @Override
+    public List<VoluntarioEntity> findAllPagination(int page, int size){
+        String sqlQuery = "Select * FROM voluntario LIMIT :size OFFSET :offset";
+        int offset = (page - 1) * size;
+        try(Connection con = sql2o.open()){
+            return con.createQuery(sqlQuery).addParameter("size", size)
+                    .addParameter("offset",offset).executeAndFetch(VoluntarioEntity.class);
+        }catch (Exception e) {
+            System.out.println("Error: " + e);
+            return null;
+        }
+    }
     @Override
     public VoluntarioEntity findById(Long id_voluntario) {
         String sqlQuery = "SELECT * FROM voluntario WHERE id_voluntario = :id_voluntario";
@@ -36,8 +50,15 @@ public class VoluntarioRepositoryImpl implements VoluntarioRepository {
     }
 
     @Override
-    public void create(VoluntarioEntity voluntario) {
-
+    public VoluntarioEntity create(VoluntarioEntity voluntario) {
+        String sqlInsertQuery = "INSERT INTO voluntario (nombre, edad, direccion, genero, email, telefono) VALUES(:nombre, :edad, :direccion, :genero, :email, :telefono)";
+        try (Connection con = sql2o.open()){
+            Long id = con.createQuery(sqlInsertQuery).bind(voluntario).executeUpdate().getKey(Long.class);
+            return findById(id);
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+            return null;
+        }
     }
 
 

@@ -1,5 +1,6 @@
 package cl.tbd.proyecto.repositories;
 
+import cl.tbd.proyecto.entities.Eme_HabilidadEntity;
 import cl.tbd.proyecto.entities.Vol_HabilidadEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,7 +21,18 @@ public class Vol_HabilidadRepositoryImpl implements Vol_HabilidadRepository {
             return connection.createQuery(query).executeAndFetch(Vol_HabilidadEntity.class);
         }
     }
-
+    @Override
+    public List<Vol_HabilidadEntity> findAllPagination(int page, int size){
+        String sqlQuery = "Select * FROM vol_habilidad LIMIT :size OFFSET :offset";
+        int offset = (page - 1) * size;
+        try(Connection con = sql2o.open()){
+            return con.createQuery(sqlQuery).addParameter("size", size)
+                    .addParameter("offset",offset).executeAndFetch(Vol_HabilidadEntity.class);
+        }catch (Exception e) {
+            System.out.println("Error: " + e);
+            return null;
+        }
+    }
     @Override
     public Vol_HabilidadEntity findById(Long id_vol_habilidad) {
         String sqlQuery = "SELECT * FROM vol_habilidad WHERE id_vol_habilidad = :id_vol_habilidad";

@@ -1,5 +1,6 @@
 package cl.tbd.proyecto.repositories;
 
+import cl.tbd.proyecto.entities.Eme_HabilidadEntity;
 import cl.tbd.proyecto.entities.RankingEntity;
 import cl.tbd.proyecto.entities.Tarea_HabilidadEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,18 @@ public class RankingRepositoryImpl implements RankingRepository {
         }
     }
 
+    @Override
+    public List<RankingEntity> findAllPagination(int page, int size){
+        String sqlQuery = "Select * FROM ranking LIMIT :size OFFSET :offset";
+        int offset = (page - 1) * size;
+        try(Connection con = sql2o.open()){
+            return con.createQuery(sqlQuery).addParameter("size", size)
+                    .addParameter("offset",offset).executeAndFetch(RankingEntity.class);
+        }catch (Exception e) {
+            System.out.println("Error: " + e);
+            return null;
+        }
+    }
     @Override
     public RankingEntity findById(Long id_ranking) {
         String sqlQuery = "SELECT * FROM ranking WHERE id_ranking = :id_ranking";
