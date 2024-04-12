@@ -12,5 +12,5 @@ public interface InstitucionRepository {
     InstitucionEntity create(InstitucionEntity institucion);
     InstitucionEntity findById(Long id);
     void update(InstitucionEntity institucion);
-    void delete(Long id);
+    Boolean delete(Long id);
 }

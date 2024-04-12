@@ -29,4 +29,8 @@ public class Estado_TareaService {
     public Estado_TareaEntity cresteEstadoTarea(Estado_TareaEntity estadoTarea) {
         return estadoTareaRepository.create(estadoTarea);
     }
+
+    public Boolean deleteEstadoTarea(Long id){
+        return estadoTareaRepository.delete(id);
+    }
 }

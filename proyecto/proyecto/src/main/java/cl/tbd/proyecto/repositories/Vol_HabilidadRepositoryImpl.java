@@ -64,7 +64,16 @@ public class Vol_HabilidadRepositoryImpl implements Vol_HabilidadRepository {
     }
 
     @Override
-    public void delete(Long id) {
-
+    public Boolean delete(Long id) {
+        String sqlDeleteQuery = "DELETE FROM vol_habilidad WHERE id_vol_habilidad = :id";
+        try (Connection con = sql2o.open()) {
+            con.createQuery(sqlDeleteQuery)
+                    .addParameter("id", id)
+                    .executeUpdate();
+            return true;
+        }catch (Exception e) {
+            System.out.println("Error: " + e);
+            return false;
+        }
     }
 }

@@ -70,6 +70,14 @@ public class EmergenciaRepositoryImpl implements EmergenciaRepository{
 
     @Override
     public Boolean delete(Long id) {
-        return null;
-    }
-}
+        String sqlDeleteQuery = "DELETE FROM emergencia WHERE id_emergencia = :id";
+        try (Connection con = sql2o.open()) {
+            con.createQuery(sqlDeleteQuery)
+                    .addParameter("id", id)
+                    .executeUpdate();
+            return true;
+        }catch (Exception e) {
+            System.out.println("Error: " + e);
+            return false;
+        }
+    }}

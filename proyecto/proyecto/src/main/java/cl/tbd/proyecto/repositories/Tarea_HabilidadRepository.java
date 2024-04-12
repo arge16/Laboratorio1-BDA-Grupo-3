@@ -13,5 +13,5 @@ public interface Tarea_HabilidadRepository {
 
     Tarea_HabilidadEntity create(Tarea_HabilidadEntity tarea_habilidad);
     void update(Tarea_HabilidadEntity tarea_habilidad);
-    void delete(Long id);
+    Boolean delete(Long id);
 }

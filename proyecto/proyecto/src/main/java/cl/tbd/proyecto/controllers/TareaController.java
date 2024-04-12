@@ -32,4 +32,12 @@ public class TareaController {
             return ResponseEntity.ok(tareaEntity);
         return ResponseEntity.badRequest().build();
     }
+
+    @DeleteMapping("")
+    public ResponseEntity<?> deleteTarea(@RequestParam("id") Long id) {
+        if(tareaService.deleteTarea(id)) {
+            return ResponseEntity.ok("deleted");
+        }
+        return ResponseEntity.badRequest().build();
+    }
 }

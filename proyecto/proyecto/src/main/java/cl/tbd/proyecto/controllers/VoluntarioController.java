@@ -33,4 +33,12 @@ public class VoluntarioController {
             return ResponseEntity.ok(voluntarioEntity);
         return ResponseEntity.badRequest().build();
     }
+
+    @DeleteMapping("")
+    public ResponseEntity<?> deleteVoluntario(@RequestParam("id") Long id) {
+        if(voluntarioService.deleteVoluntario(id)) {
+            return ResponseEntity.ok("deleted");
+        }
+        return ResponseEntity.badRequest().build();
+    }
 }

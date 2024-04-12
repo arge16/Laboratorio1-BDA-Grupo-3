@@ -32,4 +32,8 @@ public class Tarea_HabilidadService {
         return tareaHabilidadRepository.create(tareaHabilidad);
     }
 
+    public Boolean deleteTareaHabilidad(Long id){
+        return tareaHabilidadRepository.delete(id);
+    }
+
 }

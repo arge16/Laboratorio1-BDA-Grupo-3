@@ -11,5 +11,5 @@ public interface Vol_HabilidadRepository {
 
     Vol_HabilidadEntity create(Vol_HabilidadEntity vol_habilidad);
     void update(Vol_HabilidadEntity vol_habilidad);
-    void delete(Long id);
+    Boolean delete(Long id);
 }

@@ -15,5 +15,5 @@ public interface Estado_TareaRepository {
 
     void update(Estado_TareaEntity estado_tarea);
 
-    void delete(Long id);
+    Boolean delete(Long id);
 }

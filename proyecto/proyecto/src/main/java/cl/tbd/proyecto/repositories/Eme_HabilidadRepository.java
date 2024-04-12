@@ -16,5 +16,5 @@ public interface Eme_HabilidadRepository {
 
     void update(Eme_HabilidadEntity eme_habilidad);
 
-    void delete(Long id);
+    Boolean delete(Long id);
 }

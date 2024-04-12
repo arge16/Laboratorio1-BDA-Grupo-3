@@ -32,4 +32,12 @@ public class Vol_HabilidadController {
             return ResponseEntity.ok(volHabilidadEntity);
         return ResponseEntity.badRequest().build();
     }
+
+    @DeleteMapping("")
+    public ResponseEntity<?> deleteVolHabilidad(@RequestParam("id") Long id) {
+        if(volHabilidadService.deleteVolHabilidad(id)) {
+            return ResponseEntity.ok("deleted");
+        }
+        return ResponseEntity.badRequest().build();
+    }
 }

@@ -31,4 +31,8 @@ public class TareaService {
         return tareaRepository.create(tarea);
     }
 
+    public Boolean deleteTarea(Long id){
+        return tareaRepository.delete(id);
+    }
+
 }

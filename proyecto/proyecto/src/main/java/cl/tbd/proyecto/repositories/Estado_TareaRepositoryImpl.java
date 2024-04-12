@@ -70,7 +70,16 @@ public class Estado_TareaRepositoryImpl implements Estado_TareaRepository {
     }
 
     @Override
-    public void delete(Long id) {
-
+    public Boolean delete(Long id) {
+        String sqlDeleteQuery = "DELETE FROM estado_tarea WHERE id_estado_tarea = :id";
+        try (Connection con = sql2o.open()) {
+            con.createQuery(sqlDeleteQuery)
+                    .addParameter("id", id)
+                    .executeUpdate();
+            return true;
+        }catch (Exception e) {
+            System.out.println("Error: " + e);
+            return false;
+        }
     }
 }

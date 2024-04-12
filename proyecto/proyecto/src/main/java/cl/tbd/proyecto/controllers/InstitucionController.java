@@ -33,4 +33,12 @@ public class InstitucionController {
             return ResponseEntity.ok(institucionEntity);
         return ResponseEntity.badRequest().build();
     }
+
+    @DeleteMapping("")
+    public ResponseEntity<?> deleteInstitucion(@RequestParam("id") Long id) {
+        if(institucionService.deleteInstitucion(id)) {
+            return ResponseEntity.ok("deleted");
+        }
+        return ResponseEntity.badRequest().build();
+    }
 }

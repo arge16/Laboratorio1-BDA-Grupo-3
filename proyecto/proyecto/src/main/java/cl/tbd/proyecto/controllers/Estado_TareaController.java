@@ -32,4 +32,12 @@ public class Estado_TareaController{
             return  ResponseEntity.ok(estadoTareaEntity);
         return ResponseEntity.badRequest().build();
     }
+
+    @DeleteMapping("")
+    public ResponseEntity<?> deleteEstadoTarea(@RequestParam("id") Long id) {
+        if(estadoTareaService.deleteEstadoTarea(id)) {
+            return ResponseEntity.ok("deleted");
+        }
+        return ResponseEntity.badRequest().build();
+    }
 }

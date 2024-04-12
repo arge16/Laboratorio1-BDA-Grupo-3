@@ -33,4 +33,12 @@ public class RankingController {
             return ResponseEntity.ok(rankingEntity);
         return ResponseEntity.badRequest().build();
     }
+
+    @DeleteMapping("")
+    public ResponseEntity<?> deleteRanking(@RequestParam("id") Long id) {
+        if(rankingService.deleteRanking(id)) {
+            return ResponseEntity.ok("deleted");
+        }
+        return ResponseEntity.badRequest().build();
+    }
 }

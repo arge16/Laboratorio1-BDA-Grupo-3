@@ -29,4 +29,8 @@ public class RankingService {
     public RankingEntity createRanking(RankingEntity ranking) {
         return rankingRepository.create(ranking);
     }
+
+    public Boolean deleteRanking(Long id){
+        return rankingRepository.delete(id);
+    }
 }

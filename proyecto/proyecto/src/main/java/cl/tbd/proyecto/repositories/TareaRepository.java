@@ -12,6 +12,6 @@ public interface TareaRepository {
     TareaEntity create(TareaEntity tarea);
     TareaEntity findById(Long id);
     void update(TareaEntity tarea);
-    void delete(Long id);
+    Boolean delete(Long id);
 
 }

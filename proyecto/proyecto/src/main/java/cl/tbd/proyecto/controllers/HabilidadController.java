@@ -33,4 +33,12 @@ public class HabilidadController {
             return ResponseEntity.ok(habilidadEntity);
         return ResponseEntity.badRequest().build();
     }
+
+    @DeleteMapping("")
+    public ResponseEntity<?> deleteHabilidad(@RequestParam("id") Long id) {
+        if(habilidadService.deleteHabilidad(id)) {
+            return ResponseEntity.ok("deleted");
+        }
+        return ResponseEntity.badRequest().build();
+    }
 }

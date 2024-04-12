@@ -69,7 +69,16 @@ public class InstitucionRepositoryImpl implements InstitucionRepository{
     }
 
     @Override
-    public void delete(Long id) {
-
+    public Boolean delete(Long id) {
+        String sqlDeleteQuery = "DELETE FROM institucion WHERE id_institucion = :id";
+        try (Connection con = sql2o.open()) {
+            con.createQuery(sqlDeleteQuery)
+                    .addParameter("id", id)
+                    .executeUpdate();
+            return true;
+        }catch (Exception e) {
+            System.out.println("Error: " + e);
+            return false;
+        }
     }
 }

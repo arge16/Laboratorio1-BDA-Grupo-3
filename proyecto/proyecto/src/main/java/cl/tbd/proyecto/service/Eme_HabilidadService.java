@@ -28,4 +28,8 @@ public class Eme_HabilidadService {
         return emeHabilidadRepository.create(voluntario);
     }
 
+    public Boolean deleteEmeHabilidad(Long id){
+        return emeHabilidadRepository.delete(id);
+    }
+
 }

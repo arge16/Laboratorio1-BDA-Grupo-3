@@ -13,5 +13,5 @@ public interface RankingRepository {
 
     RankingEntity create(RankingEntity ranking);
     void update(RankingEntity ranking);
-    void delete(Long id);
+    Boolean delete(Long id);
 }

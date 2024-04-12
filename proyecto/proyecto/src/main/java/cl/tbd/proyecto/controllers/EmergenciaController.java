@@ -32,4 +32,12 @@ public class EmergenciaController {
             return ResponseEntity.ok(emergenciaEntity);
         return ResponseEntity.badRequest().build();
     }
+
+    @DeleteMapping("")
+    public ResponseEntity<?> deleteEmergencia(@RequestParam("id") Long id) {
+        if(emergenciaService.deleteEmergencia(id)) {
+            return ResponseEntity.ok("deleted");
+        }
+        return ResponseEntity.badRequest().build();
+    }
 }

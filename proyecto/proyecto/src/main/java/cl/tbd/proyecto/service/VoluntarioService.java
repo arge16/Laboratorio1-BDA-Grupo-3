@@ -30,5 +30,9 @@ public class VoluntarioService {
     public VoluntarioEntity createVoluntario(VoluntarioEntity voluntario) {
         return voluntarioRepository.create(voluntario);
     }
+
+    public Boolean deleteVoluntario(Long id){
+        return voluntarioRepository.delete(id);
+    }
 }
 

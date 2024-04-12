@@ -29,4 +29,8 @@ public class InstitucionService{
     public InstitucionEntity createInstitucion(InstitucionEntity institucion){
         return institucionRepository.create(institucion);
     }
+
+    public Boolean deleteInstitucion(Long id){
+        return institucionRepository.delete(id);
+    }
 }

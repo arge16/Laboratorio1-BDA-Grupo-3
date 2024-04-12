@@ -32,4 +32,12 @@ public class Eme_HabilidadController {
             return ResponseEntity.ok(eme_habilidad);
         return ResponseEntity.badRequest().build();
     }
+
+    @DeleteMapping("")
+    public ResponseEntity<?> deleteEmeHabilidad(@RequestParam("id") Long id) {
+        if(emeHabilidadService.deleteEmeHabilidad(id)) { // TODO: Force delete? con bool como param
+            return ResponseEntity.ok("deleted");
+        }
+        return ResponseEntity.badRequest().build();
+    }
 }

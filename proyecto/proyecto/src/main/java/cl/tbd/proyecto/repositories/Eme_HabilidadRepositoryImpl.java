@@ -73,11 +73,22 @@ public class Eme_HabilidadRepositoryImpl implements Eme_HabilidadRepository {
                     .addParameter("id_emergencia", eme_habilidad.getId_emergencia())
                     .addParameter("id_eme_habilidad", eme_habilidad.getId())
                     .executeUpdate();
+        }catch (Exception e) {
+            System.out.println("Error: " + e);
         }
     }
 
     @Override
-    public void delete(Long id) {
-
+    public Boolean delete(Long id) {
+        String sqlDeleteQuery = "DELETE FROM eme_habilidad WHERE id_eme_habilidad = :id";
+        try (Connection con = sql2o.open()) {
+            con.createQuery(sqlDeleteQuery)
+                    .addParameter("id", id)
+                    .executeUpdate();
+            return true;
+        }catch (Exception e) {
+            System.out.println("Error: " + e);
+            return false;
+        }
     }
 }

@@ -33,4 +33,12 @@ public class Tarea_HabilidadController {
             return ResponseEntity.ok(tareaHabilidadEntity);
         return ResponseEntity.badRequest().build();
     }
+
+    @DeleteMapping("")
+    public ResponseEntity<?> deleteTareaHabilidad(@RequestParam("id") Long id) {
+        if(tareaHabilidadService.deleteTareaHabilidad(id)) {
+            return ResponseEntity.ok("deleted");
+        }
+        return ResponseEntity.badRequest().build();
+    }
 }

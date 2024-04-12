@@ -15,6 +15,6 @@ public interface VoluntarioRepository {
 
     void update(VoluntarioEntity voluntario);
 
-    void delete(Long id);
+    Boolean delete(Long id);
 
 }

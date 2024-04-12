@@ -32,4 +32,8 @@ public class EmergenciaService {
         return emergenciaRepository.create(emergencia);
     }
 
+    public Boolean deleteEmergencia(Long id){
+        return emergenciaRepository.delete(id);
+    }
+
 }

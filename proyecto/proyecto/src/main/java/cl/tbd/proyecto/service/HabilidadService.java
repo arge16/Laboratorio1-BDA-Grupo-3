@@ -33,4 +33,7 @@ public class HabilidadService{
         return habilidadRepository.create(habilidad);
     }
 
+    public Boolean deleteHabilidad(Long id){
+        return habilidadRepository.delete(id);
+    }
 }
