@@ -1,8 +1,8 @@
 DROP TABLE IF EXISTS "vol_habilidad";
 DROP TABLE IF EXISTS "ranking";
 DROP TABLE IF EXISTS "tarea_habilidad";
-DROP TABLE IF EXISTS "tarea";
 DROP TABLE IF EXISTS "estado_tarea";
+DROP TABLE IF EXISTS "tarea";
 DROP TABLE IF EXISTS "eme_habilidad";
 DROP TABLE IF EXISTS "emergencia";
 DROP TABLE IF EXISTS "habilidad";
