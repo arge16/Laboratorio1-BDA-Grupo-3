@@ -60,6 +60,20 @@ public class Tarea_HabilidadRepositoryImpl implements Tarea_HabilidadRepository{
         }
     }
 
+    @Override
+    public Tarea_HabilidadEntity createByValues(Long id_tarea, Long id_habilidad) {
+        String sqlInsertQuery = "INSERT INTO tarea_habilidad(id_tarea, id_habilidad) VALUES(:id_tarea, :id_habilidad)";
+        try (Connection con = sql2o.open()){
+            Long id = con.createQuery(sqlInsertQuery).addParameter("id_tarea",id_tarea)
+                    .addParameter("id_habilidad",id_habilidad)
+                    .executeUpdate().getKey(Long.class);
+            return findById(id);
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+            return null;
+        }
+    }
+
 
     @Override
     public void update(Tarea_HabilidadEntity tarea_habilidad) {
