@@ -10,6 +10,6 @@ public interface Vol_HabilidadRepository {
     Vol_HabilidadEntity findById(Long id);
 
     Vol_HabilidadEntity create(Vol_HabilidadEntity vol_habilidad);
-    void update(Vol_HabilidadEntity vol_habilidad);
+    Vol_HabilidadEntity update(Vol_HabilidadEntity vol_habilidad);
     Boolean delete(Long id);
 }

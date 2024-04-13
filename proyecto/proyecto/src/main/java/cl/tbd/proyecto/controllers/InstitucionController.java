@@ -41,4 +41,16 @@ public class InstitucionController {
         }
         return ResponseEntity.badRequest().build();
     }
+
+    @PutMapping("")
+    public ResponseEntity<InstitucionEntity> updateInstitucion(@RequestBody InstitucionEntity institucion) {
+        InstitucionEntity updatedInstitucion = institucionService.updateInstitucion(institucion);
+        if (updatedInstitucion != null) {
+            return ResponseEntity.ok(updatedInstitucion);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
 }

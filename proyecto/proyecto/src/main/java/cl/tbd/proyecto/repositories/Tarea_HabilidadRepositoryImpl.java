@@ -62,8 +62,18 @@ public class Tarea_HabilidadRepositoryImpl implements Tarea_HabilidadRepository{
 
 
     @Override
-    public void update(Tarea_HabilidadEntity tarea_habilidad) {
-
+    public Tarea_HabilidadEntity update(Tarea_HabilidadEntity tareaHabilidad) {
+        String sqlUpdateQuery = "UPDATE tarea_habilidad SET id_tarea = :id_tarea, id_habilidad = :id_habilidad WHERE id_tarea_habilidad = :id_tarea_habilidad";
+        try (Connection con = sql2o.open()) {
+            con.createQuery(sqlUpdateQuery)
+                    .addParameter("id_tarea", tareaHabilidad.getId_tarea())
+                    .addParameter("id_habilidad", tareaHabilidad.getId_habilidad())
+                    .addParameter("id_tarea_habilidad", tareaHabilidad.getId())
+                    .executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error al actualizar tarea_habilidad: " + e.getMessage());
+        }
+        return null;
     }
 
     @Override

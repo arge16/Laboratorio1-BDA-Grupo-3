@@ -65,8 +65,19 @@ public class RankingRepositoryImpl implements RankingRepository {
 
 
     @Override
-    public void update(RankingEntity ranking) {
-
+    public RankingEntity update(RankingEntity ranking) {
+        String sqlUpdateQuery = "UPDATE ranking SET id_voluntario = :id_voluntario, id_tarea = :id_tarea, puntuacion = :puntuacion WHERE id_ranking = :id_ranking";
+        try (Connection con = sql2o.open()) {
+            con.createQuery(sqlUpdateQuery)
+                    .addParameter("id_voluntario", ranking.getId_voluntario())
+                    .addParameter("id_tarea", ranking.getId_tarea())
+                    .addParameter("puntuacion", ranking.getPuntuacion())
+                    .addParameter("id_ranking", ranking.getId())
+                    .executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error al actualizar el ranking: " + e.getMessage());
+        }
+        return null;
     }
 
     @Override

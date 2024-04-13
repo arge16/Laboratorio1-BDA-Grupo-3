@@ -33,6 +33,15 @@ public class Tarea_HabilidadController {
             return ResponseEntity.ok(tareaHabilidadEntity);
         return ResponseEntity.badRequest().build();
     }
+    @PutMapping("")
+    public ResponseEntity<Tarea_HabilidadEntity> updateTareaHabilidad(@RequestBody Tarea_HabilidadEntity tareaHabilidad) {
+        Tarea_HabilidadEntity updatedTareaHabilidad = tareaHabilidadService.updateTareaHabilidades(tareaHabilidad);
+        if (updatedTareaHabilidad != null) {
+            return ResponseEntity.ok(updatedTareaHabilidad);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @DeleteMapping("")
     public ResponseEntity<?> deleteTareaHabilidad(@RequestParam("id") Long id) {

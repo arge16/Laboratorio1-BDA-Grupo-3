@@ -4,7 +4,6 @@ import cl.tbd.proyecto.entities.Eme_HabilidadEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.sql2o.Connection;
-import org.sql2o.Query;
 import org.sql2o.Sql2o;
 
 import java.util.List;
@@ -66,7 +65,7 @@ public class Eme_HabilidadRepositoryImpl implements Eme_HabilidadRepository {
 
 
     @Override
-    public void update(Eme_HabilidadEntity eme_habilidad) {
+    public Eme_HabilidadEntity update(Eme_HabilidadEntity eme_habilidad) {
         String sqlUpdateQuery = "UPDATE eme_habilidad set id_emergencia = :id_emergencia WHERE id = :id_eme_habilidad";
         try (Connection con = sql2o.open()) {
             con.createQuery(sqlUpdateQuery)
@@ -76,6 +75,7 @@ public class Eme_HabilidadRepositoryImpl implements Eme_HabilidadRepository {
         }catch (Exception e) {
             System.out.println("Error: " + e);
         }
+        return eme_habilidad;
     }
 
     @Override
@@ -91,4 +91,9 @@ public class Eme_HabilidadRepositoryImpl implements Eme_HabilidadRepository {
             return false;
         }
     }
+
+
+
+
+
 }

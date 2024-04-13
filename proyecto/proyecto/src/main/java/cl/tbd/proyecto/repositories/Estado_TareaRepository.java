@@ -13,7 +13,7 @@ public interface Estado_TareaRepository {
 
     Estado_TareaEntity create(Estado_TareaEntity estado_tarea);
 
-    void update(Estado_TareaEntity estado_tarea);
+    Estado_TareaEntity update(Estado_TareaEntity estado_tarea);
 
     Boolean delete(Long id);
 }

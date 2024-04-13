@@ -36,4 +36,8 @@ public class EmergenciaService {
         return emergenciaRepository.delete(id);
     }
 
+    public EmergenciaEntity updateEmergencia(EmergenciaEntity emergencia) {
+        return emergenciaRepository.update(emergencia);
+    }
+
 }

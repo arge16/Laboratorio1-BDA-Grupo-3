@@ -34,6 +34,16 @@ public class VoluntarioController {
         return ResponseEntity.badRequest().build();
     }
 
+    @PutMapping("")
+    public ResponseEntity<VoluntarioEntity> updateVoluntario(@RequestBody VoluntarioEntity voluntario) {
+        VoluntarioEntity updatedVoluntario = voluntarioService.updateVoluntario(voluntario);
+        if (updatedVoluntario != null) {
+            return ResponseEntity.ok(updatedVoluntario);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @DeleteMapping("")
     public ResponseEntity<?> deleteVoluntario(@RequestParam("id") Long id) {
         if(voluntarioService.deleteVoluntario(id)) {

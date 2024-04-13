@@ -33,6 +33,17 @@ public class Estado_TareaController{
         return ResponseEntity.badRequest().build();
     }
 
+    @PutMapping("")
+    public ResponseEntity<Estado_TareaEntity> updateEstadoTarea(@RequestBody Estado_TareaEntity estadoTareaActualizado) {
+        Estado_TareaEntity updatedEstadoTarea = estadoTareaService.updateEstadoTarea(estadoTareaActualizado);
+        if (updatedEstadoTarea != null) {
+            return ResponseEntity.ok(updatedEstadoTarea);
+        } else {
+            // Este código puede variar dependiendo de cómo desees manejar los casos donde el estado de la tarea no existe.
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @DeleteMapping("")
     public ResponseEntity<?> deleteEstadoTarea(@RequestParam("id") Long id) {
         if(estadoTareaService.deleteEstadoTarea(id)) {

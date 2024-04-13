@@ -33,4 +33,6 @@ public class InstitucionService{
     public Boolean deleteInstitucion(Long id){
         return institucionRepository.delete(id);
     }
+
+    public InstitucionEntity updateInstitucion(InstitucionEntity institucion) { return institucionRepository.update(institucion);}
 }

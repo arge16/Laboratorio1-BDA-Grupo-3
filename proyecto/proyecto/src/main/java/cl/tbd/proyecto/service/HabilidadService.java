@@ -36,4 +36,6 @@ public class HabilidadService{
     public Boolean deleteHabilidad(Long id){
         return habilidadRepository.delete(id);
     }
+
+    public HabilidadEntity updateHabilidad(HabilidadEntity habilidad) {return habilidadRepository.update(habilidad);}
 }

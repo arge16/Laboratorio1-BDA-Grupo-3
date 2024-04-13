@@ -33,4 +33,8 @@ public class Estado_TareaService {
     public Boolean deleteEstadoTarea(Long id){
         return estadoTareaRepository.delete(id);
     }
+
+    public Estado_TareaEntity updateEstadoTarea(Estado_TareaEntity estadoTarea) {
+        return estadoTareaRepository.update(estadoTarea);
+    }
 }

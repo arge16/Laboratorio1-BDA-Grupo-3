@@ -11,6 +11,6 @@ public interface HabilidadRepository {
 
     HabilidadEntity create(HabilidadEntity habilidad);
     HabilidadEntity findById(Long id);
-    void update(HabilidadEntity habilidad);
+    HabilidadEntity update(HabilidadEntity habilidad);
     Boolean delete(Long id);
 }

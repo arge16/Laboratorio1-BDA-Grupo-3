@@ -32,4 +32,10 @@ public class Eme_HabilidadService {
         return emeHabilidadRepository.delete(id);
     }
 
+
+    public Eme_HabilidadEntity updateEmeHabilidad(Eme_HabilidadEntity eme_habilidad) {
+        return emeHabilidadRepository.update(eme_habilidad);
+    }
+
+
 }

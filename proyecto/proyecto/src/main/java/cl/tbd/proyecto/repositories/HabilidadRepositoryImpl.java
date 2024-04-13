@@ -66,8 +66,19 @@ public class HabilidadRepositoryImpl implements HabilidadRepository {
 
 
     @Override
-    public void update(HabilidadEntity habilidad) {
-
+    public HabilidadEntity update(HabilidadEntity habilidad) {
+        String sqlUpdateQuery = "UPDATE habilidad SET nombre = :nombre, descripcion = :descripcion, certificacion_requerida = :certificacionRequerida WHERE id_habilidad = :id_habilidad";
+        try (Connection con = sql2o.open()) {
+            con.createQuery(sqlUpdateQuery)
+                    .addParameter("nombre", habilidad.getNombre())
+                    .addParameter("descripcion", habilidad.getDescripcion())
+                    .addParameter("certificacionRequerida", habilidad.getCertificacion_requerida())
+                    .addParameter("id_habilidad", habilidad.getId())
+                    .executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error al actualizar la habilidad: " + e.getMessage());
+        }
+        return null;
     }
 
     @Override

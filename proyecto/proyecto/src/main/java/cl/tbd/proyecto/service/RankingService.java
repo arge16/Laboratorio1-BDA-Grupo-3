@@ -30,7 +30,10 @@ public class RankingService {
         return rankingRepository.create(ranking);
     }
 
+    public RankingEntity updateRanking(RankingEntity ranking) {return rankingRepository.update(ranking);}
+
     public Boolean deleteRanking(Long id){
         return rankingRepository.delete(id);
     }
+
 }

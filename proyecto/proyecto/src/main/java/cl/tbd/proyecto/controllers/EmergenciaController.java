@@ -33,6 +33,16 @@ public class EmergenciaController {
         return ResponseEntity.badRequest().build();
     }
 
+    @PutMapping("")
+    public ResponseEntity<EmergenciaEntity> updateEmergencia(@RequestBody EmergenciaEntity emergencia) {
+        EmergenciaEntity updatedEmergencia = emergenciaService.updateEmergencia(emergencia);
+        if (updatedEmergencia != null) {
+            return ResponseEntity.ok(updatedEmergencia);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @DeleteMapping("")
     public ResponseEntity<?> deleteEmergencia(@RequestParam("id") Long id) {
         if(emergenciaService.deleteEmergencia(id)) {
@@ -40,4 +50,6 @@ public class EmergenciaController {
         }
         return ResponseEntity.badRequest().build();
     }
+
+
 }

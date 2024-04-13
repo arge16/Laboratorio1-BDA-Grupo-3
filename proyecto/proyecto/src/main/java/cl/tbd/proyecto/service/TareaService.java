@@ -31,6 +31,7 @@ public class TareaService {
         return tareaRepository.create(tarea);
     }
 
+    public TareaEntity updateTarea(TareaEntity tarea) { return tareaRepository.update(tarea);}
     public Boolean deleteTarea(Long id){
         return tareaRepository.delete(id);
     }

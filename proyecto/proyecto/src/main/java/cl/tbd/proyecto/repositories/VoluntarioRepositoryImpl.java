@@ -64,8 +64,22 @@ public class VoluntarioRepositoryImpl implements VoluntarioRepository {
 
 
     @Override
-    public void update(VoluntarioEntity voluntario) {
-
+    public VoluntarioEntity update(VoluntarioEntity voluntario) {
+        String sql = "UPDATE voluntario SET nombre = :nombre, edad = :edad, direccion = :direccion, genero = :genero, email = :email, telefono = :telefono WHERE id_voluntario = :id_voluntario";
+        try (Connection con = sql2o.open()) {
+            con.createQuery(sql)
+                    .addParameter("nombre", voluntario.getNombre())
+                    .addParameter("edad", voluntario.getEdad())
+                    .addParameter("direccion", voluntario.getDireccion())
+                    .addParameter("genero", voluntario.getGenero())
+                    .addParameter("email", voluntario.getEmail())
+                    .addParameter("telefono", voluntario.getTelefono())
+                    .addParameter("id_voluntario", voluntario.getId())
+                    .executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error al actualizar el voluntario: " + e.getMessage());
+        }
+        return null;
     }
 
     @Override

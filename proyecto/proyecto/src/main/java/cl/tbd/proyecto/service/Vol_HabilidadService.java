@@ -25,6 +25,10 @@ public class Vol_HabilidadService {
         return volHabilidadRepository.create(volHabilidad);
     }
 
+    public Vol_HabilidadEntity updateVolHabilidades(Vol_HabilidadEntity volHabilidad) {
+        return volHabilidadRepository.update(volHabilidad);
+    }
+
     public Boolean deleteVolHabilidad(Long id){
         return volHabilidadRepository.delete(id);
     }

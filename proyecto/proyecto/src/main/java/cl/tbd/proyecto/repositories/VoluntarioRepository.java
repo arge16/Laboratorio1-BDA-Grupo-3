@@ -13,7 +13,7 @@ public interface VoluntarioRepository {
     VoluntarioEntity create(VoluntarioEntity voluntario);
 
 
-    void update(VoluntarioEntity voluntario);
+    VoluntarioEntity update(VoluntarioEntity voluntario);
 
     Boolean delete(Long id);
 

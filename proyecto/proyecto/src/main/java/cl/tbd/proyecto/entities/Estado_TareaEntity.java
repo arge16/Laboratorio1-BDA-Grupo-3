@@ -35,4 +35,11 @@ public class Estado_TareaEntity {
         this.id_tarea = id_tarea;
     }
 
+    public Long getId_estado_tarea() {
+        return id_estado_tarea;
+    }
+
+    public void setId_estado_tarea(Long id_estado_tarea) {
+        this.id_estado_tarea = id_estado_tarea;
+    }
 }

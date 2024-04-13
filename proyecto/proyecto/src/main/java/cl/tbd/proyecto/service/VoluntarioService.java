@@ -4,6 +4,7 @@ import cl.tbd.proyecto.entities.Eme_HabilidadEntity;
 import cl.tbd.proyecto.entities.VoluntarioEntity;
 import cl.tbd.proyecto.repositories.Eme_HabilidadRepository;
 import cl.tbd.proyecto.repositories.VoluntarioRepository;
+import cl.tbd.proyecto.repositories.VoluntarioRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,10 @@ public class VoluntarioService {
 
     public VoluntarioEntity createVoluntario(VoluntarioEntity voluntario) {
         return voluntarioRepository.create(voluntario);
+    }
+
+    public VoluntarioEntity updateVoluntario(VoluntarioEntity voluntario) {
+        return voluntarioRepository.update(voluntario);
     }
 
     public Boolean deleteVoluntario(Long id){

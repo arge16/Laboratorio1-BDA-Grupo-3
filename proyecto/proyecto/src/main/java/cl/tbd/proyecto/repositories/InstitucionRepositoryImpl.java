@@ -64,8 +64,20 @@ public class InstitucionRepositoryImpl implements InstitucionRepository{
 
 
     @Override
-    public void update(InstitucionEntity institucion) {
-
+    public InstitucionEntity update(InstitucionEntity institucion) {
+        String sqlUpdateQuery = "UPDATE institucion SET nombre = :nombre, email = :email, telefono = :telefono, ubicacion = :ubicacion WHERE id_institucion = :id_institucion";
+        try (Connection con = sql2o.open()) {
+            con.createQuery(sqlUpdateQuery)
+                    .addParameter("nombre", institucion.getNombre())
+                    .addParameter("email", institucion.getEmail())
+                    .addParameter("telefono", institucion.getTelefono())
+                    .addParameter("ubicacion", institucion.getUbicacion())
+                    .addParameter("id_institucion", institucion.getId())
+                    .executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error al actualizar la institución: " + e.getMessage());
+        }
+        return null;
     }
 
     @Override

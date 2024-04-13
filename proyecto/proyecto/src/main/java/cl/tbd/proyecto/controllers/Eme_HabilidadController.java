@@ -33,6 +33,16 @@ public class Eme_HabilidadController {
         return ResponseEntity.badRequest().build();
     }
 
+    @PutMapping("")
+    public ResponseEntity<Eme_HabilidadEntity> updateEmeHabilidad(@RequestBody Eme_HabilidadEntity eme_habilidad) {
+        Eme_HabilidadEntity updated = emeHabilidadService.updateEmeHabilidad(eme_habilidad);
+        if (updated != null) {
+            return ResponseEntity.ok(updated);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @DeleteMapping("")
     public ResponseEntity<?> deleteEmeHabilidad(@RequestParam("id") Long id) {
         if(emeHabilidadService.deleteEmeHabilidad(id)) { // TODO: Force delete? con bool como param
@@ -40,4 +50,7 @@ public class Eme_HabilidadController {
         }
         return ResponseEntity.badRequest().build();
     }
+
+
+
 }

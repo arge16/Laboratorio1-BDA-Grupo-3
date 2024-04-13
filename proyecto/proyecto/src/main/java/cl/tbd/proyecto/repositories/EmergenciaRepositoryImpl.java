@@ -1,8 +1,6 @@
 package cl.tbd.proyecto.repositories;
 
-import cl.tbd.proyecto.entities.Eme_HabilidadEntity;
 import cl.tbd.proyecto.entities.EmergenciaEntity;
-import cl.tbd.proyecto.entities.Estado_TareaEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.sql2o.Connection;
@@ -63,10 +61,24 @@ public class EmergenciaRepositoryImpl implements EmergenciaRepository{
         }
     }
 
+
     @Override
     public EmergenciaEntity update(EmergenciaEntity emergencia) {
+        String sqlUpdateQuery = "UPDATE emergencia SET nombre = :nombre, descripcion = :descripcion, fecha_inicio = :fechaInicio, fecha_fin = :fechaFin WHERE id_emergencia = :id_emergencia";
+        try (Connection con = sql2o.open()) {
+            con.createQuery(sqlUpdateQuery)
+                    .addParameter("nombre", emergencia.getNombre())
+                    .addParameter("descripcion", emergencia.getDescripcion())
+                    .addParameter("fechaInicio", emergencia.getFecha_inicio())  // Asegúrate que los getters están correctamente definidos
+                    .addParameter("fechaFin", emergencia.getFecha_fin())        // y se llaman igual que en la clase `EmergenciaEntity`.
+                    .addParameter("id_emergencia", emergencia.getId())  // Cambia 'id' por 'id_emergencia' para que coincida con el SQL.
+                    .executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error al actualizar la emergencia: " + e.getMessage());
+        }
         return null;
     }
+
 
     @Override
     public Boolean delete(Long id) {

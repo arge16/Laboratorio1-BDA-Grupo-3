@@ -12,5 +12,7 @@ public interface EmergenciaRepository {
     EmergenciaEntity findById(Long id);
     EmergenciaEntity create(EmergenciaEntity emergencia);
     EmergenciaEntity update(EmergenciaEntity emergencia);
+
+
     Boolean delete(Long id); // en caso de q de error da false
 }

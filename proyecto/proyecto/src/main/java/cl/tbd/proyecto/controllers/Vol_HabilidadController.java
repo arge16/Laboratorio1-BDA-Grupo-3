@@ -33,6 +33,16 @@ public class Vol_HabilidadController {
         return ResponseEntity.badRequest().build();
     }
 
+    @PutMapping("")
+    public ResponseEntity<Vol_HabilidadEntity> updateVol_Habilidad(@RequestBody Vol_HabilidadEntity volHabilidad) {
+        Vol_HabilidadEntity updatedVolHabilidad = volHabilidadService.updateVolHabilidades(volHabilidad);
+        if (updatedVolHabilidad != null) {
+            return ResponseEntity.ok(updatedVolHabilidad);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @DeleteMapping("")
     public ResponseEntity<?> deleteVolHabilidad(@RequestParam("id") Long id) {
         if(volHabilidadService.deleteVolHabilidad(id)) {

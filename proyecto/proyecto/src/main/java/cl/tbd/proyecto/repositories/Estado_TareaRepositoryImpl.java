@@ -64,9 +64,21 @@ public class Estado_TareaRepositoryImpl implements Estado_TareaRepository {
     }
 
 
-    @Override
-    public void update(Estado_TareaEntity estado_tarea) {
 
+
+    @Override
+    public Estado_TareaEntity update(Estado_TareaEntity estado_tarea) {
+        String sqlUpdateQuery = "UPDATE estado_tarea SET descripcion = :descripcion, id_tarea = :id_tarea WHERE id_estado_tarea = :id_estado_tarea";
+        try (Connection con = sql2o.open()) {
+            con.createQuery(sqlUpdateQuery)
+                    .addParameter("descripcion", estado_tarea.getDescripcion())
+                    .addParameter("id_tarea", estado_tarea.getId_tarea())
+                    .addParameter("id_estado_tarea", estado_tarea.getId_estado_tarea())
+                    .executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error al actualizar el estado de la tarea: " + e.getMessage());
+        }
+        return null;
     }
 
     @Override

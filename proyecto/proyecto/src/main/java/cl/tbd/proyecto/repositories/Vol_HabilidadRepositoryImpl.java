@@ -59,8 +59,19 @@ public class Vol_HabilidadRepositoryImpl implements Vol_HabilidadRepository {
     }
 
     @Override
-    public void update(Vol_HabilidadEntity vol_habilidad) {
-
+    public Vol_HabilidadEntity update(Vol_HabilidadEntity volHabilidad) {
+        String sql = "UPDATE vol_habilidad SET id_voluntario = :id_voluntario, id_habilidad = :id_habilidad, nivel_proficiencia = :nivel_proficiencia WHERE id_vol_habilidad = :id_vol_habilidad";
+        try (Connection con = sql2o.open()) {
+            con.createQuery(sql)
+                    .addParameter("id_voluntario", volHabilidad.getId_voluntario())
+                    .addParameter("id_habilidad", volHabilidad.getId_habilidad())
+                    .addParameter("nivel_proficiencia", volHabilidad.getNivel_proficiencia())
+                    .addParameter("id_vol_habilidad", volHabilidad.getId())
+                    .executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error al actualizar la habilidad del voluntario: " + e.getMessage());
+        }
+        return null;
     }
 
     @Override

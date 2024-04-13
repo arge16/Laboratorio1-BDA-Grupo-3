@@ -64,8 +64,19 @@ public class TareaRepositoryImpl implements TareaRepository{
 
 
     @Override
-    public void update(TareaEntity tarea) {
-
+    public TareaEntity update(TareaEntity tarea) {
+        String sqlUpdateQuery = "UPDATE tarea SET descripcion = :descripcion, id_emergencia = :id_emergencia, completada = :completada WHERE id_tarea = :id_tarea";
+        try (Connection con = sql2o.open()) {
+            con.createQuery(sqlUpdateQuery)
+                    .addParameter("descripcion", tarea.getDescripcion())
+                    .addParameter("id_emergencia", tarea.getId_emergencia())
+                    .addParameter("completada", tarea.getCompletada())
+                    .addParameter("id_tarea", tarea.getId())
+                    .executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error al actualizar la tarea: " + e.getMessage());
+        }
+        return null;
     }
 
     @Override

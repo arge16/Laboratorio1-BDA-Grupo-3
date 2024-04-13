@@ -34,6 +34,17 @@ public class HabilidadController {
         return ResponseEntity.badRequest().build();
     }
 
+    @PutMapping("")
+    public ResponseEntity<HabilidadEntity> updateHabilidad(@RequestBody HabilidadEntity habilidadActualizada) {
+        HabilidadEntity updatedHabilidad = habilidadService.updateHabilidad(habilidadActualizada);
+        if (updatedHabilidad != null) {
+            return ResponseEntity.ok(updatedHabilidad);
+        } else {
+            // Este código puede variar dependiendo de cómo desees manejar los casos donde la habilidad no existe.
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @DeleteMapping("")
     public ResponseEntity<?> deleteHabilidad(@RequestParam("id") Long id) {
         if(habilidadService.deleteHabilidad(id)) {

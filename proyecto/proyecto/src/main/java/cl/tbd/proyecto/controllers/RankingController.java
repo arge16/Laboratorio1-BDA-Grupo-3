@@ -34,6 +34,16 @@ public class RankingController {
         return ResponseEntity.badRequest().build();
     }
 
+    @PutMapping("")
+    public ResponseEntity<RankingEntity> updateRanking(@RequestBody RankingEntity ranking) {
+        RankingEntity updatedRanking = rankingService.updateRanking(ranking);
+        if (updatedRanking != null) {
+            return ResponseEntity.ok(updatedRanking);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @DeleteMapping("")
     public ResponseEntity<?> deleteRanking(@RequestParam("id") Long id) {
         if(rankingService.deleteRanking(id)) {

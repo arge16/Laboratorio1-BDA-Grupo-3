@@ -33,6 +33,16 @@ public class TareaController {
         return ResponseEntity.badRequest().build();
     }
 
+    @PutMapping("")
+    public ResponseEntity<TareaEntity> updateTarea(@RequestBody TareaEntity tarea) {
+        TareaEntity updatedTarea = tareaService.updateTarea(tarea);
+        if (updatedTarea != null) {
+            return ResponseEntity.ok(updatedTarea);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @DeleteMapping("")
     public ResponseEntity<?> deleteTarea(@RequestParam("id") Long id) {
         if(tareaService.deleteTarea(id)) {
