@@ -32,7 +32,8 @@ CREATE TABLE "tarea" (
   "descripcion" varchar,
   "id_emergencia" bigint,
   "id_voluntario" bigint,
-  "completada" int
+  "completada" int,
+  "id_estado_tarea" bigint
 );
 
 CREATE TABLE "tarea_habilidad" (
