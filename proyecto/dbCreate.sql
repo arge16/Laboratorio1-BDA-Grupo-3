@@ -31,9 +31,7 @@ CREATE TABLE "tarea" (
   "id_tarea" SERIAL PRIMARY KEY,
   "descripcion" varchar,
   "id_emergencia" bigint,
-  "id_voluntario" bigint,
-  "completada" int,
-  "id_estado_tarea" bigint
+  "completada" int
 );
 
 CREATE TABLE "tarea_habilidad" (
@@ -101,7 +99,7 @@ ALTER TABLE "tarea_habilidad" ADD FOREIGN KEY ("id_tarea") REFERENCES "tarea" ("
 
 ALTER TABLE "tarea_habilidad" ADD FOREIGN KEY ("id_habilidad") REFERENCES "habilidad" ("id_habilidad");
 
-ALTER TABLE "tarea" ADD FOREIGN KEY ("id_estado_tarea") REFERENCES "estado_tarea" ("id_estado_tarea");
+ALTER TABLE "estado_tarea" ADD FOREIGN KEY ("id_tarea") REFERENCES "tarea" ("id_tarea");
 
 ALTER TABLE "emergencia" ADD FOREIGN KEY ("id_institucion") REFERENCES "institucion" ("id_institucion");
 

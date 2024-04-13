@@ -51,7 +51,8 @@ public class VoluntarioRepositoryImpl implements VoluntarioRepository {
 
     @Override
     public VoluntarioEntity create(VoluntarioEntity voluntario) {
-        String sqlInsertQuery = "INSERT INTO voluntario (nombre, edad, direccion, genero, email, telefono) VALUES(:nombre, :edad, :direccion, :genero, :email, :telefono)";
+        String sqlInsertQuery = "INSERT INTO voluntario (nombre, edad, direccion, genero, email, telefono) " +
+                "VALUES(:nombre, :edad, :direccion, :genero, :email, :telefono)";
         try (Connection con = sql2o.open()){
             Long id = con.createQuery(sqlInsertQuery).bind(voluntario).executeUpdate().getKey(Long.class);
             return findById(id);

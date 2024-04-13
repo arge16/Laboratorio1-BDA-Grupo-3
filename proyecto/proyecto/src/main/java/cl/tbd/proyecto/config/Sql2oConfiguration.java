@@ -28,4 +28,5 @@ public class Sql2oConfiguration {
     public Sql2o sql2o() {
         return new Sql2o(dataSource());
     }
+
 }

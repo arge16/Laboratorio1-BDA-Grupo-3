@@ -7,6 +7,7 @@ CREATE TABLE consulta_log (
     tipo_consulta TEXT,
 	filas_afectadas TEXT,
 	tabla TEXT,
+	usuario TEXT,
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -15,6 +16,7 @@ RETURNS TRIGGER AS $$
 DECLARE
     operation_text TEXT;
     affected_row_text TEXT;
+	actualUser TEXT;
 BEGIN
     -- Ver que datos guardar para cada tipo de consulta
     IF TG_OP = 'INSERT' THEN
@@ -29,9 +31,8 @@ BEGIN
     ELSE
         RAISE EXCEPTION 'Operación desconocida detectada';
     END IF;
-
-    INSERT INTO consulta_log (tipo_consulta, tabla, filas_afectadas) 
-	VALUES (operation_text,TG_TABLE_NAME, affected_row_text);
+    INSERT INTO consulta_log (tipo_consulta, tabla, filas_afectadas, usuario) 
+	VALUES (operation_text,TG_TABLE_NAME, affected_row_text, user);
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
