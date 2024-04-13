@@ -10,12 +10,13 @@ DROP TABLE IF EXISTS "institucion";
 DROP TABLE IF EXISTS "voluntario";
 
 
-CREATE TABLE "users" (
-                         "id" SERIAL PRIMARY KEY,
-                         "username" varchar UNIQUE NOT NULL,
-                         "password" varchar NOT NULL, -- almacenada como un hash
-                         "email" varchar UNIQUE NOT NULL,
-                         "role" varchar -- esto puede referenciar otra tabla de 'roles' si se utiliza un enfoque más normalizado
+
+CREATE TABLE "usuarios" (
+                            "id" SERIAL PRIMARY KEY,
+                            "username" varchar UNIQUE NOT NULL,
+                            "password" varchar NOT NULL, -- almacenada como un hash
+                            "email" varchar UNIQUE NOT NULL,
+                            "role" varchar -- esto puede referenciar otra tabla de 'roles' si se utiliza un enfoque más normalizado
 );
 
 CREATE TABLE "roles" (
@@ -24,86 +25,86 @@ CREATE TABLE "roles" (
 );
 
 -- Luego tendrías una tabla de unión si es una relación muchos a muchos
-CREATE TABLE "user_roles" (
-                              "user_id" int REFERENCES "users" ("id"),
-                              "role_id" int REFERENCES "roles" ("id"),
-                              PRIMARY KEY ("user_id", "role_id")
+CREATE TABLE "usuarios_roles" (
+                                  "user_id" int REFERENCES "usuarios" ("id"),
+                                  "role_id" int REFERENCES "roles" ("id"),
+                                  PRIMARY KEY ("user_id", "role_id")
 );
 
 
 CREATE TABLE "voluntario" (
-  "id_voluntario" SERIAL PRIMARY KEY,
-  "user_id" INT REFERENCES "users" ("id"),
-  "nombre" varchar,
-  "edad" int,
-  "direccion" varchar,
-  "genero" varchar,
-  "email" varchar,
-  "telefono" varchar
+                              "id_voluntario" SERIAL PRIMARY KEY,
+                              "user_id" INT REFERENCES "usuarios" ("id"),
+                              "nombre" varchar,
+                              "edad" int,
+                              "direccion" varchar,
+                              "genero" varchar,
+                              "email" varchar,
+                              "telefono" varchar
 );
 
 CREATE TABLE "vol_habilidad" (
-  "id_vol_habilidad" SERIAL PRIMARY KEY,
-  "id_voluntario" bigint,
-  "id_habilidad" bigint,
-  "nivel_proficiencia" int
+                                 "id_vol_habilidad" SERIAL PRIMARY KEY,
+                                 "id_voluntario" bigint,
+                                 "id_habilidad" bigint,
+                                 "nivel_proficiencia" int
 );
 
 CREATE TABLE "tarea" (
-  "id_tarea" SERIAL PRIMARY KEY,
-  "descripcion" varchar,
-  "id_emergencia" bigint,
-  "completada" int
+                         "id_tarea" SERIAL PRIMARY KEY,
+                         "descripcion" varchar,
+                         "id_emergencia" bigint,
+                         "completada" int
 );
 
 CREATE TABLE "tarea_habilidad" (
-  "id_tarea_habilidad" SERIAL PRIMARY KEY,
-  "id_tarea" bigint,
-  "id_habilidad" bigint
+                                   "id_tarea_habilidad" SERIAL PRIMARY KEY,
+                                   "id_tarea" bigint,
+                                   "id_habilidad" bigint
 );
 
 CREATE TABLE "ranking" (
-  "id_ranking" SERIAL PRIMARY KEY,
-  "id_voluntario" bigint,
-  "id_tarea" bigint,
-  "puntuacion" int
+                           "id_ranking" SERIAL PRIMARY KEY,
+                           "id_voluntario" bigint,
+                           "id_tarea" bigint,
+                           "puntuacion" int
 );
 
 CREATE TABLE "institucion" (
-  "id_institucion" SERIAL PRIMARY KEY,
-  "nombre" varchar,
-  "email" varchar,
-  "telefono" varchar,
-  "ubicacion" varchar
+                               "id_institucion" SERIAL PRIMARY KEY,
+                               "nombre" varchar,
+                               "email" varchar,
+                               "telefono" varchar,
+                               "ubicacion" varchar
 );
 
 CREATE TABLE "habilidad" (
-  "id_habilidad" SERIAL PRIMARY KEY,
-  "nombre" varchar,
-  "descripcion" varchar,
-  "certificacion_requerida" int
+                             "id_habilidad" SERIAL PRIMARY KEY,
+                             "nombre" varchar,
+                             "descripcion" varchar,
+                             "certificacion_requerida" int
 );
 
 CREATE TABLE "estado_tarea" (
-  "id_estado_tarea" SERIAL PRIMARY KEY,
-  "descripcion" varchar,
-  "id_tarea" bigint
+                                "id_estado_tarea" SERIAL PRIMARY KEY,
+                                "descripcion" varchar,
+                                "id_tarea" bigint
 );
 
 CREATE TABLE "emergencia" (
-  "id_emergencia" SERIAL PRIMARY KEY,
-  "nombre" varchar,
-  "descripcion" varchar,
-  "fecha_inicio" Date,
-  "fecha_fin" Date,
-  "id_institucion" bigint,
-  "completada" int
+                              "id_emergencia" SERIAL PRIMARY KEY,
+                              "nombre" varchar,
+                              "descripcion" varchar,
+                              "fecha_inicio" Date,
+                              "fecha_fin" Date,
+                              "id_institucion" bigint,
+                              "completada" int
 );
 
 CREATE TABLE "eme_habilidad" (
-  "id_eme_habilidad" SERIAL PRIMARY KEY,
-  "id_emergencia" bigint,
-  "id_habilidad" bigint
+                                 "id_eme_habilidad" SERIAL PRIMARY KEY,
+                                 "id_emergencia" bigint,
+                                 "id_habilidad" bigint
 );
 
 ALTER TABLE "ranking" ADD FOREIGN KEY ("id_voluntario") REFERENCES "voluntario" ("id_voluntario");
