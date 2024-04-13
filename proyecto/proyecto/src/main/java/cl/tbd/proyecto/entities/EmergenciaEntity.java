@@ -10,14 +10,16 @@ public class EmergenciaEntity {
     private Date fecha_inicio;
     private Date fecha_fin;
     private Long id_institucion;
+    private int completada;
 
-    public EmergenciaEntity(Long id, String nombre, String descripcion, Date fecha_inicio, Date fecha_fin, Long id_institucion) {
+    public EmergenciaEntity(Long id, String nombre, String descripcion, Date fecha_inicio, Date fecha_fin, Long id_institucion, int completada) {
         this.id_emergencia = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.fecha_inicio = fecha_inicio;
         this.fecha_fin = fecha_fin;
         this.id_institucion = id_institucion;
+        this.completada = completada;
     }
 
     public Long getId() {
@@ -68,5 +70,11 @@ public class EmergenciaEntity {
         this.id_institucion = id_institucion;
     }
 
+    public int getCompletada() {
+        return completada;
+    }
 
+    public void setCompletada(int completada) {
+        this.completada = completada;
+    }
 }

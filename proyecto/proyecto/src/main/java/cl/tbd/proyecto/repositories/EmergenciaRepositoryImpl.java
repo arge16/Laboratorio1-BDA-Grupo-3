@@ -53,7 +53,7 @@ public class EmergenciaRepositoryImpl implements EmergenciaRepository{
 
     @Override
     public EmergenciaEntity create(EmergenciaEntity emergencia) {
-        String sqlInsertQuery =  "INSERT INTO emergencia(nombre, descripcion, fecha_inicio, fecha_fin, id_institucion) VALUES( :nombre, :descripcion, :fecha_inicio, :fecha_fin, :id_institucion)";
+        String sqlInsertQuery =  "INSERT INTO emergencia(nombre, descripcion, fecha_inicio, fecha_fin, id_institucion, completada) VALUES( :nombre, :descripcion, :fecha_inicio, :fecha_fin, :id_institucion, :completada)";
         try(Connection connection = sql2o.open()){
             Long id = connection.createQuery(sqlInsertQuery).bind(emergencia).executeUpdate().getKey(Long.class);
             return findById(id); // TODO: revisar si devolver entidad o key, o nada

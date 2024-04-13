@@ -74,7 +74,8 @@ CREATE TABLE "emergencia" (
   "descripcion" varchar,
   "fecha_inicio" Date,
   "fecha_fin" Date,
-  "id_institucion" bigint
+  "id_institucion" bigint,
+  "completada" int
 );
 
 CREATE TABLE "eme_habilidad" (
