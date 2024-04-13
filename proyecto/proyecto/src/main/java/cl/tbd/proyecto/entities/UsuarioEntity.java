@@ -5,7 +5,7 @@ public class UsuarioEntity {
     private String username;
     private String email;
     private String password;
-    private Long rolId; // Llave foránea que apunta a RolEntity
+    private Long rol_id; // Llave foránea que apunta a RolEntity
 
     public UsuarioEntity() {
     }
@@ -51,10 +51,10 @@ public class UsuarioEntity {
     }
 
     public Long getRolId() { // Getter para rolId
-        return rolId;
+        return rol_id;
     }
 
     public void setRolId(Long rolId) { // Setter para rolId
-        this.rolId = rolId;
+        this.rol_id = rolId;
     }
 }

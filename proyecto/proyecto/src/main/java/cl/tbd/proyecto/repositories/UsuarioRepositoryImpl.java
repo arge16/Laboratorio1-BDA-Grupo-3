@@ -1,6 +1,7 @@
 package cl.tbd.proyecto.repositories;
 
 import cl.tbd.proyecto.entities.UsuarioEntity;
+import cl.tbd.proyecto.entities.VoluntarioEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.sql2o.Connection;
@@ -27,6 +28,33 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
             return con.createQuery(sqlQuery)
                     .addParameter("id", id)
                     .executeAndFetchFirst(UsuarioEntity.class);
+        }
+    }
+
+    @Override
+    public UsuarioEntity findByUsername(String username){
+        String sqlQuery = "SELECT * FROM usuarios WHERE username = :username";
+        try (Connection con = sql2o.open()) {
+            return con.createQuery(sqlQuery)
+                    .addParameter("username", username)
+                    .executeAndFetchFirst(UsuarioEntity.class);
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+            return null;
+        }
+    }
+
+    @Override
+    public Boolean Login(String username, String password) {
+        String sqlQuery = "SELECT exists(SELECT *  FROM usuarios WHERE username = :username and password = :password)";
+        try (Connection con = sql2o.open()) {
+            return con.createQuery(sqlQuery)
+                    .addParameter("username", username)
+                    .addParameter("password",password)
+                    .executeAndFetchFirst(Boolean.class);
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+            return false;
         }
     }
 

@@ -47,9 +47,7 @@ public class TareaService {
         return tareaRepository.create(tarea);
     }
 
-<<<<<<< HEAD
     public TareaEntity updateTarea(TareaEntity tarea) { return tareaRepository.update(tarea);}
-=======
     public Tarea_HabilidadEntity addHabilidadToTarea(TareaEntity tarea, Long id_habilidad){
         return tareaHabilidadService.createTareaHabilidadesByValues(tarea.getId(), id_habilidad);
     }
@@ -64,7 +62,6 @@ public class TareaService {
         return habilidadService.findHabilidadesByEmergencia(tarea.getId_emergencia());
     }
 
->>>>>>> 88b3898254e551c3585e64f7873264c852901124
     public Boolean deleteTarea(Long id){
         return tareaRepository.delete(id);
     }

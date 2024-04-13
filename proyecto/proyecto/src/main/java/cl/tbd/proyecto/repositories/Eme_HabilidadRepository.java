@@ -1,11 +1,8 @@
 package cl.tbd.proyecto.repositories;
 import cl.tbd.proyecto.entities.Eme_HabilidadEntity;
-<<<<<<< HEAD
-=======
 import cl.tbd.proyecto.entities.EmergenciaEntity;
 import cl.tbd.proyecto.entities.HabilidadEntity;
 import org.sql2o.Query;
->>>>>>> 88b3898254e551c3585e64f7873264c852901124
 
 import java.util.List;
 
