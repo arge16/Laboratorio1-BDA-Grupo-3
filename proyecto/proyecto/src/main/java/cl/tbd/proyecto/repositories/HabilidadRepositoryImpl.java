@@ -51,7 +51,16 @@ public class HabilidadRepositoryImpl implements HabilidadRepository {
         }
     }
 
-
+    @Override
+    public List<HabilidadEntity> findHabilidadesByEmergencia(Long id_emergencia) {
+        String sqlQuery = "SELECT h.id_habilidad, h.nombre, h.descripcion, h.certificacion_requerida FROM habilidad h JOIN public.eme_habilidad eh on h.id_habilidad = eh.id_habilidad JOIN public.emergencia e on eh.id_emergencia = e.id_emergencia WHERE e.id_emergencia = :id_emergencia";
+        try(Connection con = sql2o.open()){
+            return con.createQuery(sqlQuery).addParameter("id_emergencia",id_emergencia).executeAndFetch(HabilidadEntity.class);
+        }catch (Exception e) {
+            System.out.println("Error: " + e);
+            return null;
+        }
+    }
     @Override
     public HabilidadEntity create(HabilidadEntity habilidad) {
         String sqlInsertQuery = "INSERT INTO habilidad(nombre, descripcion, certificacion_requerida) VALUES(:nombre, :descripcion, :certificacion_requerida)";

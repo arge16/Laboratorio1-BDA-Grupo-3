@@ -36,6 +36,24 @@ public class EmergenciaRepositoryImpl implements EmergenciaRepository{
     }
 
     @Override
+    public List<EmergenciaEntity> findAllUncompleted(int size, int page){
+        String sqlQuery = "Select * FROM emergencia WHERE completada = 0 LIMIT :size OFFSET :offset";
+        int offset = (page - 1) * size;
+        try(Connection con = sql2o.open()){
+            return con.createQuery(sqlQuery).addParameter("size", size)
+                    .addParameter("offset",offset).executeAndFetch(EmergenciaEntity.class);
+        }catch (Exception e) {
+            System.out.println("Error: " + e);
+            return null;
+        }
+    }
+
+    @Override
+    public List<EmergenciaEntity> findHabilidadesByEmergencia(Long id_emergencia) {
+        return null;
+    }
+
+    @Override
     public EmergenciaEntity findById(Long id_emergencia) {
         String sqlQuery = "SELECT * FROM emergencia WHERE id_emergencia = :id_emergencia";
         try (Connection con = sql2o.open()) {
@@ -51,7 +69,7 @@ public class EmergenciaRepositoryImpl implements EmergenciaRepository{
 
     @Override
     public EmergenciaEntity create(EmergenciaEntity emergencia) {
-        String sqlInsertQuery =  "INSERT INTO emergencia(nombre, descripcion, fecha_inicio, fecha_fin, id_institucion, completada) VALUES( :nombre, :descripcion, :fecha_inicio, :fecha_fin, :id_institucion, :completada)";
+        String sqlInsertQuery =  "INSERT INTO emergencia(nombre, descripcion, fecha_inicio, fecha_fin, id_institucion) VALUES( :nombre, :descripcion, :fecha_inicio, :fecha_fin, :id_institucion)";
         try(Connection connection = sql2o.open()){
             Long id = connection.createQuery(sqlInsertQuery).bind(emergencia).executeUpdate().getKey(Long.class);
             return findById(id); // TODO: revisar si devolver entidad o key, o nada

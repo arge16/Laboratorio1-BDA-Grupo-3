@@ -92,4 +92,22 @@ public class TareaRepositoryImpl implements TareaRepository{
             return false;
         }
     }
+
+    //Encontrar tareas por id de emergencia, ordenadas por completada y descripcion
+
+    @Override
+    public List<TareaEntity> findByEmergencia(Long id_emergencia) {
+        String sqlQuery = "SELECT * FROM tarea WHERE id_emergencia = :id_emergencia ORDER BY completada DESC, descripcion";
+        try (Connection con = sql2o.open()) {
+            return con.createQuery(sqlQuery)
+                    .addParameter("id_emergencia", id_emergencia)
+                    .executeAndFetch(TareaEntity.class);
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+            return null;
+        }
+    }
+
+
+
 }

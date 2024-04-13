@@ -32,8 +32,13 @@ public class Tarea_HabilidadService {
         return tareaHabilidadRepository.create(tareaHabilidad);
     }
 
+<<<<<<< HEAD
     public Tarea_HabilidadEntity updateTareaHabilidades(Tarea_HabilidadEntity tareaHabilidad) {
         return tareaHabilidadRepository.update(tareaHabilidad);
+=======
+    public Tarea_HabilidadEntity createTareaHabilidadesByValues(Long id_tarea, Long id_Habilidad) {
+        return tareaHabilidadRepository.createByValues(id_tarea,id_Habilidad);
+>>>>>>> 88b3898254e551c3585e64f7873264c852901124
     }
 
     public Boolean deleteTareaHabilidad(Long id){

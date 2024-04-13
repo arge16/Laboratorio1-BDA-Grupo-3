@@ -25,6 +25,13 @@ public class Eme_HabilidadController {
         }
         return ResponseEntity.ok(emeHabilidadService.getAllEmeHabilidades());
     }
+
+    @GetMapping("/emergencia")
+    public ResponseEntity<?> getHabilidadesByEmergencia(@RequestParam("id_emergencia") Long id_emergencia){
+        return ResponseEntity.ok(emeHabilidadService.findHabilidadesByEmergencia(id_emergencia));
+    }
+
+
     @PostMapping("")
     public ResponseEntity<?> postEmeHabilidad(@RequestBody Eme_HabilidadEntity eme) {
         Eme_HabilidadEntity eme_habilidad = emeHabilidadService.createEmeHabilidad(eme);
