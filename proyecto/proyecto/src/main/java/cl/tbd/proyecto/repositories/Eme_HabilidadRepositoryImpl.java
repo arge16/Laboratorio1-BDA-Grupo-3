@@ -79,13 +79,8 @@ public class Eme_HabilidadRepositoryImpl implements Eme_HabilidadRepository {
 
 
     @Override
-<<<<<<< HEAD
     public Eme_HabilidadEntity update(Eme_HabilidadEntity eme_habilidad) {
-        String sqlUpdateQuery = "UPDATE eme_habilidad set id_emergencia = :id_emergencia WHERE id = :id_eme_habilidad";
-=======
-    public void update(Eme_HabilidadEntity eme_habilidad) {
         String sqlUpdateQuery = "UPDATE eme_habilidad set id_emergencia = :id_emergencia WHERE id_eme_habilidad = :id_eme_habilidad";
->>>>>>> 88b3898254e551c3585e64f7873264c852901124
         try (Connection con = sql2o.open()) {
             con.createQuery(sqlUpdateQuery)
                     .addParameter("id_emergencia", eme_habilidad.getId_emergencia())
