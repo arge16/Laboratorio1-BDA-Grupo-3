@@ -23,6 +23,9 @@ public class TareaService {
         return tareaRepository.findAll();
     }
 
+    public List<TareaEntity> getTareasByEmergencia(Long id_emergencia){ return tareaRepository.findByEmergencia(id_emergencia); }
+
+
     public List<TareaEntity> getPageTareas(int size, int page){
         return tareaRepository.findAllPagination(size, page);
     }

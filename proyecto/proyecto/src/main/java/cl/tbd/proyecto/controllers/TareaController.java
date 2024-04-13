@@ -40,4 +40,10 @@ public class TareaController {
         }
         return ResponseEntity.badRequest().build();
     }
+
+
+    @GetMapping("/emergencia")
+    public ResponseEntity<?> getTareasByEmergencia(@RequestParam("id_emergencia") Long id_emergencia){
+        return ResponseEntity.ok(tareaService.getTareasByEmergencia(id_emergencia));
+    }
 }
