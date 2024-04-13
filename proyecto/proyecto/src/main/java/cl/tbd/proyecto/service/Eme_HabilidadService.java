@@ -3,6 +3,7 @@ package cl.tbd.proyecto.service;
 import cl.tbd.proyecto.entities.Eme_HabilidadEntity;
 import cl.tbd.proyecto.entities.EmergenciaEntity;
 import cl.tbd.proyecto.entities.Eme_HabilidadEntity;
+import cl.tbd.proyecto.entities.HabilidadEntity;
 import cl.tbd.proyecto.repositories.Eme_HabilidadRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,10 @@ public class Eme_HabilidadService {
 
     public List<Eme_HabilidadEntity> getPageEmeHabilidades(int size, int page){
         return emeHabilidadRepository.findAllPagination(size, page);
+    }
+
+    public List<HabilidadEntity> findHabilidadesByEmergencia(Long id_emergencia){
+        return emeHabilidadRepository.findHabilidadesByEmergencia(id_emergencia);
     }
 
     public Eme_HabilidadEntity createEmeHabilidad(Eme_HabilidadEntity voluntario) {

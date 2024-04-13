@@ -2,6 +2,7 @@ package cl.tbd.proyecto.service;
 
 import cl.tbd.proyecto.entities.Eme_HabilidadEntity;
 import cl.tbd.proyecto.entities.EmergenciaEntity;
+import cl.tbd.proyecto.entities.HabilidadEntity;
 import cl.tbd.proyecto.entities.VoluntarioEntity;
 import cl.tbd.proyecto.repositories.EmergenciaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,17 @@ public class EmergenciaService {
     @Autowired
     EmergenciaRepository emergenciaRepository;
 
+    @Autowired
+    HabilidadService habilidadService;
+
     public List<EmergenciaEntity> getAllEmergencias(){
         return emergenciaRepository.findAll();
     }
+
+    public List<EmergenciaEntity> getAllUncompletedEmergencias(int size, int page){
+        return emergenciaRepository.findAllUncompleted(size, page);
+    }
+
 
     public List<EmergenciaEntity> getPageEmergencias(int size, int page){
         return emergenciaRepository.findAllPagination(size, page);
