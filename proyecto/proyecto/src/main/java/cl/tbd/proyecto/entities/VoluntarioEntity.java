@@ -2,6 +2,7 @@ package cl.tbd.proyecto.entities;
 
 public class VoluntarioEntity {
         private Long id_voluntario;
+        private Long user_id;
         private String nombre;
         private int edad;
         private String direccion;
@@ -9,14 +10,23 @@ public class VoluntarioEntity {
         private String email;
         private String telefono;
 
-        public VoluntarioEntity(Long id, String nombre, int edad, String direccion, String genero, String email, String telefono) {
+        public VoluntarioEntity(Long id, Long userId, String nombre, int edad, String direccion, String genero, String email, String telefono) {
             this.id_voluntario = id;
+            this.user_id = userId;
             this.nombre = nombre;
             this.edad = edad;
             this.direccion = direccion;
             this.genero = genero;
             this.email = email;
             this.telefono = telefono;
+        }
+
+        public Long getUserId() {
+            return user_id;
+        }
+
+        public void setUserId(Long userId) {
+            this.user_id = userId;
         }
 
         public Long getId() {
@@ -74,6 +84,5 @@ public class VoluntarioEntity {
         public void setTelefono(String telefono) {
             this.telefono = telefono;
         }
-
 
 }

@@ -21,12 +21,16 @@ public class Sql2oConfiguration {
 
     @Bean
     public DataSource dataSource() {
-        return new DriverManagerDataSource(dbUrl, dbUsername, dbPassword);
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setUrl(dbUrl);
+        dataSource.setUsername(dbUsername);
+        dataSource.setPassword(dbPassword);
+        return dataSource;
     }
 
     @Bean
-    public Sql2o sql2o() {
-        return new Sql2o(dataSource());
+    public Sql2o sql2o(DataSource dataSource) {
+        return new Sql2o(dataSource);
     }
 
 }

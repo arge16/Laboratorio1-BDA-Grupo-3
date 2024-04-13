@@ -51,11 +51,17 @@ public class VoluntarioRepositoryImpl implements VoluntarioRepository {
 
     @Override
     public VoluntarioEntity create(VoluntarioEntity voluntario) {
-        String sqlInsertQuery = "INSERT INTO voluntario (nombre, edad, direccion, genero, email, telefono) " +
-                "VALUES(:nombre, :edad, :direccion, :genero, :email, :telefono)";
+        String sqlInsertQuery = "INSERT INTO voluntario (user_id, nombre, edad, direccion, genero, email, telefono) " +
+                "VALUES(:user_id, :nombre, :edad, :direccion, :genero, :email, :telefono)";
         try (Connection con = sql2o.open()){
-            Long id = con.createQuery(sqlInsertQuery).bind(voluntario).executeUpdate().getKey(Long.class);
-            return findById(id);
+            Long insertedId = con.createQuery(sqlInsertQuery, true)
+                    .addParameter("user_id", voluntario.getUserId())
+                    .bind(voluntario)
+                    .executeUpdate()
+                    .getKey(Long.class);
+            voluntario.setId(insertedId); //Actualizar el id del voluntario
+            return voluntario;
+
         } catch (Exception e) {
             System.out.println("Error: " + e);
             return null;
@@ -65,17 +71,14 @@ public class VoluntarioRepositoryImpl implements VoluntarioRepository {
 
     @Override
     public VoluntarioEntity update(VoluntarioEntity voluntario) {
-        String sql = "UPDATE voluntario SET nombre = :nombre, edad = :edad, direccion = :direccion, genero = :genero, email = :email, telefono = :telefono WHERE id_voluntario = :id_voluntario";
+        final String sqlUpdateQuery = "UPDATE voluntario SET user_id = :user_id, nombre = :nombre, edad = :edad, " +
+                "direccion = :direccion, genero = :genero, email = :email, telefono = :telefono WHERE id_voluntario = :id_voluntario";
         try (Connection con = sql2o.open()) {
-            con.createQuery(sql)
-                    .addParameter("nombre", voluntario.getNombre())
-                    .addParameter("edad", voluntario.getEdad())
-                    .addParameter("direccion", voluntario.getDireccion())
-                    .addParameter("genero", voluntario.getGenero())
-                    .addParameter("email", voluntario.getEmail())
-                    .addParameter("telefono", voluntario.getTelefono())
+            con.createQuery(sqlUpdateQuery)
+                    .bind(voluntario)
                     .addParameter("id_voluntario", voluntario.getId())
                     .executeUpdate();
+            return voluntario;
         } catch (Exception e) {
             System.out.println("Error al actualizar el voluntario: " + e.getMessage());
         }
