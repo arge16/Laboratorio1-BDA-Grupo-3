@@ -10,8 +10,30 @@ DROP TABLE IF EXISTS "institucion";
 DROP TABLE IF EXISTS "voluntario";
 
 
+CREATE TABLE "users" (
+                         "id" SERIAL PRIMARY KEY,
+                         "username" varchar UNIQUE NOT NULL,
+                         "password" varchar NOT NULL, -- almacenada como un hash
+                         "email" varchar UNIQUE NOT NULL,
+                         "role" varchar -- esto puede referenciar otra tabla de 'roles' si se utiliza un enfoque más normalizado
+);
+
+CREATE TABLE "roles" (
+                         "id" SERIAL PRIMARY KEY,
+                         "name" varchar UNIQUE NOT NULL
+);
+
+-- Luego tendrías una tabla de unión si es una relación muchos a muchos
+CREATE TABLE "user_roles" (
+                              "user_id" int REFERENCES "users" ("id"),
+                              "role_id" int REFERENCES "roles" ("id"),
+                              PRIMARY KEY ("user_id", "role_id")
+);
+
+
 CREATE TABLE "voluntario" (
   "id_voluntario" SERIAL PRIMARY KEY,
+  "user_id" INT REFERENCES "users" ("id"),
   "nombre" varchar,
   "edad" int,
   "direccion" varchar,
