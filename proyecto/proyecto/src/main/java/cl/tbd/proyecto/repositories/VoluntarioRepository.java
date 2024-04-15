@@ -10,7 +10,7 @@ public interface VoluntarioRepository {
 
     VoluntarioEntity findById(Long id);
 
-    VoluntarioEntity create(VoluntarioEntity voluntario);
+    VoluntarioEntity create(VoluntarioEntity voluntario, String actualUser);
 
 
     VoluntarioEntity update(VoluntarioEntity voluntario);

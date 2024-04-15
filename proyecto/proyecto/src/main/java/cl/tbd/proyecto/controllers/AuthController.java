@@ -24,17 +24,10 @@ public class AuthController {
 
     @GetMapping("/activeUser")
     public String getUserProfile(@RequestHeader("Authorization") String token) {
-        // Verifica y valida el token JWT
-        if (token != null && token.startsWith("Bearer ")) {
-            String jwtToken = token.substring(7);
-            if (jwtUtils.validateToken(jwtToken)) {
-                // Extrae el nombre de usuario del token
-                String username = jwtUtils.extractUsername(jwtToken);
-                // Aquí puedes cargar el perfil del usuario y devolverlo
-                return "El usuario activo es: " + username;
-            }
+        String user = usuarioService.getUser(token);
+        if (user != null){
+            return "El usuario activo es: " + user;
         }
-        // Si el token no es válido, devuelve un mensaje de error o realiza otra acción apropiada
         return "Token inválido";
     }
 

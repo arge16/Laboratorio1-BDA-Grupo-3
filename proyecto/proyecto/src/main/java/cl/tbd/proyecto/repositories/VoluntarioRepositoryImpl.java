@@ -15,6 +15,9 @@ public class VoluntarioRepositoryImpl implements VoluntarioRepository {
     @Autowired
     private Sql2o sql2o;
 
+    @Autowired
+    UsuarioRepository usuarioRepository;
+
     @Override
     public List<VoluntarioEntity> findAll() {
         try (Connection connection = sql2o.open()) {
@@ -22,7 +25,6 @@ public class VoluntarioRepositoryImpl implements VoluntarioRepository {
             return connection.createQuery(query).executeAndFetch(VoluntarioEntity.class);
         }
     }
-
 
     @Override
     public List<VoluntarioEntity> findAllPagination(int size, int page){
@@ -50,10 +52,11 @@ public class VoluntarioRepositoryImpl implements VoluntarioRepository {
     }
 
     @Override
-    public VoluntarioEntity create(VoluntarioEntity voluntario) {
+    public VoluntarioEntity create(VoluntarioEntity voluntario, String actualUser) {
         String sqlInsertQuery = "INSERT INTO voluntario (user_id, nombre, edad, direccion, genero, email, telefono) " +
                 "VALUES(:user_id, :nombre, :edad, :direccion, :genero, :email, :telefono)";
         try (Connection con = sql2o.open()){
+            usuarioRepository.setUsername(actualUser, con);
             Long insertedId = con.createQuery(sqlInsertQuery, true)
                     .addParameter("user_id", voluntario.getUserId())
                     .bind(voluntario)

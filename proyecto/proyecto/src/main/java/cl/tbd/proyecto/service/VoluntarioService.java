@@ -28,8 +28,8 @@ public class VoluntarioService {
         return voluntarioRepository.findAllPagination(size, page);
     }
 
-    public VoluntarioEntity createVoluntario(VoluntarioEntity voluntario) {
-        return voluntarioRepository.create(voluntario);
+    public VoluntarioEntity createVoluntario(VoluntarioEntity voluntario, String actualUser) {
+        return voluntarioRepository.create(voluntario,actualUser);
     }
 
     public VoluntarioEntity updateVoluntario(VoluntarioEntity voluntario) {

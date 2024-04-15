@@ -84,6 +84,16 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
     }
 
     @Override
+    public void setUsername(String username, Connection connection) {
+        if(username == null)
+            return;
+        String sqlCreateTempUser  = "CREATE TEMPORARY TABLE usuario_actual(username text); INSERT INTO usuario_actual(username) VALUES (:username)";
+        connection.createQuery(sqlCreateTempUser)
+                    .addParameter("username", username)
+                    .executeUpdate();
+    }
+
+    @Override
     public Boolean delete(Long id) {
         final String sqlDeleteQuery = "DELETE FROM usuarios WHERE id = :id";
         try (Connection con = sql2o.open()) {

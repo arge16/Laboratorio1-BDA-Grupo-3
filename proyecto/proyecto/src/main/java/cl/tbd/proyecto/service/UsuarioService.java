@@ -32,4 +32,13 @@ public class UsuarioService {
         }
     }
 
+    public String getUser(String token){
+        if (token != null && token.startsWith("Bearer ")) {
+        String jwtToken = token.substring(7);
+        if (jwtUtils.validateToken(jwtToken)) {
+            return jwtUtils.extractUsername(jwtToken);
+        }
+    }
+        return null;
+    }
 }

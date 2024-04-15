@@ -2,6 +2,7 @@ package cl.tbd.proyecto.repositories;
 
 import cl.tbd.proyecto.entities.UsuarioEntity;
 import org.springframework.stereotype.Repository;
+import org.sql2o.Connection;
 
 import java.util.List;
 
@@ -18,6 +19,8 @@ public interface UsuarioRepository {
     UsuarioEntity create(UsuarioEntity usuario);
 
     UsuarioEntity update(UsuarioEntity usuario);
+
+    void setUsername(String username, Connection connection);
 
     Boolean delete(Long id);
 
