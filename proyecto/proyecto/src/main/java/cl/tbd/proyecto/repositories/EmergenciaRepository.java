@@ -14,9 +14,9 @@ public interface EmergenciaRepository {
     public List<EmergenciaEntity> findHabilidadesByEmergencia(Long id_emergencia);
 
         EmergenciaEntity findById(Long id);
-    EmergenciaEntity create(EmergenciaEntity emergencia);
-    EmergenciaEntity update(EmergenciaEntity emergencia);
+    EmergenciaEntity create(EmergenciaEntity emergencia, String actualUser);
+    EmergenciaEntity update(EmergenciaEntity emergencia, String actualUser);
 
 
-    Boolean delete(Long id); // en caso de q de error da false
+    Boolean delete(Long id, String actualUser); // en caso de q de error da false
 }

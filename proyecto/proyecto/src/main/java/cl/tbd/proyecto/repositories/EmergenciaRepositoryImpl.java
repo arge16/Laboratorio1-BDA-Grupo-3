@@ -14,6 +14,9 @@ public class EmergenciaRepositoryImpl implements EmergenciaRepository{
     @Autowired
     private Sql2o sql2o;
 
+    @Autowired
+    UsuarioRepository usuarioRepository;
+
     @Override
     public List<EmergenciaEntity> findAll() {
         try (Connection connection = sql2o.open()) {
@@ -68,9 +71,10 @@ public class EmergenciaRepositoryImpl implements EmergenciaRepository{
 
 
     @Override
-    public EmergenciaEntity create(EmergenciaEntity emergencia) {
+    public EmergenciaEntity create(EmergenciaEntity emergencia, String actualUser) {
         String sqlInsertQuery =  "INSERT INTO emergencia(nombre, descripcion, fecha_inicio, fecha_fin, id_institucion) VALUES( :nombre, :descripcion, :fecha_inicio, :fecha_fin, :id_institucion)";
         try(Connection connection = sql2o.open()){
+            usuarioRepository.setUsername(actualUser, connection);
             Long id = connection.createQuery(sqlInsertQuery).bind(emergencia).executeUpdate().getKey(Long.class);
             return findById(id); // TODO: revisar si devolver entidad o key, o nada
         }catch (Exception e) {
@@ -81,9 +85,10 @@ public class EmergenciaRepositoryImpl implements EmergenciaRepository{
 
 
     @Override
-    public EmergenciaEntity update(EmergenciaEntity emergencia) {
+    public EmergenciaEntity update(EmergenciaEntity emergencia, String actualUser) {
         String sqlUpdateQuery = "UPDATE emergencia SET nombre = :nombre, descripcion = :descripcion, fecha_inicio = :fechaInicio, fecha_fin = :fechaFin WHERE id_emergencia = :id_emergencia";
         try (Connection con = sql2o.open()) {
+            usuarioRepository.setUsername(actualUser, con);
             con.createQuery(sqlUpdateQuery)
                     .addParameter("nombre", emergencia.getNombre())
                     .addParameter("descripcion", emergencia.getDescripcion())
@@ -99,9 +104,10 @@ public class EmergenciaRepositoryImpl implements EmergenciaRepository{
 
 
     @Override
-    public Boolean delete(Long id) {
+    public Boolean delete(Long id, String actualUser) {
         String sqlDeleteQuery = "DELETE FROM emergencia WHERE id_emergencia = :id";
         try (Connection con = sql2o.open()) {
+            usuarioRepository.setUsername(actualUser, con);
             con.createQuery(sqlDeleteQuery)
                     .addParameter("id", id)
                     .executeUpdate();

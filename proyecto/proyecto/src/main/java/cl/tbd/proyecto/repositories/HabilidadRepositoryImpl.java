@@ -16,6 +16,9 @@ public class HabilidadRepositoryImpl implements HabilidadRepository {
     @Autowired
     private Sql2o sql2o;
 
+    @Autowired
+    UsuarioRepository usuarioRepository;
+
 
     @Override
     public List<HabilidadEntity> findAll() {
@@ -62,9 +65,10 @@ public class HabilidadRepositoryImpl implements HabilidadRepository {
         }
     }
     @Override
-    public HabilidadEntity create(HabilidadEntity habilidad) {
+    public HabilidadEntity create(HabilidadEntity habilidad, String actualUser) {
         String sqlInsertQuery = "INSERT INTO habilidad(nombre, descripcion, certificacion_requerida) VALUES(:nombre, :descripcion, :certificacion_requerida)";
         try (Connection con = sql2o.open()){
+            usuarioRepository.setUsername(actualUser, con);
             Long id = con.createQuery(sqlInsertQuery).bind(habilidad).executeUpdate().getKey(Long.class);
             return findById(id);
         } catch (Exception e) {
@@ -75,9 +79,10 @@ public class HabilidadRepositoryImpl implements HabilidadRepository {
 
 
     @Override
-    public HabilidadEntity update(HabilidadEntity habilidad) {
+    public HabilidadEntity update(HabilidadEntity habilidad, String actualUser) {
         String sqlUpdateQuery = "UPDATE habilidad SET nombre = :nombre, descripcion = :descripcion, certificacion_requerida = :certificacionRequerida WHERE id_habilidad = :id_habilidad";
         try (Connection con = sql2o.open()) {
+            usuarioRepository.setUsername(actualUser, con);
             con.createQuery(sqlUpdateQuery)
                     .addParameter("nombre", habilidad.getNombre())
                     .addParameter("descripcion", habilidad.getDescripcion())
@@ -91,9 +96,10 @@ public class HabilidadRepositoryImpl implements HabilidadRepository {
     }
 
     @Override
-    public Boolean delete(Long id) {
+    public Boolean delete(Long id, String actualUser) {
         String sqlDeleteQuery = "DELETE FROM habilidad WHERE id_habilidad = :id";
         try (Connection con = sql2o.open()) {
+            usuarioRepository.setUsername(actualUser, con);
             con.createQuery(sqlDeleteQuery)
                     .addParameter("id", id)
                     .executeUpdate();

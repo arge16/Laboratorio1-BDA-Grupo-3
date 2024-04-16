@@ -11,7 +11,7 @@ public interface RankingRepository {
     RankingEntity findById(Long id);
 
 
-    RankingEntity create(RankingEntity ranking);
-    RankingEntity update(RankingEntity ranking);
-    Boolean delete(Long id);
+    RankingEntity create(RankingEntity ranking, String actualUser);
+    RankingEntity update(RankingEntity ranking, String actualUser);
+    Boolean delete(Long id, String actualUser);
 }

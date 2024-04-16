@@ -17,6 +17,10 @@ public class Eme_HabilidadRepositoryImpl implements Eme_HabilidadRepository {
     @Autowired
     private Sql2o sql2o;
 
+    @Autowired
+    UsuarioRepository usuarioRepository;
+
+
     @Override
     public List<Eme_HabilidadEntity> findAll() {
         try (Connection connection = sql2o.open()){
@@ -66,9 +70,10 @@ public class Eme_HabilidadRepositoryImpl implements Eme_HabilidadRepository {
     }
 
     @Override
-    public Eme_HabilidadEntity create(Eme_HabilidadEntity eme_habilidad) {
+    public Eme_HabilidadEntity create(Eme_HabilidadEntity eme_habilidad, String actualUser) {
         String sqlInsertQuery = "INSERT INTO eme_habilidad(id_emergencia, id_habilidad) VALUES(:id_emergencia, :id_habilidad)";
         try (Connection con = sql2o.open()){
+            usuarioRepository.setUsername(actualUser, con);
             Long id = con.createQuery(sqlInsertQuery).bind(eme_habilidad).executeUpdate().getKey(Long.class);
             return findById(id);
         } catch (Exception e) {
@@ -79,9 +84,10 @@ public class Eme_HabilidadRepositoryImpl implements Eme_HabilidadRepository {
 
 
     @Override
-    public Eme_HabilidadEntity update(Eme_HabilidadEntity eme_habilidad) {
+    public Eme_HabilidadEntity update(Eme_HabilidadEntity eme_habilidad, String actualUser) {
         String sqlUpdateQuery = "UPDATE eme_habilidad set id_emergencia = :id_emergencia WHERE id_eme_habilidad = :id_eme_habilidad";
         try (Connection con = sql2o.open()) {
+            usuarioRepository.setUsername(actualUser, con);
             con.createQuery(sqlUpdateQuery)
                     .addParameter("id_emergencia", eme_habilidad.getId_emergencia())
                     .addParameter("id_eme_habilidad", eme_habilidad.getId())
@@ -93,9 +99,10 @@ public class Eme_HabilidadRepositoryImpl implements Eme_HabilidadRepository {
     }
 
     @Override
-    public Boolean delete(Long id) {
+    public Boolean delete(Long id, String actualUser) {
         String sqlDeleteQuery = "DELETE FROM eme_habilidad WHERE id_eme_habilidad = :id";
         try (Connection con = sql2o.open()) {
+            usuarioRepository.setUsername(actualUser, con);
             con.createQuery(sqlDeleteQuery)
                     .addParameter("id", id)
                     .executeUpdate();

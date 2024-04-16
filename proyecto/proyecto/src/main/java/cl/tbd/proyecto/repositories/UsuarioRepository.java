@@ -16,12 +16,12 @@ public interface UsuarioRepository {
 
     Boolean Login(String username, String Password);
 
-    UsuarioEntity create(UsuarioEntity usuario);
+    UsuarioEntity create(UsuarioEntity usuario, String actualUser);
 
-    UsuarioEntity update(UsuarioEntity usuario);
+    UsuarioEntity update(UsuarioEntity usuario, String actualUser);
 
     void setUsername(String username, Connection connection);
 
-    Boolean delete(Long id);
+    Boolean delete(Long id, String actualUser);
 
 }

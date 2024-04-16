@@ -16,6 +16,9 @@ public class TareaRepositoryImpl implements TareaRepository{
     @Autowired
     private Sql2o sql2o;
 
+    @Autowired
+    UsuarioRepository usuarioRepository;
+
 
     @Override
     public List<TareaEntity> findAll() {
@@ -51,9 +54,10 @@ public class TareaRepositoryImpl implements TareaRepository{
     }
 
     @Override
-    public TareaEntity create(TareaEntity tarea) {
+    public TareaEntity create(TareaEntity tarea, String actualUser) {
         String sqlInsertQuery = "INSERT INTO tarea(descripcion, id_emergencia, completada) VALUES(:descripcion, :id_emergencia, :completada)";
         try (Connection con = sql2o.open()){
+            usuarioRepository.setUsername(actualUser, con);
             Long id = con.createQuery(sqlInsertQuery).bind(tarea).executeUpdate().getKey(Long.class);
             return findById(id);
         } catch (Exception e) {
@@ -64,9 +68,10 @@ public class TareaRepositoryImpl implements TareaRepository{
 
 
     @Override
-    public TareaEntity update(TareaEntity tarea) {
+    public TareaEntity update(TareaEntity tarea, String actualUser) {
         String sqlUpdateQuery = "UPDATE tarea SET descripcion = :descripcion, id_emergencia = :id_emergencia, completada = :completada WHERE id_tarea = :id_tarea";
         try (Connection con = sql2o.open()) {
+            usuarioRepository.setUsername(actualUser, con);
             con.createQuery(sqlUpdateQuery)
                     .addParameter("descripcion", tarea.getDescripcion())
                     .addParameter("id_emergencia", tarea.getId_emergencia())
@@ -80,9 +85,10 @@ public class TareaRepositoryImpl implements TareaRepository{
     }
 
     @Override
-    public Boolean delete(Long id) {
+    public Boolean delete(Long id, String actualUser) {
         String sqlDeleteQuery = "DELETE FROM tarea WHERE id_tarea = :id";
         try (Connection con = sql2o.open()) {
+            usuarioRepository.setUsername(actualUser, con);
             con.createQuery(sqlDeleteQuery)
                     .addParameter("id", id)
                     .executeUpdate();

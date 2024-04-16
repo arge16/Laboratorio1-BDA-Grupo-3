@@ -16,6 +16,9 @@ public class RankingRepositoryImpl implements RankingRepository {
     @Autowired
     private Sql2o sql2o;
 
+    @Autowired
+    UsuarioRepository usuarioRepository;
+
 
     @Override
     public List<RankingEntity> findAll() {
@@ -52,9 +55,10 @@ public class RankingRepositoryImpl implements RankingRepository {
 
 
     @Override
-    public RankingEntity create(RankingEntity ranking) {
+    public RankingEntity create(RankingEntity ranking, String actualUser) {
         String sqlInsertQuery = "INSERT INTO ranking(id_voluntario, id_tarea, puntuacion) VALUES(:id_voluntario, :id_tarea, :puntuacion)";
         try (Connection con = sql2o.open()){
+            usuarioRepository.setUsername(actualUser, con);
             Long id = con.createQuery(sqlInsertQuery).bind(ranking).executeUpdate().getKey(Long.class);
             return findById(id);
         } catch (Exception e) {
@@ -65,9 +69,10 @@ public class RankingRepositoryImpl implements RankingRepository {
 
 
     @Override
-    public RankingEntity update(RankingEntity ranking) {
+    public RankingEntity update(RankingEntity ranking, String actualUser) {
         String sqlUpdateQuery = "UPDATE ranking SET id_voluntario = :id_voluntario, id_tarea = :id_tarea, puntuacion = :puntuacion WHERE id_ranking = :id_ranking";
         try (Connection con = sql2o.open()) {
+            usuarioRepository.setUsername(actualUser, con);
             con.createQuery(sqlUpdateQuery)
                     .addParameter("id_voluntario", ranking.getId_voluntario())
                     .addParameter("id_tarea", ranking.getId_tarea())
@@ -81,9 +86,10 @@ public class RankingRepositoryImpl implements RankingRepository {
     }
 
     @Override
-    public Boolean delete(Long id) {
+    public Boolean delete(Long id, String actualUser) {
         String sqlDeleteQuery = "DELETE FROM ranking WHERE id_ranking = :id";
         try (Connection con = sql2o.open()) {
+            usuarioRepository.setUsername(actualUser, con);
             con.createQuery(sqlDeleteQuery)
                     .addParameter("id", id)
                     .executeUpdate();

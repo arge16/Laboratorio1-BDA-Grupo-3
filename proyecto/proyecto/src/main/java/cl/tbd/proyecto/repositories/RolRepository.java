@@ -9,10 +9,10 @@ public interface RolRepository {
 
     RolEntity findById(Long id);
 
-    RolEntity create(RolEntity rol);
+    RolEntity create(RolEntity rol, String actualUser);
 
-    RolEntity update(RolEntity rol);
+    RolEntity update(RolEntity rol, String actualUser);
 
-    Boolean delete(Long id);
+    Boolean delete(Long id, String actualUser);
 
 }

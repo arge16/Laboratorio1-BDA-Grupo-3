@@ -12,14 +12,14 @@ public interface Eme_HabilidadRepository {
 
     List<Eme_HabilidadEntity> findAllPagination(int size, int page);
 
-    Eme_HabilidadEntity create(Eme_HabilidadEntity eme_habilidad);
+    Eme_HabilidadEntity create(Eme_HabilidadEntity eme_habilidad, String actualUser);
 
     List<HabilidadEntity> findHabilidadesByEmergencia(Long id_emergencia);
 
     Eme_HabilidadEntity findById(Long id);
 
-    Eme_HabilidadEntity update(Eme_HabilidadEntity eme_habilidad);
+    Eme_HabilidadEntity update(Eme_HabilidadEntity eme_habilidad, String actualUser);
 
-    Boolean delete(Long id);
+    Boolean delete(Long id, String actualUser);
 
 }

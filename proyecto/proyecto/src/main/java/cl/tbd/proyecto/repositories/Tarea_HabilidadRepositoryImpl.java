@@ -16,6 +16,9 @@ public class Tarea_HabilidadRepositoryImpl implements Tarea_HabilidadRepository{
     @Autowired
     private Sql2o sql2o;
 
+    @Autowired
+    UsuarioRepository usuarioRepository;
+
     @Override
     public List<Tarea_HabilidadEntity> findAll() {
         try (Connection connection = sql2o.open()) {
@@ -49,9 +52,10 @@ public class Tarea_HabilidadRepositoryImpl implements Tarea_HabilidadRepository{
     }
 
     @Override
-    public Tarea_HabilidadEntity create(Tarea_HabilidadEntity tarea_habilidad) {
+    public Tarea_HabilidadEntity create(Tarea_HabilidadEntity tarea_habilidad, String actualUser) {
         String sqlInsertQuery = "INSERT INTO tarea_habilidad(id_tarea, id_habilidad) VALUES(:id_tarea, :id_habilidad)";
         try (Connection con = sql2o.open()){
+            usuarioRepository.setUsername(actualUser, con);
             Long id = con.createQuery(sqlInsertQuery).bind(tarea_habilidad).executeUpdate().getKey(Long.class);
             return findById(id);
         } catch (Exception e) {
@@ -76,9 +80,10 @@ public class Tarea_HabilidadRepositoryImpl implements Tarea_HabilidadRepository{
 
 
     @Override
-    public Tarea_HabilidadEntity update(Tarea_HabilidadEntity tareaHabilidad) {
+    public Tarea_HabilidadEntity update(Tarea_HabilidadEntity tareaHabilidad, String actualUser) {
         String sqlUpdateQuery = "UPDATE tarea_habilidad SET id_tarea = :id_tarea, id_habilidad = :id_habilidad WHERE id_tarea_habilidad = :id_tarea_habilidad";
         try (Connection con = sql2o.open()) {
+            usuarioRepository.setUsername(actualUser, con);
             con.createQuery(sqlUpdateQuery)
                     .addParameter("id_tarea", tareaHabilidad.getId_tarea())
                     .addParameter("id_habilidad", tareaHabilidad.getId_habilidad())
@@ -91,9 +96,10 @@ public class Tarea_HabilidadRepositoryImpl implements Tarea_HabilidadRepository{
     }
 
     @Override
-    public Boolean delete(Long id) {
+    public Boolean delete(Long id, String actualUser) {
         String sqlDeleteQuery = "DELETE FROM tarea_habilidad WHERE id_tarea_habilidad = :id";
         try (Connection con = sql2o.open()) {
+            usuarioRepository.setUsername(actualUser, con);
             con.createQuery(sqlDeleteQuery)
                     .addParameter("id", id)
                     .executeUpdate();

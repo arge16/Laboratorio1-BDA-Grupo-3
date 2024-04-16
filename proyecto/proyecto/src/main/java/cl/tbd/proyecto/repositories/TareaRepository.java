@@ -8,10 +8,10 @@ public interface TareaRepository {
 
     List<TareaEntity> findAll();
     List<TareaEntity> findAllPagination(int size, int page);
-    TareaEntity create(TareaEntity tarea);
+    TareaEntity create(TareaEntity tarea, String actualUser);
     TareaEntity findById(Long id);
-    TareaEntity update(TareaEntity tarea);
-    Boolean delete(Long id);
+    TareaEntity update(TareaEntity tarea, String actualUser);
+    Boolean delete(Long id, String actualUser);
 
     List<TareaEntity> findByEmergencia(Long id_emergencia);
 

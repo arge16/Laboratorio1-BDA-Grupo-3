@@ -12,6 +12,9 @@ public class RolRepositoryImpl implements RolRepository {
     @Autowired
     private Sql2o sql2o;
 
+    @Autowired
+    UsuarioRepository usuarioRepository;
+
     @Override
     public List<RolEntity> findAll() {
         final String sqlQuery = "SELECT * FROM roles";
@@ -31,9 +34,10 @@ public class RolRepositoryImpl implements RolRepository {
     }
 
     @Override
-    public RolEntity create(RolEntity rol) {
+    public RolEntity create(RolEntity rol, String actualUser) {
         final String sqlInsertQuery = "INSERT INTO roles (nombre_rol) VALUES (:nombreRol)";
         try (Connection con = sql2o.open()) {
+            usuarioRepository.setUsername(actualUser, con);
             Long insertedId = con.createQuery(sqlInsertQuery, true)
                     .bind(rol)
                     .executeUpdate()
@@ -44,9 +48,10 @@ public class RolRepositoryImpl implements RolRepository {
     }
 
     @Override
-    public RolEntity update(RolEntity rol) {
+    public RolEntity update(RolEntity rol, String actualUser) {
         final String sqlUpdateQuery = "UPDATE roles SET nombre_rol = :nombreRol WHERE id = :id";
         try (Connection con = sql2o.open()) {
+            usuarioRepository.setUsername(actualUser, con);
             con.createQuery(sqlUpdateQuery)
                     .bind(rol)
                     .executeUpdate();
@@ -55,9 +60,10 @@ public class RolRepositoryImpl implements RolRepository {
     }
 
     @Override
-    public Boolean delete(Long id) {
+    public Boolean delete(Long id, String actualUser) {
         final String sqlDeleteQuery = "DELETE FROM roles WHERE id = :id";
         try (Connection con = sql2o.open()) {
+            usuarioRepository.setUsername(actualUser, con);
             con.createQuery(sqlDeleteQuery)
                     .addParameter("id", id)
                     .executeUpdate();

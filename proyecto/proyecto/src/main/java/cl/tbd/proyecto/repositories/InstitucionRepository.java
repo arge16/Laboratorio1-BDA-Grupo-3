@@ -9,8 +9,8 @@ public interface InstitucionRepository {
     List<InstitucionEntity> findAll();
     List<InstitucionEntity> findAllPagination(int size, int page);
 
-    InstitucionEntity create(InstitucionEntity institucion);
+    InstitucionEntity create(InstitucionEntity institucion, String actualUser);
     InstitucionEntity findById(Long id);
-    InstitucionEntity update(InstitucionEntity institucion);
-    Boolean delete(Long id);
+    InstitucionEntity update(InstitucionEntity institucion, String actualUser);
+    Boolean delete(Long id, String actualUser);
 }

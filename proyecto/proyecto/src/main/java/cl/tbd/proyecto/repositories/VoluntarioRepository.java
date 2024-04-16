@@ -13,8 +13,8 @@ public interface VoluntarioRepository {
     VoluntarioEntity create(VoluntarioEntity voluntario, String actualUser);
 
 
-    VoluntarioEntity update(VoluntarioEntity voluntario);
+    VoluntarioEntity update(VoluntarioEntity voluntario, String actualUser);
 
-    Boolean delete(Long id);
+    Boolean delete(Long id, String actualUser);
 
 }

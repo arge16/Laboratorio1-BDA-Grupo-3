@@ -11,9 +11,9 @@ public interface Estado_TareaRepository {
     Estado_TareaEntity findById(Long id);
 
 
-    Estado_TareaEntity create(Estado_TareaEntity estado_tarea);
+    Estado_TareaEntity create(Estado_TareaEntity estado_tarea, String actualUser);
 
-    Estado_TareaEntity update(Estado_TareaEntity estado_tarea);
+    Estado_TareaEntity update(Estado_TareaEntity estado_tarea, String actualUser);
 
-    Boolean delete(Long id);
+    Boolean delete(Long id, String actualUser);
 }

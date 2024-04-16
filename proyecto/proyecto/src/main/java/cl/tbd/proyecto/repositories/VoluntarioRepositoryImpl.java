@@ -73,10 +73,11 @@ public class VoluntarioRepositoryImpl implements VoluntarioRepository {
 
 
     @Override
-    public VoluntarioEntity update(VoluntarioEntity voluntario) {
+    public VoluntarioEntity update(VoluntarioEntity voluntario, String actualUser) {
         final String sqlUpdateQuery = "UPDATE voluntario SET user_id = :user_id, nombre = :nombre, edad = :edad, " +
                 "direccion = :direccion, genero = :genero, email = :email, telefono = :telefono WHERE id_voluntario = :id_voluntario";
         try (Connection con = sql2o.open()) {
+            usuarioRepository.setUsername(actualUser, con);
             con.createQuery(sqlUpdateQuery)
                     .bind(voluntario)
                     .addParameter("id_voluntario", voluntario.getId())
@@ -89,9 +90,10 @@ public class VoluntarioRepositoryImpl implements VoluntarioRepository {
     }
 
     @Override
-    public Boolean delete(Long id) {
+    public Boolean delete(Long id, String actualUser) {
         String sqlDeleteQuery = "DELETE FROM voluntario WHERE id_voluntario = :id";
         try (Connection con = sql2o.open()) {
+            usuarioRepository.setUsername(actualUser, con);
             con.createQuery(sqlDeleteQuery)
                     .addParameter("id", id)
                     .executeUpdate();
