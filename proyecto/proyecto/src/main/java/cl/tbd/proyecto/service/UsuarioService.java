@@ -21,7 +21,7 @@ public class UsuarioService {
         if (usuarioRepository.findByUsername(usuario.getUsername()) != null) {
             throw new RuntimeException("El nombre de usuario ya está en uso.");
         }
-        return usuarioRepository.create(usuario);
+        return usuarioRepository.create(usuario);  /*Los argumentos de los metodos no coinciden*/
     }
 
     public String login(LoginDTO loginRequest){

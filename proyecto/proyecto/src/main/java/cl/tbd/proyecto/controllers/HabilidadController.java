@@ -2,6 +2,7 @@ package cl.tbd.proyecto.controllers;
 
 import cl.tbd.proyecto.entities.HabilidadEntity;
 import cl.tbd.proyecto.service.HabilidadService;
+import cl.tbd.proyecto.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +19,13 @@ public class HabilidadController {
     @GetMapping("")
     public ResponseEntity<?> getAllHabilidades(
             @RequestParam(value = "size", required = false) Integer size,
-            @RequestParam(value = "page", required = false) Integer page
+            @RequestParam(value = "page", required = false) Integer page,
+            @RequestHeader(value = "Authorization",required = false) String token
     ){
+        UsuarioService UserServiceInstance = new UsuarioService();
+        String actualUser= UserServiceInstance.getUser(token);
+
+
         if(size!=null){
             return ResponseEntity.ok(habilidadService.getPageHabilidades(size, Objects.requireNonNullElse(page, 1)));
         }
@@ -27,7 +33,14 @@ public class HabilidadController {
     }
 
     @PostMapping("")
-    public ResponseEntity<?> postHabilidad(@RequestBody HabilidadEntity habilidad) {
+    public ResponseEntity<?> postHabilidad(
+            @RequestBody HabilidadEntity habilidad,
+            @RequestHeader(value = "Authorization",required = false) String token) {
+
+        UsuarioService UserServiceInstance = new UsuarioService();
+        String actualUser= UserServiceInstance.getUser(token);
+
+
         HabilidadEntity habilidadEntity = habilidadService.createHabilidad(habilidad);
         if (habilidadEntity!=null)
             return ResponseEntity.ok(habilidadEntity);
@@ -35,7 +48,14 @@ public class HabilidadController {
     }
 
     @PutMapping("")
-    public ResponseEntity<HabilidadEntity> updateHabilidad(@RequestBody HabilidadEntity habilidadActualizada) {
+    public ResponseEntity<HabilidadEntity> updateHabilidad(
+            @RequestBody HabilidadEntity habilidadActualizada,
+            @RequestHeader(value = "Authorization",required = false) String token) {
+
+        UsuarioService UserServiceInstance = new UsuarioService();
+        String actualUser= UserServiceInstance.getUser(token);
+
+
         HabilidadEntity updatedHabilidad = habilidadService.updateHabilidad(habilidadActualizada);
         if (updatedHabilidad != null) {
             return ResponseEntity.ok(updatedHabilidad);
@@ -46,7 +66,14 @@ public class HabilidadController {
     }
 
     @DeleteMapping("")
-    public ResponseEntity<?> deleteHabilidad(@RequestParam("id") Long id) {
+    public ResponseEntity<?> deleteHabilidad(
+            @RequestParam("id") Long id,
+            @RequestHeader(value = "Authorization",required = false) String token) {
+
+        UsuarioService UserServiceInstance = new UsuarioService();
+        String actualUser= UserServiceInstance.getUser(token);
+
+
         if(habilidadService.deleteHabilidad(id)) {
             return ResponseEntity.ok("deleted");
         }

@@ -19,6 +19,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public String login(@RequestBody LoginDTO request) {
+
         return  usuarioService.login(request);
     }
 

@@ -2,6 +2,7 @@ package cl.tbd.proyecto.controllers;
 
 import cl.tbd.proyecto.entities.RankingEntity;
 import cl.tbd.proyecto.service.RankingService;
+import cl.tbd.proyecto.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +19,13 @@ public class RankingController {
     @GetMapping("")
     public ResponseEntity<?> getAllRankings(
             @RequestParam(value = "size", required = false) Integer size,
-            @RequestParam(value = "page", required = false) Integer page
+            @RequestParam(value = "page", required = false) Integer page,
+            @RequestHeader(value = "Authorization",required = false) String token
     ){
+        UsuarioService UserServiceInstance = new UsuarioService();
+        String actualUser= UserServiceInstance.getUser(token);
+
+
         if(size!=null){
             return ResponseEntity.ok(rankingService.getPageRankings(size, Objects.requireNonNullElse(page, 1)));
         }
@@ -27,7 +33,14 @@ public class RankingController {
     }
 
     @PostMapping("")
-    public ResponseEntity<?> postRanking(@RequestBody RankingEntity ranking) {
+    public ResponseEntity<?> postRanking(
+            @RequestBody RankingEntity ranking,
+            @RequestHeader(value = "Authorization",required = false) String token) {
+
+        UsuarioService UserServiceInstance = new UsuarioService();
+        String actualUser= UserServiceInstance.getUser(token);
+
+
         RankingEntity rankingEntity = rankingService.createRanking(ranking);
         if (rankingEntity!=null)
             return ResponseEntity.ok(rankingEntity);
@@ -35,7 +48,14 @@ public class RankingController {
     }
 
     @PutMapping("")
-    public ResponseEntity<RankingEntity> updateRanking(@RequestBody RankingEntity ranking) {
+    public ResponseEntity<RankingEntity> updateRanking(
+            @RequestBody RankingEntity ranking,
+            @RequestHeader(value = "Authorization",required = false) String token) {
+
+        UsuarioService UserServiceInstance = new UsuarioService();
+        String actualUser= UserServiceInstance.getUser(token);
+
+
         RankingEntity updatedRanking = rankingService.updateRanking(ranking);
         if (updatedRanking != null) {
             return ResponseEntity.ok(updatedRanking);
@@ -45,7 +65,14 @@ public class RankingController {
     }
 
     @DeleteMapping("")
-    public ResponseEntity<?> deleteRanking(@RequestParam("id") Long id) {
+    public ResponseEntity<?> deleteRanking(
+            @RequestParam("id") Long id,
+            @RequestHeader(value = "Authorization",required = false) String token) {
+
+        UsuarioService UserServiceInstance = new UsuarioService();
+        String actualUser= UserServiceInstance.getUser(token);
+
+
         if(rankingService.deleteRanking(id)) {
             return ResponseEntity.ok("deleted");
         }

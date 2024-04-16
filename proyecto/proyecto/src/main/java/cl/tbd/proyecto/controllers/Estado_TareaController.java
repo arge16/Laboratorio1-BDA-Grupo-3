@@ -2,6 +2,7 @@ package cl.tbd.proyecto.controllers;
 
 import cl.tbd.proyecto.entities.Estado_TareaEntity;
 import cl.tbd.proyecto.service.Estado_TareaService;
+import cl.tbd.proyecto.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,15 +19,28 @@ public class Estado_TareaController{
     @GetMapping("")
     public ResponseEntity<?> getAllEstadoTareas(
             @RequestParam(value = "size", required = false) Integer size,
-            @RequestParam(value = "page", required = false) Integer page
+            @RequestParam(value = "page", required = false) Integer page,
+            @RequestHeader(value = "Authorization", required = false) String token
     ){
+
+        UsuarioService UserServiceInstance = new UsuarioService();
+        String actualUser= UserServiceInstance.getUser(token);
+
+
         if(size!=null){
             return ResponseEntity.ok(estadoTareaService.getPageEstadoTareas(size, Objects.requireNonNullElse(page, 1)));
         }
         return ResponseEntity.ok(estadoTareaService.getAllEstadoTareas());
     }
     @PostMapping("")
-    public ResponseEntity<?> postEstadoTarea(@RequestBody Estado_TareaEntity estadoTarea){
+    public ResponseEntity<?> postEstadoTarea(
+            @RequestBody Estado_TareaEntity estadoTarea,
+            @RequestHeader(value = "Authorization", required = false) String token){
+
+        UsuarioService UserServiceInstance = new UsuarioService();
+        String actualUser= UserServiceInstance.getUser(token);
+
+
         Estado_TareaEntity estadoTareaEntity = estadoTareaService.cresteEstadoTarea(estadoTarea);
         if(estadoTareaEntity != null)
             return  ResponseEntity.ok(estadoTareaEntity);
@@ -34,7 +48,14 @@ public class Estado_TareaController{
     }
 
     @PutMapping("")
-    public ResponseEntity<Estado_TareaEntity> updateEstadoTarea(@RequestBody Estado_TareaEntity estadoTareaActualizado) {
+    public ResponseEntity<Estado_TareaEntity> updateEstadoTarea(
+            @RequestBody Estado_TareaEntity estadoTareaActualizado,
+            @RequestHeader(value = "Authorization",required = false) String token) {
+
+        UsuarioService UserServiceInstance = new UsuarioService();
+        String actualUser= UserServiceInstance.getUser(token);
+
+
         Estado_TareaEntity updatedEstadoTarea = estadoTareaService.updateEstadoTarea(estadoTareaActualizado);
         if (updatedEstadoTarea != null) {
             return ResponseEntity.ok(updatedEstadoTarea);
@@ -45,7 +66,14 @@ public class Estado_TareaController{
     }
 
     @DeleteMapping("")
-    public ResponseEntity<?> deleteEstadoTarea(@RequestParam("id") Long id) {
+    public ResponseEntity<?> deleteEstadoTarea(
+            @RequestParam("id") Long id,
+            @RequestHeader(value = "Authorization",required = false) String token ) {
+
+        UsuarioService UserServiceInstance = new UsuarioService();
+        String actualUser= UserServiceInstance.getUser(token);
+
+
         if(estadoTareaService.deleteEstadoTarea(id)) {
             return ResponseEntity.ok("deleted");
         }

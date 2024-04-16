@@ -2,6 +2,7 @@ package cl.tbd.proyecto.controllers;
 
 import cl.tbd.proyecto.entities.TareaEntity;
 import cl.tbd.proyecto.service.TareaService;
+import cl.tbd.proyecto.service.UsuarioService;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +24,14 @@ public class TareaController {
     @GetMapping("")
     public ResponseEntity<?> getAllTareas(
             @RequestParam(value = "size", required = false) Integer size,
-            @RequestParam(value = "page", required = false) Integer page
+            @RequestParam(value = "page", required = false) Integer page,
+            @RequestHeader(value = "Authorization", required = false) String token
     ){
+
+        UsuarioService UserServiceInstance = new UsuarioService();
+        String actualUser= UserServiceInstance.getUser(token);
+
+
         if(size!=null){
             return ResponseEntity.ok(tareaService.getPageTareas(size, Objects.requireNonNullElse(page, 1)));
         }
@@ -32,13 +39,22 @@ public class TareaController {
     }
 
     @GetMapping("/possibleHabilidades")
-    public ResponseEntity<?> getHabilidadesByEmergencia(@RequestParam("id_tarea") Long id_tarea){
+    public ResponseEntity<?> getHabilidadesByEmergencia(
+            @RequestParam("id_tarea") Long id_tarea,
+            @RequestHeader(value = "Authorization", required = false) String token){
         return ResponseEntity.ok(tareaService.getHabilidadesByTareaEmergency(tareaService.getTareaByID(id_tarea)));
     }
 
     @PutMapping("/addHabilidades")
-    public ResponseEntity<?> getHabilidadesByEmergencia(@RequestParam("id_tarea") Long id_tarea,
-                                                        @RequestBody JsonNode id_habilidades){
+    public ResponseEntity<?> getHabilidadesByEmergencia(
+            @RequestParam("id_tarea") Long id_tarea,
+            @RequestBody JsonNode id_habilidades,
+            @RequestHeader(value = "Authorization",required = false) String token){
+
+        UsuarioService UserServiceInstance = new UsuarioService();
+        String actualUser= UserServiceInstance.getUser(token);
+
+
         List<String> numerosCadenas = Arrays.asList(id_habilidades.get("id_habilidades").asText().split(","));
         List<Long> numerosLong = numerosCadenas.stream()
                 .map(Long::parseLong)
@@ -48,7 +64,14 @@ public class TareaController {
     }
 
     @PostMapping("")
-    public ResponseEntity<?> postTarea(@RequestBody TareaEntity tarea) {
+    public ResponseEntity<?> postTarea(
+            @RequestBody TareaEntity tarea,
+            @RequestHeader(value = "Authorization",required = false) String token) {
+
+        UsuarioService UserServiceInstance = new UsuarioService();
+        String actualUser= UserServiceInstance.getUser(token);
+
+
         TareaEntity tareaEntity = tareaService.createTarea(tarea);
         if (tareaEntity!=null)
             return ResponseEntity.ok(tareaEntity);
@@ -56,7 +79,14 @@ public class TareaController {
     }
 
     @PutMapping("")
-    public ResponseEntity<TareaEntity> updateTarea(@RequestBody TareaEntity tarea) {
+    public ResponseEntity<TareaEntity> updateTarea(
+            @RequestBody TareaEntity tarea,
+            @RequestHeader(value = "Authorization",required = false) String token) {
+
+        UsuarioService UserServiceInstance = new UsuarioService();
+        String actualUser= UserServiceInstance.getUser(token);
+
+
         TareaEntity updatedTarea = tareaService.updateTarea(tarea);
         if (updatedTarea != null) {
             return ResponseEntity.ok(updatedTarea);
@@ -66,7 +96,14 @@ public class TareaController {
     }
 
     @DeleteMapping("")
-    public ResponseEntity<?> deleteTarea(@RequestParam("id") Long id) {
+    public ResponseEntity<?> deleteTarea(
+            @RequestParam("id") Long id,
+            @RequestHeader(value = "Authorization",required = false) String token) {
+
+        UsuarioService UserServiceInstance = new UsuarioService();
+        String actualUser= UserServiceInstance.getUser(token);
+
+
         if(tareaService.deleteTarea(id)) {
             return ResponseEntity.ok("deleted");
         }
@@ -75,7 +112,14 @@ public class TareaController {
 
 
     @GetMapping("/emergencia")
-    public ResponseEntity<?> getTareasByEmergencia(@RequestParam("id_emergencia") Long id_emergencia){
+    public ResponseEntity<?> getTareasByEmergencia(
+            @RequestParam("id_emergencia") Long id_emergencia,
+            @RequestHeader(value = "Authorization",required = false) String token){
+
+        UsuarioService UserServiceInstance = new UsuarioService();
+        String actualUser= UserServiceInstance.getUser(token);
+
+
         return ResponseEntity.ok(tareaService.getTareasByEmergencia(id_emergencia));
     }
 }

@@ -2,6 +2,7 @@ package cl.tbd.proyecto.controllers;
 
 import cl.tbd.proyecto.entities.Tarea_HabilidadEntity;
 import cl.tbd.proyecto.service.Tarea_HabilidadService;
+import cl.tbd.proyecto.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +19,13 @@ public class Tarea_HabilidadController {
     @GetMapping("")
     public ResponseEntity<?> getAllTareaHabilidades(
             @RequestParam(value = "size", required = false) Integer size,
-            @RequestParam(value = "page", required = false) Integer page
+            @RequestParam(value = "page", required = false) Integer page,
+            @RequestHeader(value = "Authorization", required = false) String token
     ){
+
+        UsuarioService UserServiceInstance = new UsuarioService();
+        String actualUser= UserServiceInstance.getUser(token);
+
         if(size!=null){
             return ResponseEntity.ok(tareaHabilidadService.getPageTareaHabilidades(size, Objects.requireNonNullElse(page, 1)));
         }
@@ -27,14 +33,28 @@ public class Tarea_HabilidadController {
     }
 
     @PostMapping("")
-    public ResponseEntity<?> postTareaHabilidad(@RequestBody Tarea_HabilidadEntity tareaHabilidad) {
+    public ResponseEntity<?> postTareaHabilidad(
+            @RequestBody Tarea_HabilidadEntity tareaHabilidad,
+            @RequestHeader(value = "Authorization", required = false) String token) {
+
+        UsuarioService UserServiceInstance = new UsuarioService();
+        String actualUser= UserServiceInstance.getUser(token);
+
+
         Tarea_HabilidadEntity tareaHabilidadEntity = tareaHabilidadService.createTareaHabilidades(tareaHabilidad);
         if (tareaHabilidadEntity!=null)
             return ResponseEntity.ok(tareaHabilidadEntity);
         return ResponseEntity.badRequest().build();
     }
     @PutMapping("")
-    public ResponseEntity<Tarea_HabilidadEntity> updateTareaHabilidad(@RequestBody Tarea_HabilidadEntity tareaHabilidad) {
+    public ResponseEntity<Tarea_HabilidadEntity> updateTareaHabilidad(
+            @RequestBody Tarea_HabilidadEntity tareaHabilidad,
+            @RequestHeader(value = "Authorization",required = false) String token) {
+
+
+        UsuarioService UserServiceInstance = new UsuarioService();
+        String actualUser= UserServiceInstance.getUser(token);
+
         Tarea_HabilidadEntity updatedTareaHabilidad = tareaHabilidadService.updateTareaHabilidades(tareaHabilidad);
         if (updatedTareaHabilidad != null) {
             return ResponseEntity.ok(updatedTareaHabilidad);
@@ -44,7 +64,14 @@ public class Tarea_HabilidadController {
     }
 
     @DeleteMapping("")
-    public ResponseEntity<?> deleteTareaHabilidad(@RequestParam("id") Long id) {
+    public ResponseEntity<?> deleteTareaHabilidad(
+            @RequestParam("id") Long id,
+            @RequestHeader(value = "Authorization",required = false) String token) {
+
+        UsuarioService UserServiceInstance = new UsuarioService();
+        String actualUser= UserServiceInstance.getUser(token);
+
+
         if(tareaHabilidadService.deleteTareaHabilidad(id)) {
             return ResponseEntity.ok("deleted");
         }

@@ -23,18 +23,22 @@ public class VoluntarioController {
     public ResponseEntity<?> getAllVoluntarios(
             @RequestParam(value = "size", required = false) Integer size,
             @RequestParam(value = "page", required = false) Integer page,
-            @RequestHeader("Authorization") String token)
+            @RequestHeader(value = "Authorization", required = false) String token)
             {
+                String actualUser = usuarioService.getUser(token);
 
-        if(size!=null){
+          if(size!=null){
             return ResponseEntity.ok(voluntarioService.getPageVoluntarios(size, Objects.requireNonNullElse(page, 1)));
         }
         return ResponseEntity.ok(voluntarioService.getAllVoluntarios());
     }
 
     @PostMapping("")
-    public ResponseEntity<?> postVoluntario(@RequestBody VoluntarioEntity voluntario,@RequestHeader(value ="Authorization", required = false) String token ) {
+    public ResponseEntity<?> postVoluntario(
+            @RequestBody VoluntarioEntity voluntario,
+            @RequestHeader(value ="Authorization", required = false) String token ) {
         String actualUser = usuarioService.getUser(token);
+
         VoluntarioEntity voluntarioEntity = voluntarioService.createVoluntario(voluntario,actualUser);
         if (voluntarioEntity!=null)
             return ResponseEntity.ok(voluntarioEntity);
@@ -42,7 +46,12 @@ public class VoluntarioController {
     }
 
     @PutMapping("")
-    public ResponseEntity<VoluntarioEntity> updateVoluntario(@RequestBody VoluntarioEntity voluntario) {
+    public ResponseEntity<VoluntarioEntity> updateVoluntario(
+            @RequestBody VoluntarioEntity voluntario,
+            @RequestHeader(value = "Authorization",required = false) String token) {
+
+        String actualUser = usuarioService.getUser(token);
+
         VoluntarioEntity updatedVoluntario = voluntarioService.updateVoluntario(voluntario);
         if (updatedVoluntario != null) {
             return ResponseEntity.ok(updatedVoluntario);
@@ -52,7 +61,12 @@ public class VoluntarioController {
     }
 
     @DeleteMapping("")
-    public ResponseEntity<?> deleteVoluntario(@RequestParam("id") Long id) {
+    public ResponseEntity<?> deleteVoluntario(
+            @RequestParam("id") Long id,
+            @RequestHeader(value = "Authorization", required = false) String token) {
+
+        String actualUser = usuarioService.getUser(token);
+
         if(voluntarioService.deleteVoluntario(id)) {
             return ResponseEntity.ok("deleted");
         }

@@ -2,6 +2,7 @@ package cl.tbd.proyecto.controllers;
 
 import cl.tbd.proyecto.entities.Eme_HabilidadEntity;
 import cl.tbd.proyecto.service.Eme_HabilidadService;
+import cl.tbd.proyecto.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +19,12 @@ public class Eme_HabilidadController {
     @GetMapping("")
     public ResponseEntity<?> getAllVoluntarios(
             @RequestParam(value = "size", required = false) Integer size,
-            @RequestParam(value = "page", required = false) Integer page
+            @RequestParam(value = "page", required = false) Integer page,
+            @RequestHeader(value = "Authorization",required = false) String token
     ){
+        UsuarioService UserServiceInstance = new UsuarioService();
+        String actualUser= UserServiceInstance.getUser(token);
+
         if(size!=null){
             return ResponseEntity.ok(emeHabilidadService.getPageEmeHabilidades(size, Objects.requireNonNullElse(page, 1)));
         }
@@ -27,13 +32,30 @@ public class Eme_HabilidadController {
     }
 
     @GetMapping("/emergencia")
-    public ResponseEntity<?> getHabilidadesByEmergencia(@RequestParam("id_emergencia") Long id_emergencia){
+    public ResponseEntity<?> getHabilidadesByEmergencia(
+            @RequestParam("id_emergencia") Long id_emergencia,
+            @RequestHeader(value = "Authorization",required = false) String token){
+
+        UsuarioService UserServiceInstance = new UsuarioService();
+        String actualUser= UserServiceInstance.getUser(token);
+
+
+        /*Supongo que habrà alguna logica de comprobacion y autenticacion aca, como en todos los demas controllers*/
+
         return ResponseEntity.ok(emeHabilidadService.findHabilidadesByEmergencia(id_emergencia));
     }
 
 
     @PostMapping("")
-    public ResponseEntity<?> postEmeHabilidad(@RequestBody Eme_HabilidadEntity eme) {
+    public ResponseEntity<?> postEmeHabilidad(
+            @RequestBody Eme_HabilidadEntity eme,
+            @RequestHeader(value = "Authorization",required = false) String token) {
+        UsuarioService UserServiceInstance = new UsuarioService();
+        String actualUser= UserServiceInstance.getUser(token);
+
+        /*---*/
+
+
         Eme_HabilidadEntity eme_habilidad = emeHabilidadService.createEmeHabilidad(eme);
         if (eme_habilidad!=null)
             return ResponseEntity.ok(eme_habilidad);
@@ -41,7 +63,14 @@ public class Eme_HabilidadController {
     }
 
     @PutMapping("")
-    public ResponseEntity<Eme_HabilidadEntity> updateEmeHabilidad(@RequestBody Eme_HabilidadEntity eme_habilidad) {
+    public ResponseEntity<Eme_HabilidadEntity> updateEmeHabilidad(
+            @RequestBody Eme_HabilidadEntity eme_habilidad,
+            @RequestHeader(value = "Authorization",required = false) String token) {
+
+        UsuarioService UserServiceInstance = new UsuarioService();
+        String actualUser= UserServiceInstance.getUser(token);
+
+
         Eme_HabilidadEntity updated = emeHabilidadService.updateEmeHabilidad(eme_habilidad);
         if (updated != null) {
             return ResponseEntity.ok(updated);
@@ -51,7 +80,14 @@ public class Eme_HabilidadController {
     }
 
     @DeleteMapping("")
-    public ResponseEntity<?> deleteEmeHabilidad(@RequestParam("id") Long id) {
+    public ResponseEntity<?> deleteEmeHabilidad(
+            @RequestParam("id") Long id,
+            @RequestHeader(value = "Authorization",required = false) String token) {
+
+        UsuarioService UserServiceInstance = new UsuarioService();
+        String actualUser= UserServiceInstance.getUser(token);
+
+
         if(emeHabilidadService.deleteEmeHabilidad(id)) { // TODO: Force delete? con bool como param
             return ResponseEntity.ok("deleted");
         }
