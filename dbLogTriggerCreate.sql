@@ -19,6 +19,16 @@ DECLARE
 	actualUser TEXT;
 BEGIN
     -- Ver que datos guardar para cada tipo de consulta
+	BEGIN
+	actualUser := (SELECT username FROM usuario_actual);
+	EXCEPTION WHEN undefined_table THEN
+        actualUser := 'no_user_logged';
+    IF actualUser is NULL THEN
+        RAISE EXCEPTION 'No se encontró ningún usuario actual';
+		actualUser := 'no_user_logged';
+	END IF;
+	END;
+
     IF TG_OP = 'INSERT' THEN
         operation_text := 'INSERT';
         affected_row_text := NEW::TEXT;
@@ -32,7 +42,7 @@ BEGIN
         RAISE EXCEPTION 'Operación desconocida detectada';
     END IF;
     INSERT INTO consulta_log (tipo_consulta, tabla, filas_afectadas, usuario) 
-	VALUES (operation_text,TG_TABLE_NAME, affected_row_text, user);
+	VALUES (operation_text,TG_TABLE_NAME, affected_row_text, actualUser);
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;

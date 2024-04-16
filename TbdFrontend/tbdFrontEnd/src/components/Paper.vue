@@ -1,4 +1,14 @@
-<script setup></script>
+<script setup>
+import Selecter from './Selecter.vue'
+import { onBeforeMount, onBeforeUnmount } from 'vue'
+onBeforeMount(() => {
+  document.body.classList = 'login'
+})
+
+onBeforeUnmount(() => {
+  document.body.classList = ''
+})
+</script>
 
 <template>
   <div class="container d-flex justify-content-around">
