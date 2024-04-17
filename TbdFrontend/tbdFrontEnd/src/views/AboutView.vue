@@ -78,9 +78,6 @@ const submitForm = () => {
   height: 100%;
 }
 
-.multiselect {
-}
-
 .submit {
   background-color: #243346;
   border-color: #243346;

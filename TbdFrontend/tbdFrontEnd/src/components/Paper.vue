@@ -1,5 +1,4 @@
 <script setup>
-import Selecter from './Selecter.vue'
 import { onBeforeMount, onBeforeUnmount } from 'vue'
 onBeforeMount(() => {
   document.body.classList = 'login'
