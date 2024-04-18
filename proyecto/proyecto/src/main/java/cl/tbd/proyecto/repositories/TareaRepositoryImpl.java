@@ -55,7 +55,7 @@ public class TareaRepositoryImpl implements TareaRepository{
 
     @Override
     public TareaEntity create(TareaEntity tarea, String actualUser) {
-        String sqlInsertQuery = "INSERT INTO tarea(descripcion, id_emergencia, completada) VALUES(:descripcion, :id_emergencia, :completada)";
+        String sqlInsertQuery = "INSERT INTO tarea(descripcion, id_emergencia, id_estado_tarea) VALUES(:descripcion, :id_emergencia, :id_estado_tarea)";
         try (Connection con = sql2o.open()){
             usuarioRepository.setUsername(actualUser, con);
             Long id = con.createQuery(sqlInsertQuery).bind(tarea).executeUpdate().getKey(Long.class);
@@ -69,13 +69,13 @@ public class TareaRepositoryImpl implements TareaRepository{
 
     @Override
     public TareaEntity update(TareaEntity tarea, String actualUser) {
-        String sqlUpdateQuery = "UPDATE tarea SET descripcion = :descripcion, id_emergencia = :id_emergencia, completada = :completada WHERE id_tarea = :id_tarea";
+        String sqlUpdateQuery = "UPDATE tarea SET descripcion = :descripcion, id_emergencia = :id_emergencia, id_estado_tarea = :id_estado_tarea WHERE id_tarea = :id_tarea";
         try (Connection con = sql2o.open()) {
             usuarioRepository.setUsername(actualUser, con);
             con.createQuery(sqlUpdateQuery)
                     .addParameter("descripcion", tarea.getDescripcion())
                     .addParameter("id_emergencia", tarea.getId_emergencia())
-                    .addParameter("completada", tarea.getCompletada())
+                    .addParameter("id_estado_tarea", tarea.getId_estado_tarea())
                     .addParameter("id_tarea", tarea.getId())
                     .executeUpdate();
         } catch (Exception e) {
@@ -103,7 +103,7 @@ public class TareaRepositoryImpl implements TareaRepository{
 
     @Override
     public List<TareaEntity> findByEmergencia(Long id_emergencia) {
-        String sqlQuery = "SELECT * FROM tarea WHERE id_emergencia = :id_emergencia ORDER BY completada DESC, descripcion";
+        String sqlQuery = "SELECT * FROM tarea WHERE id_emergencia = :id_emergencia ORDER BY id_estado_tarea DESC, descripcion";
         try (Connection con = sql2o.open()) {
             return con.createQuery(sqlQuery)
                     .addParameter("id_emergencia", id_emergencia)

@@ -38,6 +38,7 @@ public class EmergenciaRepositoryImpl implements EmergenciaRepository{
         }
     }
 
+    /*
     @Override
     public List<EmergenciaEntity> findAllUncompleted(int size, int page){
         String sqlQuery = "Select * FROM emergencia WHERE completada = 0 LIMIT :size OFFSET :offset";
@@ -49,7 +50,26 @@ public class EmergenciaRepositoryImpl implements EmergenciaRepository{
             System.out.println("Error: " + e);
             return null;
         }
+    }*/
+
+    @Override
+    public List<EmergenciaEntity> findAllUncompleted(int size, int page) {
+        String sqlQuery = "SELECT e.* FROM emergencia e " +
+                "INNER JOIN estado_emergencia ee ON e.id_estado_emergencia = ee.id_estado_emergencia " +
+                "WHERE ee.descripcion = 'uncompleted' " +
+                "LIMIT :size OFFSET :offset";
+        int offset = (page - 1) * size;
+        try (Connection con = sql2o.open()) {
+            return con.createQuery(sqlQuery)
+                    .addParameter("size", size)
+                    .addParameter("offset", offset)
+                    .executeAndFetch(EmergenciaEntity.class);
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+            return null;
+        }
     }
+
 
     @Override
     public List<EmergenciaEntity> findHabilidadesByEmergencia(Long id_emergencia) {

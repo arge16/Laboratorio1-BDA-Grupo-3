@@ -4,13 +4,14 @@ public class TareaEntity {
     private Long id_tarea;
     private String descripcion;
     private Long id_emergencia;
-    private int completada;
+    private Long id_estado_tarea;
 
-    public TareaEntity(Long id, String descripcion, Long id_emergencia, int completada) {
+
+    public TareaEntity(Long id, String descripcion, Long id_emergencia, Long id_estado_tarea) {
         this.id_tarea = id;
         this.descripcion = descripcion;
         this.id_emergencia = id_emergencia;
-        this.completada = completada;
+        this.id_estado_tarea = id_estado_tarea;
     }
 
     public Long getId() {
@@ -37,12 +38,12 @@ public class TareaEntity {
         this.id_emergencia = id_emergencia;
     }
 
-    public int getCompletada() {
-        return completada;
+    public Long getId_estado_tarea() {
+        return id_estado_tarea;
     }
 
-    public void setCompletada(int completada) {
-        this.completada = completada;
+    public void setId_estado_tarea(Long id_estado_tarea) {
+        this.id_estado_tarea = id_estado_tarea;
     }
 
 }

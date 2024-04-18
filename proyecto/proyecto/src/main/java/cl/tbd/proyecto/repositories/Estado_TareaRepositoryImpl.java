@@ -56,9 +56,8 @@ public class Estado_TareaRepositoryImpl implements Estado_TareaRepository {
 
     @Override
     public Estado_TareaEntity create(Estado_TareaEntity estado_tarea, String actualUser) {
-        String sqlInsertQuery = "INSERT INTO estado_tarea(descripcion, id_tarea) VALUES(:descripcion, :id_tarea)";
+        String sqlInsertQuery = "INSERT INTO estado_tarea(descripcion) VALUES(:descripcion)";
         try (Connection connection = sql2o.open()){
-            usuarioRepository.setUsername(actualUser, connection);
             Long id = connection.createQuery(sqlInsertQuery).bind(estado_tarea).executeUpdate().getKey(Long.class);
             return findById(id);
         } catch (Exception e){
@@ -72,12 +71,11 @@ public class Estado_TareaRepositoryImpl implements Estado_TareaRepository {
 
     @Override
     public Estado_TareaEntity update(Estado_TareaEntity estado_tarea, String actualUser) {
-        String sqlUpdateQuery = "UPDATE estado_tarea SET descripcion = :descripcion, id_tarea = :id_tarea WHERE id_estado_tarea = :id_estado_tarea";
+        String sqlUpdateQuery = "UPDATE estado_tarea SET descripcion = :descripcion WHERE id_estado_tarea = :id_estado_tarea";
         try (Connection con = sql2o.open()) {
             usuarioRepository.setUsername(actualUser, con);
             con.createQuery(sqlUpdateQuery)
                     .addParameter("descripcion", estado_tarea.getDescripcion())
-                    .addParameter("id_tarea", estado_tarea.getId_tarea())
                     .addParameter("id_estado_tarea", estado_tarea.getId_estado_tarea())
                     .executeUpdate();
         } catch (Exception e) {

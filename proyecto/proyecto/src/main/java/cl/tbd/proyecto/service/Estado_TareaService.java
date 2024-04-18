@@ -26,7 +26,7 @@ public class Estado_TareaService {
         return estadoTareaRepository.findAllPagination(size, page);
     }
 
-    public Estado_TareaEntity cresteEstadoTarea(Estado_TareaEntity estadoTarea) {
+    public Estado_TareaEntity createEstadoTarea(Estado_TareaEntity estadoTarea) {
         return estadoTareaRepository.create(estadoTarea);
     }
 

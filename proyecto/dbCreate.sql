@@ -47,7 +47,7 @@ CREATE TABLE "tarea" (
                          "id_tarea" SERIAL PRIMARY KEY,
                          "descripcion" varchar,
                          "id_emergencia" bigint,
-                         "completada" int
+                         "id_estado_tarea" bigint
 );
 
 CREATE TABLE "tarea_habilidad" (
@@ -80,8 +80,12 @@ CREATE TABLE "habilidad" (
 
 CREATE TABLE "estado_tarea" (
                                 "id_estado_tarea" SERIAL PRIMARY KEY,
-                                "descripcion" varchar,
-                                "id_tarea" bigint
+                                "descripcion" varchar
+);
+
+CREATE TABLE "estado_emergencia" (
+                                "id_estado_emergencia" SERIAL PRIMARY KEY,
+                                "descripcion" varchar
 );
 
 CREATE TABLE "emergencia" (
@@ -91,7 +95,7 @@ CREATE TABLE "emergencia" (
                               "fecha_inicio" Date,
                               "fecha_fin" Date,
                               "id_institucion" bigint,
-                              "completada" int
+                              "id_estado_emergencia" bigint
 );
 
 CREATE TABLE "eme_habilidad" (
@@ -116,7 +120,9 @@ ALTER TABLE "tarea_habilidad" ADD FOREIGN KEY ("id_tarea") REFERENCES "tarea" ("
 
 ALTER TABLE "tarea_habilidad" ADD FOREIGN KEY ("id_habilidad") REFERENCES "habilidad" ("id_habilidad");
 
-ALTER TABLE "estado_tarea" ADD FOREIGN KEY ("id_tarea") REFERENCES "tarea" ("id_tarea");
+ALTER TABLE "tarea" ADD FOREIGN KEY ("id_estado_tarea") REFERENCES "estado_tarea" ("id_estado_tarea");
+
+ALTER TABLE "emergencia" ADD FOREIGN KEY ("id_estado_emergencia") REFERENCES "estado_emergencia" ("id_estado_emergencia");
 
 ALTER TABLE "emergencia" ADD FOREIGN KEY ("id_institucion") REFERENCES "institucion" ("id_institucion");
 

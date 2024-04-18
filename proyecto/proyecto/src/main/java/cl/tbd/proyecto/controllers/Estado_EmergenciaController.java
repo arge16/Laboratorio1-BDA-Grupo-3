@@ -1,7 +1,7 @@
 package cl.tbd.proyecto.controllers;
 
-import cl.tbd.proyecto.entities.Estado_TareaEntity;
-import cl.tbd.proyecto.service.Estado_TareaService;
+import cl.tbd.proyecto.entities.Estado_EmergenciaEntity;
+import cl.tbd.proyecto.service.Estado_EmergenciaService;
 import cl.tbd.proyecto.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,13 +11,13 @@ import java.util.Objects;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/estado_tarea")
-public class Estado_TareaController{
+@RequestMapping("/api/estado_emergencia")
+public class Estado_EmergenciaController {
     @Autowired
-    Estado_TareaService estadoTareaService;
+    Estado_EmergenciaService estadoEmergenciaService;
 
     @GetMapping("")
-    public ResponseEntity<?> getAllEstadoTareas(
+    public ResponseEntity<?> getAllEstadoEmergencias(
             @RequestParam(value = "size", required = false) Integer size,
             @RequestParam(value = "page", required = false) Integer page,
             @RequestHeader(value = "Authorization", required = false) String token
@@ -28,37 +28,38 @@ public class Estado_TareaController{
 
 
         if(size!=null){
-            return ResponseEntity.ok(estadoTareaService.getPageEstadoTareas(size, Objects.requireNonNullElse(page, 1)));
+            return ResponseEntity.ok(estadoEmergenciaService.getPageEstadoEmergencias(size, Objects.requireNonNullElse(page, 1)));
         }
-        return ResponseEntity.ok(estadoTareaService.getAllEstadoTareas());
+        return ResponseEntity.ok(estadoEmergenciaService.getAllEstadoEmergencias());
     }
+
     @PostMapping("")
-    public ResponseEntity<?> postEstadoTarea(
-            @RequestBody Estado_TareaEntity estadoTarea,
+    public ResponseEntity<?> postEstadoEmergencia(
+            @RequestBody Estado_EmergenciaEntity estadoEmergencia,
             @RequestHeader(value = "Authorization", required = false) String token){
 
         UsuarioService UserServiceInstance = new UsuarioService();
         String actualUser= UserServiceInstance.getUser(token);
 
 
-        Estado_TareaEntity estadoTareaEntity = estadoTareaService.createEstadoTarea(estadoTarea);
-        if(estadoTareaEntity != null)
-            return  ResponseEntity.ok(estadoTareaEntity);
+        Estado_EmergenciaEntity estadoEmergenciaEntity = estadoEmergenciaService.createEstadoEmergencia(estadoEmergencia);
+        if(estadoEmergenciaEntity != null)
+            return  ResponseEntity.ok(estadoEmergenciaEntity);
         return ResponseEntity.badRequest().build();
     }
 
     @PutMapping("")
-    public ResponseEntity<Estado_TareaEntity> updateEstadoTarea(
-            @RequestBody Estado_TareaEntity estadoTareaActualizado,
+    public ResponseEntity<Estado_EmergenciaEntity> updateEstadoEmergencia(
+            @RequestBody Estado_EmergenciaEntity estadoEmergenciaActualizado,
             @RequestHeader(value = "Authorization",required = false) String token) {
 
         UsuarioService UserServiceInstance = new UsuarioService();
         String actualUser= UserServiceInstance.getUser(token);
 
 
-        Estado_TareaEntity updatedEstadoTarea = estadoTareaService.updateEstadoTarea(estadoTareaActualizado);
-        if (updatedEstadoTarea != null) {
-            return ResponseEntity.ok(updatedEstadoTarea);
+        Estado_EmergenciaEntity updateEstadoEmergencia = estadoEmergenciaService.updateEstadoEmergencia(estadoEmergenciaActualizado);
+        if (updateEstadoEmergencia != null) {
+            return ResponseEntity.ok(updateEstadoEmergencia);
         } else {
             // Este código puede variar dependiendo de cómo desees manejar los casos donde el estado de la tarea no existe.
             return ResponseEntity.notFound().build();
@@ -66,7 +67,7 @@ public class Estado_TareaController{
     }
 
     @DeleteMapping("")
-    public ResponseEntity<?> deleteEstadoTarea(
+    public ResponseEntity<?> deleteEstadoEmergencia(
             @RequestParam("id") Long id,
             @RequestHeader(value = "Authorization",required = false) String token ) {
 
@@ -74,7 +75,7 @@ public class Estado_TareaController{
         String actualUser= UserServiceInstance.getUser(token);
 
 
-        if(estadoTareaService.deleteEstadoTarea(id)) {
+        if(estadoEmergenciaService.deleteEstadoEmergencia(id)) {
             return ResponseEntity.ok("deleted");
         }
         return ResponseEntity.badRequest().build();
