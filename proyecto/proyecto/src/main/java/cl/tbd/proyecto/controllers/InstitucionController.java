@@ -15,15 +15,15 @@ import java.util.Objects;
 public class InstitucionController {
     @Autowired
     InstitucionService institucionService;
-
+    @Autowired
+    UsuarioService usuarioService;
     @GetMapping("")
     public ResponseEntity<?> getAllInstituciones(
             @RequestParam(value = "size", required = false) Integer size,
             @RequestParam(value = "page", required = false) Integer page,
             @RequestHeader(value = "Authorization",required = false) String token
     ){
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
 
         if(size!=null){
@@ -37,8 +37,7 @@ public class InstitucionController {
             @RequestBody InstitucionEntity institucion,
             @RequestHeader(value = "Authorization",required = false) String token) {
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
 
         InstitucionEntity institucionEntity = institucionService.createInstitucion(institucion, actualUser);
@@ -53,8 +52,7 @@ public class InstitucionController {
             @RequestHeader(value = "Authorization",required = false) String token) {
 
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
 
         if(institucionService.deleteInstitucion(id, actualUser)) {
@@ -68,8 +66,7 @@ public class InstitucionController {
             @RequestBody InstitucionEntity institucion,
             @RequestHeader(value = "Authorization", required = false) String token) {
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
 
         InstitucionEntity updatedInstitucion = institucionService.updateInstitucion(institucion, actualUser);

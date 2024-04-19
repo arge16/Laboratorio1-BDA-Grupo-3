@@ -16,14 +16,16 @@ public class EmergenciaController {
     @Autowired
     EmergenciaService emergenciaService;
 
+    @Autowired
+    UsuarioService usuarioService;
+
     @GetMapping("")
     public ResponseEntity<?> getAllEmergencias(
             @RequestParam(value = "size", required = false) Integer size,
             @RequestParam(value = "page", required = false) Integer page,
             @RequestHeader(value = "Authorization",required = false) String token
     ){
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
         if(size!=null){
             return ResponseEntity.ok(emergenciaService.getPageEmergencias(size, Objects.requireNonNullElse(page, 1)));
@@ -35,8 +37,7 @@ public class EmergenciaController {
             @RequestBody EmergenciaEntity emergencia,
             @RequestHeader(value = "Authorization",required = false) String token) {
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
 
         EmergenciaEntity emergenciaEntity = emergenciaService.createEmergencia(emergencia,actualUser);
@@ -50,8 +51,7 @@ public class EmergenciaController {
             @RequestBody EmergenciaEntity emergencia,
             @RequestHeader(value = "Authorization",required = false) String token) {
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
         EmergenciaEntity updatedEmergencia = emergenciaService.updateEmergencia(emergencia,actualUser);
         if (updatedEmergencia != null) {
@@ -66,8 +66,7 @@ public class EmergenciaController {
             @RequestParam("id") Long id,
             @RequestHeader(value = "Authorization",required = false) String token) {
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
 
         if(emergenciaService.deleteEmergencia(id, actualUser)) {

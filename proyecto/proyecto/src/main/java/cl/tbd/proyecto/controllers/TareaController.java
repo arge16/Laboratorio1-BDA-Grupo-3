@@ -20,7 +20,8 @@ import java.util.stream.Collectors;
 public class TareaController {
     @Autowired
     TareaService tareaService;
-
+    @Autowired
+    UsuarioService usuarioService;
     @GetMapping("")
     public ResponseEntity<?> getAllTareas(
             @RequestParam(value = "size", required = false) Integer size,
@@ -28,8 +29,7 @@ public class TareaController {
             @RequestHeader(value = "Authorization", required = false) String token
     ){
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
 
         if(size!=null){
@@ -51,8 +51,7 @@ public class TareaController {
             @RequestBody JsonNode id_habilidades,
             @RequestHeader(value = "Authorization",required = false) String token){
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
 
         List<String> numerosCadenas = Arrays.asList(id_habilidades.get("id_habilidades").asText().split(","));
@@ -68,8 +67,7 @@ public class TareaController {
             @RequestBody TareaEntity tarea,
             @RequestHeader(value = "Authorization",required = false) String token) {
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
 
         TareaEntity tareaEntity = tareaService.createTarea(tarea,actualUser);
@@ -83,8 +81,7 @@ public class TareaController {
             @RequestBody TareaEntity tarea,
             @RequestHeader(value = "Authorization",required = false) String token) {
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
 
         TareaEntity updatedTarea = tareaService.updateTarea(tarea,actualUser);
@@ -100,8 +97,7 @@ public class TareaController {
             @RequestParam("id") Long id,
             @RequestHeader(value = "Authorization",required = false) String token) {
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
 
         if(tareaService.deleteTarea(id,actualUser)) {
@@ -116,8 +112,7 @@ public class TareaController {
             @RequestParam("id_emergencia") Long id_emergencia,
             @RequestHeader(value = "Authorization",required = false) String token){
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
 
         return ResponseEntity.ok(tareaService.getTareasByEmergencia(id_emergencia));

@@ -13,9 +13,6 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
     @Autowired
     private Sql2o sql2o;
 
-    @Autowired
-    UsuarioRepository usuarioRepository;
-
     @Override
     public List<UsuarioEntity> findAll() {
         final String sqlQuery = "SELECT * FROM usuarios";
@@ -66,7 +63,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
         final String sqlInsertQuery = "INSERT INTO usuarios (username, password, email, rol_id) " +
                 "VALUES (:username, :password, :email, :rolId)";
         try (Connection con = sql2o.open()) {
-            usuarioRepository.setUsername(actualUser, con);
+            setUsername(actualUser, con);
             Long insertedId = con.createQuery(sqlInsertQuery, true)
                     .bind(usuario)
                     .executeUpdate()
@@ -80,7 +77,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
     public UsuarioEntity update(UsuarioEntity usuario, String actualUser) {
         final String sqlUpdateQuery = "UPDATE usuarios SET username = :username, password = :password, email = :email, rol_id = :rolId WHERE id = :id";
         try (Connection con = sql2o.open()) {
-            usuarioRepository.setUsername(actualUser, con);
+            setUsername(actualUser, con);
             con.createQuery(sqlUpdateQuery)
                     .bind(usuario)
                     .executeUpdate();
@@ -102,7 +99,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
     public Boolean delete(Long id, String actualUser) {
         final String sqlDeleteQuery = "DELETE FROM usuarios WHERE id = :id";
         try (Connection con = sql2o.open()) {
-            usuarioRepository.setUsername(actualUser, con);
+            setUsername(actualUser, con);
             con.createQuery(sqlDeleteQuery)
                     .addParameter("id", id)
                     .executeUpdate();

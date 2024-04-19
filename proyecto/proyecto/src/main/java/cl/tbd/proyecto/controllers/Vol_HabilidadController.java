@@ -15,7 +15,8 @@ import java.util.Objects;
 public class Vol_HabilidadController {
     @Autowired
     Vol_HabilidadService volHabilidadService;
-
+    @Autowired
+    UsuarioService usuarioService;
     @GetMapping("")
     public ResponseEntity<?> getAllVolHabilidades(
             @RequestParam(value = "size", required = false) Integer size,
@@ -23,8 +24,7 @@ public class Vol_HabilidadController {
             @RequestHeader(value = "Authorization",required = false) String token
     ){
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
 
         if(size!=null){
@@ -37,8 +37,7 @@ public class Vol_HabilidadController {
             @RequestBody Vol_HabilidadEntity volHabilidad,
             @RequestHeader(value = "Authorization",required = false) String token) {
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
         Vol_HabilidadEntity volHabilidadEntity = volHabilidadService.createVolHabilidades(volHabilidad, actualUser);
         if (volHabilidadEntity!=null)
@@ -51,8 +50,7 @@ public class Vol_HabilidadController {
             @RequestBody Vol_HabilidadEntity volHabilidad,
             @RequestHeader(value = "Authorization", required = false) String token) {
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
 
         Vol_HabilidadEntity updatedVolHabilidad = volHabilidadService.updateVolHabilidades(volHabilidad,actualUser);
@@ -68,8 +66,7 @@ public class Vol_HabilidadController {
             @RequestParam("id") Long id,
             @RequestHeader(value = "Authorization", required = false) String token) {
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
 
         if(volHabilidadService.deleteVolHabilidad(id, actualUser)) {

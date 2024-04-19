@@ -16,15 +16,16 @@ public class Estado_TareaController{
     @Autowired
     Estado_TareaService estadoTareaService;
 
+    @Autowired
+    UsuarioService usuarioService;
+
     @GetMapping("")
     public ResponseEntity<?> getAllEstadoTareas(
             @RequestParam(value = "size", required = false) Integer size,
             @RequestParam(value = "page", required = false) Integer page,
             @RequestHeader(value = "Authorization", required = false) String token
     ){
-
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
 
         if(size!=null){
@@ -37,9 +38,7 @@ public class Estado_TareaController{
             @RequestBody Estado_TareaEntity estadoTarea,
             @RequestHeader(value = "Authorization", required = false) String token){
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
-
+        String actualUser= usuarioService.getUser(token);
 
         Estado_TareaEntity estadoTareaEntity = estadoTareaService.createEstadoTarea(estadoTarea, actualUser);
         if(estadoTareaEntity != null)
@@ -52,10 +51,7 @@ public class Estado_TareaController{
             @RequestBody Estado_TareaEntity estadoTareaActualizado,
             @RequestHeader(value = "Authorization",required = false) String token) {
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
-
-
+        String actualUser= usuarioService.getUser(token);
         Estado_TareaEntity updatedEstadoTarea = estadoTareaService.updateEstadoTarea(estadoTareaActualizado,actualUser);
         if (updatedEstadoTarea != null) {
             return ResponseEntity.ok(updatedEstadoTarea);
@@ -69,9 +65,7 @@ public class Estado_TareaController{
     public ResponseEntity<?> deleteEstadoTarea(
             @RequestParam("id") Long id,
             @RequestHeader(value = "Authorization",required = false) String token ) {
-
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
 
         if(estadoTareaService.deleteEstadoTarea(id,actualUser)) {

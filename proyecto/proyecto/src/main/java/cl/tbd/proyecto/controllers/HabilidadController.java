@@ -15,15 +15,15 @@ import java.util.Objects;
 public class HabilidadController {
     @Autowired
     HabilidadService habilidadService;
-
+    @Autowired
+    UsuarioService usuarioService;
     @GetMapping("")
     public ResponseEntity<?> getAllHabilidades(
             @RequestParam(value = "size", required = false) Integer size,
             @RequestParam(value = "page", required = false) Integer page,
             @RequestHeader(value = "Authorization",required = false) String token
     ){
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
 
         if(size!=null){
@@ -37,8 +37,7 @@ public class HabilidadController {
             @RequestBody HabilidadEntity habilidad,
             @RequestHeader(value = "Authorization",required = false) String token) {
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
 
         HabilidadEntity habilidadEntity = habilidadService.createHabilidad(habilidad,actualUser);
@@ -52,8 +51,7 @@ public class HabilidadController {
             @RequestBody HabilidadEntity habilidadActualizada,
             @RequestHeader(value = "Authorization",required = false) String token) {
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
 
         HabilidadEntity updatedHabilidad = habilidadService.updateHabilidad(habilidadActualizada,actualUser);
@@ -70,8 +68,7 @@ public class HabilidadController {
             @RequestParam("id") Long id,
             @RequestHeader(value = "Authorization",required = false) String token) {
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
 
         if(habilidadService.deleteHabilidad(id,actualUser)) {

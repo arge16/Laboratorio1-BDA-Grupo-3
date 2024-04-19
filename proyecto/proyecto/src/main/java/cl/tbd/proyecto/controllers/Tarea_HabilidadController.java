@@ -15,7 +15,8 @@ import java.util.Objects;
 public class Tarea_HabilidadController {
     @Autowired
     Tarea_HabilidadService tareaHabilidadService;
-
+    @Autowired
+    UsuarioService usuarioService;
     @GetMapping("")
     public ResponseEntity<?> getAllTareaHabilidades(
             @RequestParam(value = "size", required = false) Integer size,
@@ -23,8 +24,7 @@ public class Tarea_HabilidadController {
             @RequestHeader(value = "Authorization", required = false) String token
     ){
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
         if(size!=null){
             return ResponseEntity.ok(tareaHabilidadService.getPageTareaHabilidades(size, Objects.requireNonNullElse(page, 1)));
@@ -37,8 +37,7 @@ public class Tarea_HabilidadController {
             @RequestBody Tarea_HabilidadEntity tareaHabilidad,
             @RequestHeader(value = "Authorization", required = false) String token) {
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
 
         Tarea_HabilidadEntity tareaHabilidadEntity = tareaHabilidadService.createTareaHabilidades(tareaHabilidad,actualUser);
@@ -52,8 +51,7 @@ public class Tarea_HabilidadController {
             @RequestHeader(value = "Authorization",required = false) String token) {
 
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
         Tarea_HabilidadEntity updatedTareaHabilidad = tareaHabilidadService.updateTareaHabilidades(tareaHabilidad, actualUser);
         if (updatedTareaHabilidad != null) {
@@ -68,8 +66,7 @@ public class Tarea_HabilidadController {
             @RequestParam("id") Long id,
             @RequestHeader(value = "Authorization",required = false) String token) {
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
 
         if(tareaHabilidadService.deleteTareaHabilidad(id, actualUser)) {

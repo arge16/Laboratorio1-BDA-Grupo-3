@@ -15,6 +15,8 @@ import java.util.Objects;
 public class Eme_HabilidadController {
     @Autowired
     Eme_HabilidadService emeHabilidadService;
+    @Autowired
+    UsuarioService usuarioService;
 
     @GetMapping("")
     public ResponseEntity<?> getAllVoluntarios(
@@ -22,8 +24,7 @@ public class Eme_HabilidadController {
             @RequestParam(value = "page", required = false) Integer page,
             @RequestHeader(value = "Authorization",required = false) String token
     ){
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
         if(size!=null){
             return ResponseEntity.ok(emeHabilidadService.getPageEmeHabilidades(size, Objects.requireNonNullElse(page, 1)));
@@ -36,8 +37,7 @@ public class Eme_HabilidadController {
             @RequestParam("id_emergencia") Long id_emergencia,
             @RequestHeader(value = "Authorization",required = false) String token){
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
 
         /*Supongo que habrà alguna logica de comprobacion y autenticacion aca, como en todos los demas controllers*/
@@ -50,8 +50,7 @@ public class Eme_HabilidadController {
     public ResponseEntity<?> postEmeHabilidad(
             @RequestBody Eme_HabilidadEntity eme,
             @RequestHeader(value = "Authorization",required = false) String token) {
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
         /*---*/
 
@@ -67,8 +66,7 @@ public class Eme_HabilidadController {
             @RequestBody Eme_HabilidadEntity eme_habilidad,
             @RequestHeader(value = "Authorization",required = false) String token) {
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
 
         Eme_HabilidadEntity updated = emeHabilidadService.updateEmeHabilidad(eme_habilidad,actualUser);
@@ -84,8 +82,7 @@ public class Eme_HabilidadController {
             @RequestParam("id") Long id,
             @RequestHeader(value = "Authorization",required = false) String token) {
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
 
         if(emeHabilidadService.deleteEmeHabilidad(id,actualUser)){ // TODO: Force delete? con bool como param

@@ -15,15 +15,15 @@ import java.util.Objects;
 public class RankingController {
     @Autowired
     RankingService rankingService;
-
+    @Autowired
+    UsuarioService usuarioService;
     @GetMapping("")
     public ResponseEntity<?> getAllRankings(
             @RequestParam(value = "size", required = false) Integer size,
             @RequestParam(value = "page", required = false) Integer page,
             @RequestHeader(value = "Authorization",required = false) String token
     ){
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
 
         if(size!=null){
@@ -37,8 +37,7 @@ public class RankingController {
             @RequestBody RankingEntity ranking,
             @RequestHeader(value = "Authorization",required = false) String token) {
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
 
         RankingEntity rankingEntity = rankingService.createRanking(ranking, actualUser);
@@ -52,8 +51,7 @@ public class RankingController {
             @RequestBody RankingEntity ranking,
             @RequestHeader(value = "Authorization",required = false) String token) {
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
 
         RankingEntity updatedRanking = rankingService.updateRanking(ranking, actualUser);
@@ -69,8 +67,7 @@ public class RankingController {
             @RequestParam("id") Long id,
             @RequestHeader(value = "Authorization",required = false) String token) {
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
 
         if(rankingService.deleteRanking(id, actualUser)) {

@@ -15,7 +15,8 @@ import java.util.Objects;
 public class Estado_EmergenciaController {
     @Autowired
     Estado_EmergenciaService estadoEmergenciaService;
-
+    @Autowired
+    UsuarioService usuarioService;
     @GetMapping("")
     public ResponseEntity<?> getAllEstadoEmergencias(
             @RequestParam(value = "size", required = false) Integer size,
@@ -23,8 +24,7 @@ public class Estado_EmergenciaController {
             @RequestHeader(value = "Authorization", required = false) String token
     ){
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
 
         if(size!=null){
@@ -38,8 +38,7 @@ public class Estado_EmergenciaController {
             @RequestBody Estado_EmergenciaEntity estadoEmergencia,
             @RequestHeader(value = "Authorization", required = false) String token){
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
 
         Estado_EmergenciaEntity estadoEmergenciaEntity = estadoEmergenciaService.createEstadoEmergencia(estadoEmergencia,actualUser);
@@ -53,8 +52,7 @@ public class Estado_EmergenciaController {
             @RequestBody Estado_EmergenciaEntity estadoEmergenciaActualizado,
             @RequestHeader(value = "Authorization",required = false) String token) {
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
 
         Estado_EmergenciaEntity updateEstadoEmergencia = estadoEmergenciaService.updateEstadoEmergencia(estadoEmergenciaActualizado,actualUser);
@@ -71,8 +69,7 @@ public class Estado_EmergenciaController {
             @RequestParam("id") Long id,
             @RequestHeader(value = "Authorization",required = false) String token ) {
 
-        UsuarioService UserServiceInstance = new UsuarioService();
-        String actualUser= UserServiceInstance.getUser(token);
+        String actualUser= usuarioService.getUser(token);
 
 
         if(estadoEmergenciaService.deleteEstadoEmergencia(id, actualUser)) {
