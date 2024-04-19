@@ -28,19 +28,19 @@ public class Tarea_HabilidadService {
         return tareaHabilidadRepository.findAllPagination(size, page);
     }
 
-    public Tarea_HabilidadEntity createTareaHabilidades(Tarea_HabilidadEntity tareaHabilidad) {
-        return tareaHabilidadRepository.create(tareaHabilidad);
+    public Tarea_HabilidadEntity createTareaHabilidades(Tarea_HabilidadEntity tareaHabilidad, String actualUser) {
+        return tareaHabilidadRepository.create(tareaHabilidad, actualUser);
     }
 
-    public Tarea_HabilidadEntity updateTareaHabilidades(Tarea_HabilidadEntity tareaHabilidad) {
-        return tareaHabilidadRepository.update(tareaHabilidad);
+    public Tarea_HabilidadEntity updateTareaHabilidades(Tarea_HabilidadEntity tareaHabilidad, String actualUser) {
+        return tareaHabilidadRepository.update(tareaHabilidad, actualUser);
     }
     public Tarea_HabilidadEntity createTareaHabilidadesByValues(Long id_tarea, Long id_Habilidad) {
         return tareaHabilidadRepository.createByValues(id_tarea,id_Habilidad);
     }
 
-    public Boolean deleteTareaHabilidad(Long id){
-        return tareaHabilidadRepository.delete(id);
+    public Boolean deleteTareaHabilidad(Long id, String actualUser){
+        return tareaHabilidadRepository.delete(id, actualUser);
     }
 
 

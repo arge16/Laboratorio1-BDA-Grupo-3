@@ -56,7 +56,7 @@ public class Eme_HabilidadController {
         /*---*/
 
 
-        Eme_HabilidadEntity eme_habilidad = emeHabilidadService.createEmeHabilidad(eme);
+        Eme_HabilidadEntity eme_habilidad = emeHabilidadService.createEmeHabilidad(eme,actualUser);
         if (eme_habilidad!=null)
             return ResponseEntity.ok(eme_habilidad);
         return ResponseEntity.badRequest().build();
@@ -71,7 +71,7 @@ public class Eme_HabilidadController {
         String actualUser= UserServiceInstance.getUser(token);
 
 
-        Eme_HabilidadEntity updated = emeHabilidadService.updateEmeHabilidad(eme_habilidad);
+        Eme_HabilidadEntity updated = emeHabilidadService.updateEmeHabilidad(eme_habilidad,actualUser);
         if (updated != null) {
             return ResponseEntity.ok(updated);
         } else {
@@ -88,7 +88,7 @@ public class Eme_HabilidadController {
         String actualUser= UserServiceInstance.getUser(token);
 
 
-        if(emeHabilidadService.deleteEmeHabilidad(id)) { // TODO: Force delete? con bool como param
+        if(emeHabilidadService.deleteEmeHabilidad(id,actualUser)){ // TODO: Force delete? con bool como param
             return ResponseEntity.ok("deleted");
         }
         return ResponseEntity.badRequest().build();

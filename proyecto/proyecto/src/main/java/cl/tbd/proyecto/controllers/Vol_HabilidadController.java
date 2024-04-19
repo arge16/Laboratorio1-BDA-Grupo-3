@@ -40,7 +40,7 @@ public class Vol_HabilidadController {
         UsuarioService UserServiceInstance = new UsuarioService();
         String actualUser= UserServiceInstance.getUser(token);
 
-        Vol_HabilidadEntity volHabilidadEntity = volHabilidadService.createVolHabilidades(volHabilidad);
+        Vol_HabilidadEntity volHabilidadEntity = volHabilidadService.createVolHabilidades(volHabilidad, actualUser);
         if (volHabilidadEntity!=null)
             return ResponseEntity.ok(volHabilidadEntity);
         return ResponseEntity.badRequest().build();
@@ -55,7 +55,7 @@ public class Vol_HabilidadController {
         String actualUser= UserServiceInstance.getUser(token);
 
 
-        Vol_HabilidadEntity updatedVolHabilidad = volHabilidadService.updateVolHabilidades(volHabilidad);
+        Vol_HabilidadEntity updatedVolHabilidad = volHabilidadService.updateVolHabilidades(volHabilidad,actualUser);
         if (updatedVolHabilidad != null) {
             return ResponseEntity.ok(updatedVolHabilidad);
         } else {
@@ -72,7 +72,7 @@ public class Vol_HabilidadController {
         String actualUser= UserServiceInstance.getUser(token);
 
 
-        if(volHabilidadService.deleteVolHabilidad(id)) {
+        if(volHabilidadService.deleteVolHabilidad(id, actualUser)) {
             return ResponseEntity.ok("deleted");
         }
         return ResponseEntity.badRequest().build();

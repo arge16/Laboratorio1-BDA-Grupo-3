@@ -41,7 +41,7 @@ public class RankingController {
         String actualUser= UserServiceInstance.getUser(token);
 
 
-        RankingEntity rankingEntity = rankingService.createRanking(ranking);
+        RankingEntity rankingEntity = rankingService.createRanking(ranking, actualUser);
         if (rankingEntity!=null)
             return ResponseEntity.ok(rankingEntity);
         return ResponseEntity.badRequest().build();
@@ -56,7 +56,7 @@ public class RankingController {
         String actualUser= UserServiceInstance.getUser(token);
 
 
-        RankingEntity updatedRanking = rankingService.updateRanking(ranking);
+        RankingEntity updatedRanking = rankingService.updateRanking(ranking, actualUser);
         if (updatedRanking != null) {
             return ResponseEntity.ok(updatedRanking);
         } else {
@@ -73,7 +73,7 @@ public class RankingController {
         String actualUser= UserServiceInstance.getUser(token);
 
 
-        if(rankingService.deleteRanking(id)) {
+        if(rankingService.deleteRanking(id, actualUser)) {
             return ResponseEntity.ok("deleted");
         }
         return ResponseEntity.badRequest().build();

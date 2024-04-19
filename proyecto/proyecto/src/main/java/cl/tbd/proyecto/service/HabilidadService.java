@@ -33,13 +33,13 @@ public class HabilidadService{
         return habilidadRepository.findHabilidadesByEmergencia(id_emergencia);
     }
 
-    public HabilidadEntity createHabilidad(HabilidadEntity habilidad) {
-        return habilidadRepository.create(habilidad);
+    public HabilidadEntity createHabilidad(HabilidadEntity habilidad, String actualUser) {
+        return habilidadRepository.create(habilidad, actualUser);
     }
 
-    public Boolean deleteHabilidad(Long id){
-        return habilidadRepository.delete(id);
+    public Boolean deleteHabilidad(Long id, String actualUser){
+        return habilidadRepository.delete(id, actualUser);
     }
 
-    public HabilidadEntity updateHabilidad(HabilidadEntity habilidad) {return habilidadRepository.update(habilidad);}
+    public HabilidadEntity updateHabilidad(HabilidadEntity habilidad, String actualUser) {return habilidadRepository.update(habilidad, actualUser);}
 }

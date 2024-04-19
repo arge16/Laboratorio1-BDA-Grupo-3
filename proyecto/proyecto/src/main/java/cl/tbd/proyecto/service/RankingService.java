@@ -26,14 +26,14 @@ public class RankingService {
         return rankingRepository.findAllPagination(size, page);
     }
 
-    public RankingEntity createRanking(RankingEntity ranking) {
-        return rankingRepository.create(ranking);
+    public RankingEntity createRanking(RankingEntity ranking, String actualUser) {
+        return rankingRepository.create(ranking, actualUser);
     }
 
-    public RankingEntity updateRanking(RankingEntity ranking) {return rankingRepository.update(ranking);}
+    public RankingEntity updateRanking(RankingEntity ranking, String actualUser) {return rankingRepository.update(ranking, actualUser);}
 
-    public Boolean deleteRanking(Long id){
-        return rankingRepository.delete(id);
+    public Boolean deleteRanking(Long id, String actualUser){
+        return rankingRepository.delete(id, actualUser);
     }
 
 }

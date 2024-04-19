@@ -22,15 +22,15 @@ public class Estado_EmergenciaService {
         return estadoEmergenciaRepository.findAllPagination(size, page);
     }
 
-    public Estado_EmergenciaEntity createEstadoEmergencia(Estado_EmergenciaEntity estadoEmergencia) {
-        return estadoEmergenciaRepository.create(estadoEmergencia);
+    public Estado_EmergenciaEntity createEstadoEmergencia(Estado_EmergenciaEntity estadoEmergencia, String actualUser) {
+        return estadoEmergenciaRepository.create(estadoEmergencia,actualUser);
     }
 
-    public Boolean deleteEstadoEmergencia(Long id){
-        return estadoEmergenciaRepository.delete(id);
+    public Boolean deleteEstadoEmergencia(Long id, String actualUser){
+        return estadoEmergenciaRepository.delete(id, actualUser);
     }
 
-    public Estado_EmergenciaEntity updateEstadoEmergencia(Estado_EmergenciaEntity estadoEmergencia) {
-        return estadoEmergenciaRepository.update(estadoEmergencia);
+    public Estado_EmergenciaEntity updateEstadoEmergencia(Estado_EmergenciaEntity estadoEmergencia, String actualUser) {
+        return estadoEmergenciaRepository.update(estadoEmergencia, actualUser);
     }
 }

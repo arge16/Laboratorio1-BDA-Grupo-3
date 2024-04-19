@@ -32,12 +32,12 @@ public class VoluntarioService {
         return voluntarioRepository.create(voluntario,actualUser);
     }
 
-    public VoluntarioEntity updateVoluntario(VoluntarioEntity voluntario) {
-        return voluntarioRepository.update(voluntario);
+    public VoluntarioEntity updateVoluntario(VoluntarioEntity voluntario, String actualUser) {
+        return voluntarioRepository.update(voluntario, actualUser);
     }
 
-    public Boolean deleteVoluntario(Long id){
-        return voluntarioRepository.delete(id);
+    public Boolean deleteVoluntario(Long id, String actualUser){
+        return voluntarioRepository.delete(id, actualUser);
     }
 }
 

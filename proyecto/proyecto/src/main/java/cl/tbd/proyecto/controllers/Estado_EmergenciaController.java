@@ -42,7 +42,7 @@ public class Estado_EmergenciaController {
         String actualUser= UserServiceInstance.getUser(token);
 
 
-        Estado_EmergenciaEntity estadoEmergenciaEntity = estadoEmergenciaService.createEstadoEmergencia(estadoEmergencia);
+        Estado_EmergenciaEntity estadoEmergenciaEntity = estadoEmergenciaService.createEstadoEmergencia(estadoEmergencia,actualUser);
         if(estadoEmergenciaEntity != null)
             return  ResponseEntity.ok(estadoEmergenciaEntity);
         return ResponseEntity.badRequest().build();
@@ -57,7 +57,7 @@ public class Estado_EmergenciaController {
         String actualUser= UserServiceInstance.getUser(token);
 
 
-        Estado_EmergenciaEntity updateEstadoEmergencia = estadoEmergenciaService.updateEstadoEmergencia(estadoEmergenciaActualizado);
+        Estado_EmergenciaEntity updateEstadoEmergencia = estadoEmergenciaService.updateEstadoEmergencia(estadoEmergenciaActualizado,actualUser);
         if (updateEstadoEmergencia != null) {
             return ResponseEntity.ok(updateEstadoEmergencia);
         } else {
@@ -75,7 +75,7 @@ public class Estado_EmergenciaController {
         String actualUser= UserServiceInstance.getUser(token);
 
 
-        if(estadoEmergenciaService.deleteEstadoEmergencia(id)) {
+        if(estadoEmergenciaService.deleteEstadoEmergencia(id, actualUser)) {
             return ResponseEntity.ok("deleted");
         }
         return ResponseEntity.badRequest().build();

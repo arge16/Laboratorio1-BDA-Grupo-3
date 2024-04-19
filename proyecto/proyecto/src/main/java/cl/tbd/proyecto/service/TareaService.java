@@ -43,11 +43,11 @@ public class TareaService {
         return tareaRepository.findById(id);
     }
 
-    public TareaEntity createTarea(TareaEntity tarea) {
-        return tareaRepository.create(tarea);
+    public TareaEntity createTarea(TareaEntity tarea, String actualUser) {
+        return tareaRepository.create(tarea,actualUser);
     }
 
-    public TareaEntity updateTarea(TareaEntity tarea) { return tareaRepository.update(tarea);}
+    public TareaEntity updateTarea(TareaEntity tarea, String actualUser) { return tareaRepository.update(tarea,actualUser);}
     public Tarea_HabilidadEntity addHabilidadToTarea(TareaEntity tarea, Long id_habilidad){
         return tareaHabilidadService.createTareaHabilidadesByValues(tarea.getId(), id_habilidad);
     }
@@ -62,8 +62,8 @@ public class TareaService {
         return habilidadService.findHabilidadesByEmergencia(tarea.getId_emergencia());
     }
 
-    public Boolean deleteTarea(Long id){
-        return tareaRepository.delete(id);
+    public Boolean deleteTarea(Long id,String actualUser){
+        return tareaRepository.delete(id,actualUser);
     }
 
 }

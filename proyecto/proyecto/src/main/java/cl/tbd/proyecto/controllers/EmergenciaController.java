@@ -39,7 +39,7 @@ public class EmergenciaController {
         String actualUser= UserServiceInstance.getUser(token);
 
 
-        EmergenciaEntity emergenciaEntity = emergenciaService.createEmergencia(emergencia);
+        EmergenciaEntity emergenciaEntity = emergenciaService.createEmergencia(emergencia,actualUser);
         if (emergencia!=null)
             return ResponseEntity.ok(emergenciaEntity);
         return ResponseEntity.badRequest().build();
@@ -53,7 +53,7 @@ public class EmergenciaController {
         UsuarioService UserServiceInstance = new UsuarioService();
         String actualUser= UserServiceInstance.getUser(token);
 
-        EmergenciaEntity updatedEmergencia = emergenciaService.updateEmergencia(emergencia);
+        EmergenciaEntity updatedEmergencia = emergenciaService.updateEmergencia(emergencia,actualUser);
         if (updatedEmergencia != null) {
             return ResponseEntity.ok(updatedEmergencia);
         } else {
@@ -70,7 +70,7 @@ public class EmergenciaController {
         String actualUser= UserServiceInstance.getUser(token);
 
 
-        if(emergenciaService.deleteEmergencia(id)) {
+        if(emergenciaService.deleteEmergencia(id, actualUser)) {
             return ResponseEntity.ok("deleted");
         }
         return ResponseEntity.badRequest().build();

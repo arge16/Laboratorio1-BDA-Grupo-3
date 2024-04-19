@@ -26,13 +26,14 @@ public class InstitucionService{
         return institucionRepository.findAllPagination(size, page);
     }
 
-    public InstitucionEntity createInstitucion(InstitucionEntity institucion){
-        return institucionRepository.create(institucion);
+    public InstitucionEntity createInstitucion(InstitucionEntity institucion, String actualUser){
+        return institucionRepository.create(institucion, actualUser);
     }
 
-    public Boolean deleteInstitucion(Long id){
-        return institucionRepository.delete(id);
+    public Boolean deleteInstitucion(Long id, String actualUser){
+        return institucionRepository.delete(id, actualUser);
     }
 
-    public InstitucionEntity updateInstitucion(InstitucionEntity institucion) { return institucionRepository.update(institucion);}
+    public InstitucionEntity updateInstitucion(InstitucionEntity institucion, String actualUser)
+    { return institucionRepository.update(institucion, actualUser);}
 }

@@ -41,7 +41,7 @@ public class HabilidadController {
         String actualUser= UserServiceInstance.getUser(token);
 
 
-        HabilidadEntity habilidadEntity = habilidadService.createHabilidad(habilidad);
+        HabilidadEntity habilidadEntity = habilidadService.createHabilidad(habilidad,actualUser);
         if (habilidadEntity!=null)
             return ResponseEntity.ok(habilidadEntity);
         return ResponseEntity.badRequest().build();
@@ -56,7 +56,7 @@ public class HabilidadController {
         String actualUser= UserServiceInstance.getUser(token);
 
 
-        HabilidadEntity updatedHabilidad = habilidadService.updateHabilidad(habilidadActualizada);
+        HabilidadEntity updatedHabilidad = habilidadService.updateHabilidad(habilidadActualizada,actualUser);
         if (updatedHabilidad != null) {
             return ResponseEntity.ok(updatedHabilidad);
         } else {
@@ -74,7 +74,7 @@ public class HabilidadController {
         String actualUser= UserServiceInstance.getUser(token);
 
 
-        if(habilidadService.deleteHabilidad(id)) {
+        if(habilidadService.deleteHabilidad(id,actualUser)) {
             return ResponseEntity.ok("deleted");
         }
         return ResponseEntity.badRequest().build();

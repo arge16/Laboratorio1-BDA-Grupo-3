@@ -29,17 +29,17 @@ public class Eme_HabilidadService {
         return emeHabilidadRepository.findHabilidadesByEmergencia(id_emergencia);
     }
 
-    public Eme_HabilidadEntity createEmeHabilidad(Eme_HabilidadEntity voluntario) {
-        return emeHabilidadRepository.create(voluntario);
+    public Eme_HabilidadEntity createEmeHabilidad(Eme_HabilidadEntity eme_habilidad, String actualUser) {
+        return emeHabilidadRepository.create(eme_habilidad,actualUser);
     }
 
-    public Boolean deleteEmeHabilidad(Long id){
-        return emeHabilidadRepository.delete(id);
+    public Boolean deleteEmeHabilidad(Long id, String actualUser){
+        return emeHabilidadRepository.delete(id,actualUser);
     }
 
 
-    public Eme_HabilidadEntity updateEmeHabilidad(Eme_HabilidadEntity eme_habilidad) {
-        return emeHabilidadRepository.update(eme_habilidad);
+    public Eme_HabilidadEntity updateEmeHabilidad(Eme_HabilidadEntity eme_habilidad,String actualUser) {
+        return emeHabilidadRepository.update(eme_habilidad,actualUser);
     }
 
 

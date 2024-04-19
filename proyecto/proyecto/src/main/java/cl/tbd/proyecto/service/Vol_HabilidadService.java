@@ -21,15 +21,15 @@ public class Vol_HabilidadService {
         return volHabilidadRepository.findAllPagination(size, page);
     }
 
-    public Vol_HabilidadEntity createVolHabilidades(Vol_HabilidadEntity volHabilidad) {
-        return volHabilidadRepository.create(volHabilidad);
+    public Vol_HabilidadEntity createVolHabilidades(Vol_HabilidadEntity volHabilidad, String actualUser) {
+        return volHabilidadRepository.create(volHabilidad, actualUser);
     }
 
-    public Vol_HabilidadEntity updateVolHabilidades(Vol_HabilidadEntity volHabilidad) {
-        return volHabilidadRepository.update(volHabilidad);
+    public Vol_HabilidadEntity updateVolHabilidades(Vol_HabilidadEntity volHabilidad, String actualUser) {
+        return volHabilidadRepository.update(volHabilidad, actualUser);
     }
 
-    public Boolean deleteVolHabilidad(Long id){
-        return volHabilidadRepository.delete(id);
+    public Boolean deleteVolHabilidad(Long id, String actualUser){
+        return volHabilidadRepository.delete(id,actualUser);
     }
 }

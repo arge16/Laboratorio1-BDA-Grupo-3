@@ -16,12 +16,12 @@ public class UsuarioService {
     @Autowired
     JwtUtils jwtUtils;
 
-    public UsuarioEntity registerUser(UsuarioEntity usuario) {
+    public UsuarioEntity registerUser(UsuarioEntity usuario, String actualUser) {
         // Verificar si el usuario ya está registrado
         if (usuarioRepository.findByUsername(usuario.getUsername()) != null) {
             throw new RuntimeException("El nombre de usuario ya está en uso.");
         }
-        return usuarioRepository.create(usuario);  /*Los argumentos de los metodos no coinciden*/
+        return usuarioRepository.create(usuario, actualUser);  /*Los argumentos de los metodos no coinciden*/
     }
 
     public String login(LoginDTO loginRequest){

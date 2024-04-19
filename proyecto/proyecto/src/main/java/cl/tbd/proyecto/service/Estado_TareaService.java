@@ -26,15 +26,15 @@ public class Estado_TareaService {
         return estadoTareaRepository.findAllPagination(size, page);
     }
 
-    public Estado_TareaEntity createEstadoTarea(Estado_TareaEntity estadoTarea) {
-        return estadoTareaRepository.create(estadoTarea);
+    public Estado_TareaEntity createEstadoTarea(Estado_TareaEntity estadoTarea,String actualUser) {
+        return estadoTareaRepository.create(estadoTarea, actualUser);
     }
 
-    public Boolean deleteEstadoTarea(Long id){
-        return estadoTareaRepository.delete(id);
+    public Boolean deleteEstadoTarea(Long id,String actualUser){
+        return estadoTareaRepository.delete(id,actualUser);
     }
 
-    public Estado_TareaEntity updateEstadoTarea(Estado_TareaEntity estadoTarea) {
-        return estadoTareaRepository.update(estadoTarea);
+    public Estado_TareaEntity updateEstadoTarea(Estado_TareaEntity estadoTarea, String actualUser) {
+        return estadoTareaRepository.update(estadoTarea,actualUser);
     }
 }

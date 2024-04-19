@@ -72,7 +72,7 @@ public class TareaController {
         String actualUser= UserServiceInstance.getUser(token);
 
 
-        TareaEntity tareaEntity = tareaService.createTarea(tarea);
+        TareaEntity tareaEntity = tareaService.createTarea(tarea,actualUser);
         if (tareaEntity!=null)
             return ResponseEntity.ok(tareaEntity);
         return ResponseEntity.badRequest().build();
@@ -87,7 +87,7 @@ public class TareaController {
         String actualUser= UserServiceInstance.getUser(token);
 
 
-        TareaEntity updatedTarea = tareaService.updateTarea(tarea);
+        TareaEntity updatedTarea = tareaService.updateTarea(tarea,actualUser);
         if (updatedTarea != null) {
             return ResponseEntity.ok(updatedTarea);
         } else {
@@ -104,7 +104,7 @@ public class TareaController {
         String actualUser= UserServiceInstance.getUser(token);
 
 
-        if(tareaService.deleteTarea(id)) {
+        if(tareaService.deleteTarea(id,actualUser)) {
             return ResponseEntity.ok("deleted");
         }
         return ResponseEntity.badRequest().build();

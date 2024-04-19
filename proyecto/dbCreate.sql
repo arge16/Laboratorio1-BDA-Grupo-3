@@ -33,7 +33,8 @@ CREATE TABLE "voluntario" (
                               "direccion" varchar,
                               "genero" varchar,
                               "email" varchar,
-                              "telefono" varchar
+                              "telefono" varchar,
+                               "rut" varchar
 );
 
 CREATE TABLE "vol_habilidad" (
@@ -60,7 +61,8 @@ CREATE TABLE "ranking" (
                            "id_ranking" SERIAL PRIMARY KEY,
                            "id_voluntario" bigint,
                            "id_tarea" bigint,
-                           "puntuacion" int
+                           "puntuacion" int,
+                            "participa" int
 );
 
 CREATE TABLE "institucion" (

@@ -41,7 +41,7 @@ public class Tarea_HabilidadController {
         String actualUser= UserServiceInstance.getUser(token);
 
 
-        Tarea_HabilidadEntity tareaHabilidadEntity = tareaHabilidadService.createTareaHabilidades(tareaHabilidad);
+        Tarea_HabilidadEntity tareaHabilidadEntity = tareaHabilidadService.createTareaHabilidades(tareaHabilidad,actualUser);
         if (tareaHabilidadEntity!=null)
             return ResponseEntity.ok(tareaHabilidadEntity);
         return ResponseEntity.badRequest().build();
@@ -55,7 +55,7 @@ public class Tarea_HabilidadController {
         UsuarioService UserServiceInstance = new UsuarioService();
         String actualUser= UserServiceInstance.getUser(token);
 
-        Tarea_HabilidadEntity updatedTareaHabilidad = tareaHabilidadService.updateTareaHabilidades(tareaHabilidad);
+        Tarea_HabilidadEntity updatedTareaHabilidad = tareaHabilidadService.updateTareaHabilidades(tareaHabilidad, actualUser);
         if (updatedTareaHabilidad != null) {
             return ResponseEntity.ok(updatedTareaHabilidad);
         } else {
@@ -72,7 +72,7 @@ public class Tarea_HabilidadController {
         String actualUser= UserServiceInstance.getUser(token);
 
 
-        if(tareaHabilidadService.deleteTareaHabilidad(id)) {
+        if(tareaHabilidadService.deleteTareaHabilidad(id, actualUser)) {
             return ResponseEntity.ok("deleted");
         }
         return ResponseEntity.badRequest().build();

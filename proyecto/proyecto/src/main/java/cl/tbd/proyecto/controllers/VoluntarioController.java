@@ -52,7 +52,7 @@ public class VoluntarioController {
 
         String actualUser = usuarioService.getUser(token);
 
-        VoluntarioEntity updatedVoluntario = voluntarioService.updateVoluntario(voluntario);
+        VoluntarioEntity updatedVoluntario = voluntarioService.updateVoluntario(voluntario, actualUser);
         if (updatedVoluntario != null) {
             return ResponseEntity.ok(updatedVoluntario);
         } else {
@@ -67,7 +67,7 @@ public class VoluntarioController {
 
         String actualUser = usuarioService.getUser(token);
 
-        if(voluntarioService.deleteVoluntario(id)) {
+        if(voluntarioService.deleteVoluntario(id, actualUser)) {
             return ResponseEntity.ok("deleted");
         }
         return ResponseEntity.badRequest().build();

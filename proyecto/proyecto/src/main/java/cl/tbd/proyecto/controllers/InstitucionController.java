@@ -41,7 +41,7 @@ public class InstitucionController {
         String actualUser= UserServiceInstance.getUser(token);
 
 
-        InstitucionEntity institucionEntity = institucionService.createInstitucion(institucion);
+        InstitucionEntity institucionEntity = institucionService.createInstitucion(institucion, actualUser);
         if (institucionEntity!=null)
             return ResponseEntity.ok(institucionEntity);
         return ResponseEntity.badRequest().build();
@@ -57,7 +57,7 @@ public class InstitucionController {
         String actualUser= UserServiceInstance.getUser(token);
 
 
-        if(institucionService.deleteInstitucion(id)) {
+        if(institucionService.deleteInstitucion(id, actualUser)) {
             return ResponseEntity.ok("deleted");
         }
         return ResponseEntity.badRequest().build();
@@ -72,7 +72,7 @@ public class InstitucionController {
         String actualUser= UserServiceInstance.getUser(token);
 
 
-        InstitucionEntity updatedInstitucion = institucionService.updateInstitucion(institucion);
+        InstitucionEntity updatedInstitucion = institucionService.updateInstitucion(institucion, actualUser);
         if (updatedInstitucion != null) {
             return ResponseEntity.ok(updatedInstitucion);
         } else {

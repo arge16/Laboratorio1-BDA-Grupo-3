@@ -41,7 +41,7 @@ public class Estado_TareaController{
         String actualUser= UserServiceInstance.getUser(token);
 
 
-        Estado_TareaEntity estadoTareaEntity = estadoTareaService.createEstadoTarea(estadoTarea);
+        Estado_TareaEntity estadoTareaEntity = estadoTareaService.createEstadoTarea(estadoTarea, actualUser);
         if(estadoTareaEntity != null)
             return  ResponseEntity.ok(estadoTareaEntity);
         return ResponseEntity.badRequest().build();
@@ -56,7 +56,7 @@ public class Estado_TareaController{
         String actualUser= UserServiceInstance.getUser(token);
 
 
-        Estado_TareaEntity updatedEstadoTarea = estadoTareaService.updateEstadoTarea(estadoTareaActualizado);
+        Estado_TareaEntity updatedEstadoTarea = estadoTareaService.updateEstadoTarea(estadoTareaActualizado,actualUser);
         if (updatedEstadoTarea != null) {
             return ResponseEntity.ok(updatedEstadoTarea);
         } else {
@@ -74,7 +74,7 @@ public class Estado_TareaController{
         String actualUser= UserServiceInstance.getUser(token);
 
 
-        if(estadoTareaService.deleteEstadoTarea(id)) {
+        if(estadoTareaService.deleteEstadoTarea(id,actualUser)) {
             return ResponseEntity.ok("deleted");
         }
         return ResponseEntity.badRequest().build();

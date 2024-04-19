@@ -37,16 +37,16 @@ public class EmergenciaService {
         return emergenciaRepository.findAllPagination(size, page);
     }
 
-    public EmergenciaEntity createEmergencia(EmergenciaEntity emergencia) {
-        return emergenciaRepository.create(emergencia);
+    public EmergenciaEntity createEmergencia(EmergenciaEntity emergencia, String actualUser) {
+        return emergenciaRepository.create(emergencia, actualUser);
     }
 
-    public Boolean deleteEmergencia(Long id){
-        return emergenciaRepository.delete(id);
+    public Boolean deleteEmergencia(Long id, String actualUser){
+        return emergenciaRepository.delete(id, actualUser);
     }
 
-    public EmergenciaEntity updateEmergencia(EmergenciaEntity emergencia) {
-        return emergenciaRepository.update(emergencia);
+    public EmergenciaEntity updateEmergencia(EmergenciaEntity emergencia, String actualUser) {
+        return emergenciaRepository.update(emergencia, actualUser);
     }
 
 }
