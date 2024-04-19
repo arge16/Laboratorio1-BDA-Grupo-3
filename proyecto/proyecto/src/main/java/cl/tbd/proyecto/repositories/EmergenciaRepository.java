@@ -1,7 +1,5 @@
 package cl.tbd.proyecto.repositories;
-import cl.tbd.proyecto.entities.Eme_HabilidadEntity;
 import cl.tbd.proyecto.entities.EmergenciaEntity;
-import cl.tbd.proyecto.entities.Estado_TareaEntity;
 
 import java.util.List;
 public interface EmergenciaRepository {

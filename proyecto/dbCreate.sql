@@ -1,8 +1,9 @@
 DROP TABLE IF EXISTS "vol_habilidad";
 DROP TABLE IF EXISTS "ranking";
 DROP TABLE IF EXISTS "tarea_habilidad";
-DROP TABLE IF EXISTS "estado_tarea";
 DROP TABLE IF EXISTS "tarea";
+DROP TABLE IF EXISTS "estado_tarea";
+DROP TABLE IF EXISTS "estado_emergencia";
 DROP TABLE IF EXISTS "eme_habilidad";
 DROP TABLE IF EXISTS "emergencia";
 DROP TABLE IF EXISTS "habilidad";
@@ -48,7 +49,7 @@ CREATE TABLE "tarea" (
                          "id_tarea" SERIAL PRIMARY KEY,
                          "descripcion" varchar,
                          "id_emergencia" bigint,
-                         "id_estado_tarea" bigint
+                         "id_estado" bigint
 );
 
 CREATE TABLE "tarea_habilidad" (
@@ -80,13 +81,8 @@ CREATE TABLE "habilidad" (
                              "certificacion_requerida" int
 );
 
-CREATE TABLE "estado_tarea" (
-                                "id_estado_tarea" SERIAL PRIMARY KEY,
-                                "descripcion" varchar
-);
-
-CREATE TABLE "estado_emergencia" (
-                                "id_estado_emergencia" SERIAL PRIMARY KEY,
+CREATE TABLE "estado" (
+                                "id_estado" SERIAL PRIMARY KEY,
                                 "descripcion" varchar
 );
 
@@ -97,7 +93,7 @@ CREATE TABLE "emergencia" (
                               "fecha_inicio" Date,
                               "fecha_fin" Date,
                               "id_institucion" bigint,
-                              "id_estado_emergencia" bigint
+                              "id_estado" bigint
 );
 
 CREATE TABLE "eme_habilidad" (
@@ -122,9 +118,9 @@ ALTER TABLE "tarea_habilidad" ADD FOREIGN KEY ("id_tarea") REFERENCES "tarea" ("
 
 ALTER TABLE "tarea_habilidad" ADD FOREIGN KEY ("id_habilidad") REFERENCES "habilidad" ("id_habilidad");
 
-ALTER TABLE "tarea" ADD FOREIGN KEY ("id_estado_tarea") REFERENCES "estado_tarea" ("id_estado_tarea");
+ALTER TABLE "tarea" ADD FOREIGN KEY ("id_estado") REFERENCES "estado" ("id_estado");
 
-ALTER TABLE "emergencia" ADD FOREIGN KEY ("id_estado_emergencia") REFERENCES "estado_emergencia" ("id_estado_emergencia");
+ALTER TABLE "emergencia" ADD FOREIGN KEY ("id_estado") REFERENCES "estado" ("id_estado");
 
 ALTER TABLE "emergencia" ADD FOREIGN KEY ("id_institucion") REFERENCES "institucion" ("id_institucion");
 

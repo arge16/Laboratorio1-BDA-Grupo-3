@@ -10,6 +10,8 @@ import org.sql2o.Sql2o;
 
 import java.util.List;
 
+import static cl.tbd.proyecto.repositories.EstadoRepositoryImpl.deleteSql;
+
 @Repository
 public class TareaRepositoryImpl implements TareaRepository{
 
@@ -55,7 +57,7 @@ public class TareaRepositoryImpl implements TareaRepository{
 
     @Override
     public TareaEntity create(TareaEntity tarea, String actualUser) {
-        String sqlInsertQuery = "INSERT INTO tarea(descripcion, id_emergencia, id_estado_tarea) VALUES(:descripcion, :id_emergencia, :id_estado_tarea)";
+        String sqlInsertQuery = "INSERT INTO tarea(descripcion, id_emergencia, id_estado) VALUES(:descripcion, :id_emergencia, :id_estado)";
         try (Connection con = sql2o.open()){
             usuarioRepository.setUsername(actualUser, con);
             Long id = con.createQuery(sqlInsertQuery).bind(tarea).executeUpdate().getKey(Long.class);
@@ -69,13 +71,13 @@ public class TareaRepositoryImpl implements TareaRepository{
 
     @Override
     public TareaEntity update(TareaEntity tarea, String actualUser) {
-        String sqlUpdateQuery = "UPDATE tarea SET descripcion = :descripcion, id_emergencia = :id_emergencia, id_estado_tarea = :id_estado_tarea WHERE id_tarea = :id_tarea";
+        String sqlUpdateQuery = "UPDATE tarea SET descripcion = :descripcion, id_emergencia = :id_emergencia, id_estado = :id_estado WHERE id_tarea = :id_tarea";
         try (Connection con = sql2o.open()) {
             usuarioRepository.setUsername(actualUser, con);
             con.createQuery(sqlUpdateQuery)
                     .addParameter("descripcion", tarea.getDescripcion())
                     .addParameter("id_emergencia", tarea.getId_emergencia())
-                    .addParameter("id_estado_tarea", tarea.getId_estado_tarea())
+                    .addParameter("id_estado", tarea.getId_estado())
                     .addParameter("id_tarea", tarea.getId())
                     .executeUpdate();
         } catch (Exception e) {
@@ -87,23 +89,14 @@ public class TareaRepositoryImpl implements TareaRepository{
     @Override
     public Boolean delete(Long id, String actualUser) {
         String sqlDeleteQuery = "DELETE FROM tarea WHERE id_tarea = :id";
-        try (Connection con = sql2o.open()) {
-            usuarioRepository.setUsername(actualUser, con);
-            con.createQuery(sqlDeleteQuery)
-                    .addParameter("id", id)
-                    .executeUpdate();
-            return true;
-        }catch (Exception e) {
-            System.out.println("Error: " + e);
-            return false;
-        }
+        return deleteSql(id, actualUser, sqlDeleteQuery, sql2o, usuarioRepository);
     }
 
     //Encontrar tareas por id de emergencia, ordenadas por completada y descripcion
 
     @Override
     public List<TareaEntity> findByEmergencia(Long id_emergencia) {
-        String sqlQuery = "SELECT * FROM tarea WHERE id_emergencia = :id_emergencia ORDER BY id_estado_tarea DESC, descripcion";
+        String sqlQuery = "SELECT * FROM tarea WHERE id_emergencia = :id_emergencia ORDER BY id_estado DESC, descripcion";
         try (Connection con = sql2o.open()) {
             return con.createQuery(sqlQuery)
                     .addParameter("id_emergencia", id_emergencia)

@@ -10,6 +10,8 @@ import org.sql2o.Sql2o;
 
 import java.util.List;
 
+import static cl.tbd.proyecto.repositories.EstadoRepositoryImpl.deleteSql;
+
 @Repository
 public class Tarea_HabilidadRepositoryImpl implements Tarea_HabilidadRepository{
 
@@ -98,15 +100,6 @@ public class Tarea_HabilidadRepositoryImpl implements Tarea_HabilidadRepository{
     @Override
     public Boolean delete(Long id, String actualUser) {
         String sqlDeleteQuery = "DELETE FROM tarea_habilidad WHERE id_tarea_habilidad = :id";
-        try (Connection con = sql2o.open()) {
-            usuarioRepository.setUsername(actualUser, con);
-            con.createQuery(sqlDeleteQuery)
-                    .addParameter("id", id)
-                    .executeUpdate();
-            return true;
-        }catch (Exception e) {
-            System.out.println("Error: " + e);
-            return false;
-        }
+        return deleteSql(id, actualUser, sqlDeleteQuery, sql2o, usuarioRepository);
     }
 }

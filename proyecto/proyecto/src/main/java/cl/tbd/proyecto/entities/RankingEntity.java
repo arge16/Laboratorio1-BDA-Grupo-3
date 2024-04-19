@@ -4,6 +4,7 @@ public class RankingEntity {
     private Long id_ranking;
     private Long id_voluntario;
     private Long id_tarea;
+    public int participa;
     private int puntuacion;
 
     public RankingEntity(Long id, Long id_voluntario, int puntuacion, Long id_tarea) {
@@ -46,4 +47,11 @@ public class RankingEntity {
         this.id_tarea = id_tarea;
     }
 
+    public int getParticipa() {
+        return participa;
+    }
+
+    public void setParticipa(int participa) {
+        this.participa = participa;
+    }
 }

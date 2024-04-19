@@ -76,4 +76,12 @@ public class HabilidadController {
         }
         return ResponseEntity.badRequest().build();
     }
+
+    @GetMapping("/byEmergency")
+    public ResponseEntity<?> getHabilidadesByEmergencia(
+            @RequestParam("id") Long id_emergencia,
+            @RequestHeader(value = "Authorization", required = false) String token){
+        return ResponseEntity.ok(habilidadService.findHabilidadesByEmergencia(id_emergencia));
+    }
+
 }

@@ -1,6 +1,6 @@
 package cl.tbd.proyecto.repositories;
 
-import cl.tbd.proyecto.entities.Estado_EmergenciaEntity;
+import cl.tbd.proyecto.entities.EstadoEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.sql2o.Connection;
@@ -8,7 +8,7 @@ import org.sql2o.Sql2o;
 import java.util.List;
 
 @Repository
-public class Estado_EmergenciaRepositoryImpl implements Estado_EmergenciaRepository {
+public class EstadoRepositoryImpl implements EstadoRepository {
     @Autowired
     private Sql2o sql2o;
 
@@ -17,44 +17,43 @@ public class Estado_EmergenciaRepositoryImpl implements Estado_EmergenciaReposit
 
 
     @Override
-    public List<Estado_EmergenciaEntity> findAll() {
+    public List<EstadoEntity> findAll() {
         try (Connection connection = sql2o.open()) {
-            String query = "SELECT * FROM estado_emergencia";
-            return connection.createQuery(query).executeAndFetch(Estado_EmergenciaEntity.class);
+            String query = "SELECT * FROM estado";
+            return connection.createQuery(query).executeAndFetch(EstadoEntity.class);
         }
     }
 
     @Override
-    public List<Estado_EmergenciaEntity> findAllPagination(int size, int page){
-        String sqlQuery = "Select * FROM estado_emergencia LIMIT :size OFFSET :offset";
+    public List<EstadoEntity> findAllPagination(int size, int page){
+        String sqlQuery = "Select * FROM estado LIMIT :size OFFSET :offset";
         int offset = (page - 1) * size;
         try(Connection con = sql2o.open()){
             return con.createQuery(sqlQuery).addParameter("size", size)
-                    .addParameter("offset",offset).executeAndFetch(Estado_EmergenciaEntity.class);
+                    .addParameter("offset",offset).executeAndFetch(EstadoEntity.class);
         }catch (Exception e) {
             System.out.println("Error: " + e);
             return null;
         }
     }
     @Override
-    public Estado_EmergenciaEntity findById(Long id_estado_emergencia) {
-        String sqlQuery = "SELECT * FROM estado_emergencia WHERE id_estado_emergencia = :id_estado_emergencia";
+    public EstadoEntity findById(Long id_estado) {
+        String sqlQuery = "SELECT * FROM estado WHERE id_estado = :id_estado";
         try (Connection con = sql2o.open()) {
             return con.createQuery(sqlQuery)
-                    .addParameter("id_estado_emergencia", id_estado_emergencia)
-                    .executeAndFetchFirst(Estado_EmergenciaEntity.class);
+                    .addParameter("id_estado", id_estado)
+                    .executeAndFetchFirst(EstadoEntity.class);
         } catch (Exception e) {
             System.out.println("Error: " + e);
             return null;
         }
     }
 
-
     @Override
-    public Estado_EmergenciaEntity create(Estado_EmergenciaEntity estado_emergencia, String actualUser) {
-        String sqlInsertQuery = "INSERT INTO estado_emergencia(descripcion) VALUES(:descripcion)";
+    public EstadoEntity create(EstadoEntity estado, String actualUser) {
+        String sqlInsertQuery = "INSERT INTO estado(descripcion) VALUES(:descripcion)";
         try (Connection connection = sql2o.open()){
-            Long id = connection.createQuery(sqlInsertQuery).bind(estado_emergencia).executeUpdate().getKey(Long.class);
+            Long id = connection.createQuery(sqlInsertQuery).bind(estado).executeUpdate().getKey(Long.class);
             return findById(id);
         } catch (Exception e){
             System.out.println("Error: " + e );
@@ -62,17 +61,14 @@ public class Estado_EmergenciaRepositoryImpl implements Estado_EmergenciaReposit
         }
     }
 
-
-
-
     @Override
-    public Estado_EmergenciaEntity update(Estado_EmergenciaEntity estado_emergencia, String actualUser) {
-        String sqlUpdateQuery = "UPDATE estado_emergencia SET descripcion = :descripcion WHERE id_estado_emergencia = :id_estado_emergencia";
+    public EstadoEntity update(EstadoEntity estado, String actualUser) {
+        String sqlUpdateQuery = "UPDATE estado SET descripcion = :descripcion WHERE id_estado = :id_estado";
         try (Connection con = sql2o.open()) {
             usuarioRepository.setUsername(actualUser, con);
             con.createQuery(sqlUpdateQuery)
-                    .addParameter("descripcion", estado_emergencia.getDescripcion())
-                    .addParameter("id_estado_emergencia", estado_emergencia.getId_estado_emergencia())
+                    .addParameter("descripcion", estado.getDescripcion())
+                    .addParameter("id_estado", estado.getId_estado())
                     .executeUpdate();
         } catch (Exception e) {
             System.out.println("Error al actualizar el estado de la emergencia: " + e.getMessage());
@@ -82,7 +78,11 @@ public class Estado_EmergenciaRepositoryImpl implements Estado_EmergenciaReposit
 
     @Override
     public Boolean delete(Long id, String actualUser) {
-        String sqlDeleteQuery = "DELETE FROM estado_emergencia WHERE id_estado_emergencia = :id";
+        String sqlDeleteQuery = "DELETE FROM estado WHERE id_estado = :id";
+        return deleteSql(id, actualUser, sqlDeleteQuery, sql2o, usuarioRepository);
+    }
+
+    static Boolean deleteSql(Long id, String actualUser, String sqlDeleteQuery, Sql2o sql2o, UsuarioRepository usuarioRepository) {
         try (Connection con = sql2o.open()) {
             usuarioRepository.setUsername(actualUser, con);
             con.createQuery(sqlDeleteQuery)

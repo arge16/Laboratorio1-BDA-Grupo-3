@@ -10,16 +10,16 @@ public class EmergenciaEntity {
     private Date fecha_inicio;
     private Date fecha_fin;
     private Long id_institucion;
-    private Long id_estado_emergencia;
+    private Long id_estado;
 
-    public EmergenciaEntity(Long id, String nombre, String descripcion, Date fecha_inicio, Date fecha_fin, Long id_institucion, Long id_estado_emergencia) {
+    public EmergenciaEntity(Long id, String nombre, String descripcion, Date fecha_inicio, Date fecha_fin, Long id_institucion, Long id_estado) {
         this.id_emergencia = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.fecha_inicio = fecha_inicio;
         this.fecha_fin = fecha_fin;
         this.id_institucion = id_institucion;
-        this.id_estado_emergencia = id_estado_emergencia;
+        this.id_estado = id_estado;
     }
 
     public Long getId() {
@@ -70,11 +70,11 @@ public class EmergenciaEntity {
         this.id_institucion = id_institucion;
     }
 
-    public Long getId_estado_emergencia() {
-        return id_estado_emergencia;
+    public Long getId_estado() {
+        return id_estado;
     }
 
-    public void setId_estado_emergencia(Long id_estado_emergencia) {
-        this.id_estado_emergencia = id_estado_emergencia;
+    public void setId_estado(Long id_estado) {
+        this.id_estado = id_estado;
     }
 }

@@ -10,6 +10,8 @@ import org.sql2o.Sql2o;
 
 import java.util.List;
 
+import static cl.tbd.proyecto.repositories.EstadoRepositoryImpl.deleteSql;
+
 @Repository
 public class RankingRepositoryImpl implements RankingRepository {
 
@@ -56,7 +58,7 @@ public class RankingRepositoryImpl implements RankingRepository {
 
     @Override
     public RankingEntity create(RankingEntity ranking, String actualUser) {
-        String sqlInsertQuery = "INSERT INTO ranking(id_voluntario, id_tarea, puntuacion) VALUES(:id_voluntario, :id_tarea, :puntuacion)";
+        String sqlInsertQuery = "INSERT INTO ranking(id_voluntario, id_tarea, puntuacion, participa) VALUES(:id_voluntario, :id_tarea, :puntuacion, :participa)";
         try (Connection con = sql2o.open()){
             usuarioRepository.setUsername(actualUser, con);
             Long id = con.createQuery(sqlInsertQuery).bind(ranking).executeUpdate().getKey(Long.class);
@@ -88,15 +90,6 @@ public class RankingRepositoryImpl implements RankingRepository {
     @Override
     public Boolean delete(Long id, String actualUser) {
         String sqlDeleteQuery = "DELETE FROM ranking WHERE id_ranking = :id";
-        try (Connection con = sql2o.open()) {
-            usuarioRepository.setUsername(actualUser, con);
-            con.createQuery(sqlDeleteQuery)
-                    .addParameter("id", id)
-                    .executeUpdate();
-            return true;
-        }catch (Exception e) {
-            System.out.println("Error: " + e);
-            return false;
-        }
+        return deleteSql(id, actualUser, sqlDeleteQuery, sql2o, usuarioRepository);
     }
 }

@@ -38,13 +38,6 @@ public class TareaController {
         return ResponseEntity.ok(tareaService.getAllTareas());
     }
 
-    @GetMapping("/possibleHabilidades")
-    public ResponseEntity<?> getHabilidadesByEmergencia(
-            @RequestParam("id_tarea") Long id_tarea,
-            @RequestHeader(value = "Authorization", required = false) String token){
-        return ResponseEntity.ok(tareaService.getHabilidadesByTareaEmergency(tareaService.getTareaByID(id_tarea)));
-    }
-
     @PutMapping("/addHabilidades")
     public ResponseEntity<?> getHabilidadesByEmergencia(
             @RequestParam("id_tarea") Long id_tarea,

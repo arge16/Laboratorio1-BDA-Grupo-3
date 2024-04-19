@@ -58,10 +58,6 @@ public class TareaService {
         return tareaHabilidadEntities;
     }
 
-    public List<HabilidadEntity> getHabilidadesByTareaEmergency(TareaEntity tarea){
-        return habilidadService.findHabilidadesByEmergencia(tarea.getId_emergencia());
-    }
-
     public Boolean deleteTarea(Long id,String actualUser){
         return tareaRepository.delete(id,actualUser);
     }

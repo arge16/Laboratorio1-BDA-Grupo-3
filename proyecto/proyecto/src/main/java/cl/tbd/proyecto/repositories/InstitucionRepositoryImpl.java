@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
+import static cl.tbd.proyecto.repositories.EstadoRepositoryImpl.deleteSql;
+
 
 import java.util.List;
 
@@ -88,15 +90,6 @@ public class InstitucionRepositoryImpl implements InstitucionRepository{
     @Override
     public Boolean delete(Long id, String actualUser) {
         String sqlDeleteQuery = "DELETE FROM institucion WHERE id_institucion = :id";
-        try (Connection con = sql2o.open()) {
-            usuarioRepository.setUsername(actualUser, con);
-            con.createQuery(sqlDeleteQuery)
-                    .addParameter("id", id)
-                    .executeUpdate();
-            return true;
-        }catch (Exception e) {
-            System.out.println("Error: " + e);
-            return false;
-        }
+        return deleteSql(id, actualUser, sqlDeleteQuery, sql2o, usuarioRepository);
     }
 }
