@@ -4,6 +4,7 @@ import cl.tbd.proyecto.controllers.DTO.LoginDTO;
 import cl.tbd.proyecto.entities.UsuarioEntity;
 import cl.tbd.proyecto.repositories.UsuarioRepository;
 import cl.tbd.proyecto.utils.JwtUtils;
+import cl.tbd.proyecto.utils.EncryptUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,27 +19,35 @@ public class UsuarioService {
 
     public UsuarioEntity registerUser(UsuarioEntity usuario, String actualUser) {
         // Verificar si el usuario ya está registrado
-        if (usuarioRepository.findByUsername(usuario.getUsername()) != null) {
+        UsuarioEntity existingUser = usuarioRepository.findByUsername(usuario.getUsername());
+        if (existingUser != null) {
             throw new RuntimeException("El nombre de usuario ya está en uso.");
         }
-        return usuarioRepository.create(usuario, actualUser);  /*Los argumentos de los metodos no coinciden*/
+        // Hashear la contraseña antes de guardar el usuario
+        String hashedPassword = EncryptUtils.hashPassword(usuario.getPassword());
+        usuario.setPassword(hashedPassword); // Setear la contraseña hasheada
+
+        return usuarioRepository.create(usuario, actualUser); // Asumiendo que el método create() existe y es apropiado
     }
 
     public String login(LoginDTO loginRequest){
-        if(usuarioRepository.Login(loginRequest.getUsername(),loginRequest.getPassword())){
-            return jwtUtils.generateToken(usuarioRepository.findByUsername(loginRequest.getUsername()));
+        UsuarioEntity user = usuarioRepository.findByUsername(loginRequest.getUsername());
+        if(user != null && user.getPassword().equals(EncryptUtils.hashPassword(loginRequest.getPassword()))){
+            // Si las credenciales son correctas, generar y devolver el token JWT
+            return jwtUtils.generateToken(user);
         }else{
+            // Si las credenciales no son correctas, devolver null o manejar el error TODO
             return null;
         }
     }
 
     public String getUser(String token){
         if (token != null && token.startsWith("Bearer ")) {
-        String jwtToken = token.substring(7);
-        if (jwtUtils.validateToken(jwtToken)) {
-            return jwtUtils.extractUsername(jwtToken);
+            String jwtToken = token.substring(7);
+            if (jwtUtils.validateToken(jwtToken)) {
+                return jwtUtils.extractUsername(jwtToken);
+            }
         }
-    }
         return null;
     }
 }
