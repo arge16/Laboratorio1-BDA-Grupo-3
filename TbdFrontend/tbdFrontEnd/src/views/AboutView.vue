@@ -59,8 +59,6 @@ const submitForm = () => {
   </div>
 </template>
 
-<style src="@vueform/multiselect/themes/default.css"></style>
-
 <style scoped>
 .form-control.custom-shadow:focus {
   outline: 0;

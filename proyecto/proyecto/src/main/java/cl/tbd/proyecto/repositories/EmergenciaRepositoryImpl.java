@@ -57,7 +57,7 @@ public class EmergenciaRepositoryImpl implements EmergenciaRepository{
     @Override
     public List<EmergenciaEntity> findAllUncompleted(int size, int page) {
         String sqlQuery = "SELECT e.* FROM emergencia e " +
-                "INNER JOIN estado_emergencia ee ON e.id_estado_emergencia = ee.id_estado_emergencia " +
+                "INNER JOIN estado ee ON e.id_estado = ee.id_estado " +
                 "WHERE ee.descripcion = 'uncompleted' " +
                 "LIMIT :size OFFSET :offset";
         int offset = (page - 1) * size;
@@ -71,7 +71,6 @@ public class EmergenciaRepositoryImpl implements EmergenciaRepository{
             return null;
         }
     }
-
 
     @Override
     public List<EmergenciaEntity> findHabilidadesByEmergencia(Long id_emergencia) {

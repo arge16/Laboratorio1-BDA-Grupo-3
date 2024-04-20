@@ -1,6 +1,7 @@
 package cl.tbd.proyecto.repositories;
 
 import cl.tbd.proyecto.entities.Eme_HabilidadEntity;
+import cl.tbd.proyecto.entities.HabilidadEntity;
 import cl.tbd.proyecto.entities.VoluntarioEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.core.Authentication;
@@ -40,6 +41,22 @@ public class VoluntarioRepositoryImpl implements VoluntarioRepository {
             return null;
         }
     }
+
+    @Override
+    public List<VoluntarioEntity> findAllVoluntariosByTarea(long tarea_id){
+        String sqlQuery = "SELECT v.* FROM voluntario v INNER JOIN public.ranking on v.id_voluntario = ranking.id_voluntario " +
+                "INNER JOIN public.tarea t on ranking.id_tarea = t.id_tarea WHERE t.id_tarea = :id_tarea";
+        try(Connection con = sql2o.open()){
+            return con.createQuery(sqlQuery)
+                    .addParameter("id_tarea",tarea_id)
+                    .executeAndFetch(VoluntarioEntity.class);
+        }catch (Exception e) {
+            System.out.println("Error: " + e);
+            return null;
+        }
+    }
+
+
     @Override
     public VoluntarioEntity findById(Long id_voluntario) {
         String sqlQuery = "SELECT * FROM voluntario WHERE id_voluntario = :id_voluntario";
@@ -55,8 +72,8 @@ public class VoluntarioRepositoryImpl implements VoluntarioRepository {
 
     @Override
     public VoluntarioEntity create(VoluntarioEntity voluntario, String actualUser) {
-        String sqlInsertQuery = "INSERT INTO voluntario (user_id, nombre, edad, direccion, genero, email, telefono) " +
-                "VALUES(:user_id, :nombre, :edad, :direccion, :genero, :email, :telefono)";
+        String sqlInsertQuery = "INSERT INTO voluntario (user_id, nombre, edad, direccion, genero, email, telefono,rut) " +
+                "VALUES(:user_id, :nombre, :edad, :direccion, :genero, :email, :telefono, :rut)";
         try (Connection con = sql2o.open()){
             usuarioRepository.setUsername(actualUser, con);
             Long insertedId = con.createQuery(sqlInsertQuery, true)

@@ -28,6 +28,10 @@ public class VoluntarioService {
         return voluntarioRepository.findAllPagination(size, page);
     }
 
+    public List<VoluntarioEntity> getAllVoluntariosByTarea(Long id_tarea){
+        return voluntarioRepository.findAllVoluntariosByTarea(id_tarea);
+    }
+
     public VoluntarioEntity createVoluntario(VoluntarioEntity voluntario, String actualUser) {
         return voluntarioRepository.create(voluntario,actualUser);
     }

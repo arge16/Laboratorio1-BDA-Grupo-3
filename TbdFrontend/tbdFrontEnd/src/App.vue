@@ -9,4 +9,5 @@ import 'bootstrap/dist/css/bootstrap.min.css'
   <RouterView />
 </template>
 
+<style src="@vueform/multiselect/themes/default.css"></style>
 <style></style>

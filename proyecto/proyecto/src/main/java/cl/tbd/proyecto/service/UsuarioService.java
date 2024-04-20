@@ -32,7 +32,7 @@ public class UsuarioService {
 
     public String login(LoginDTO loginRequest){
         UsuarioEntity user = usuarioRepository.findByUsername(loginRequest.getUsername());
-        if(user != null && user.getPassword().equals(EncryptUtils.hashPassword(loginRequest.getPassword()))){
+        if(user != null && EncryptUtils.comparePassword(user.getPassword(), loginRequest.getPassword())){
             // Si las credenciales son correctas, generar y devolver el token JWT
             return jwtUtils.generateToken(user);
         }else{

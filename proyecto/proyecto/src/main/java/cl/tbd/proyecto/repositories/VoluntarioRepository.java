@@ -8,6 +8,8 @@ public interface VoluntarioRepository {
 
     List<VoluntarioEntity> findAllPagination(int size, int page);
 
+    List<VoluntarioEntity> findAllVoluntariosByTarea(long tarea_id);
+
     VoluntarioEntity findById(Long id);
 
     VoluntarioEntity create(VoluntarioEntity voluntario, String actualUser);

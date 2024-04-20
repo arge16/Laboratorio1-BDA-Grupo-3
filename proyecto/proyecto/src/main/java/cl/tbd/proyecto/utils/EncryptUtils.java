@@ -30,5 +30,9 @@ public class EncryptUtils {
         }
     }
 
+    public static boolean comparePassword(String passDB, String pass){
+        return passDB.equals( EncryptUtils.hashPassword(pass));
+    };
+
     // Puedes agregar aquí otros métodos relacionados con la criptografía si es necesario
 }

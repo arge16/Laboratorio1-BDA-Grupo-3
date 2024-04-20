@@ -18,7 +18,6 @@ public class VoluntarioController {
     @Autowired
     UsuarioService usuarioService;
 
-
     @GetMapping("")
     public ResponseEntity<?> getAllVoluntarios(
             @RequestParam(value = "size", required = false) Integer size,
@@ -32,7 +31,14 @@ public class VoluntarioController {
         }
         return ResponseEntity.ok(voluntarioService.getAllVoluntarios());
     }
-
+    @GetMapping("/Tarea")
+    public ResponseEntity<?> getAllVoluntariosByTarea(
+            @RequestHeader(value = "Authorization", required = false) String token,
+            @RequestParam("id_tarea") Long id_tarea)
+    {
+        String actualUser = usuarioService.getUser(token);
+        return ResponseEntity.ok(voluntarioService.getAllVoluntariosByTarea(id_tarea));
+    }
     @PostMapping("")
     public ResponseEntity<?> postVoluntario(
             @RequestBody VoluntarioEntity voluntario,
