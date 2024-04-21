@@ -33,6 +33,10 @@ public class HabilidadService{
         return habilidadRepository.findHabilidadesByEmergencia(id_emergencia);
     }
 
+    public List<HabilidadEntity> findHabilidadesByTarea(Long id_tarea){
+        return habilidadRepository.findHabilidadesByTarea(id_tarea);
+    }
+
     public HabilidadEntity createHabilidad(HabilidadEntity habilidad, String actualUser) {
         return habilidadRepository.create(habilidad, actualUser);
     }

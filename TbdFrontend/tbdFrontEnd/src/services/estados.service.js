@@ -1,7 +1,7 @@
 import { fetchData } from '@/http-common'
 
 export default {
-  async getEmergencias() {
-    return fetchData('emergencia')
+  async getEstados() {
+    return fetchData('estado')
   }
 }

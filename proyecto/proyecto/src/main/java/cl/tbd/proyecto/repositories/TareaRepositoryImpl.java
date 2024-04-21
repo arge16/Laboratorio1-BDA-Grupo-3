@@ -80,6 +80,7 @@ public class TareaRepositoryImpl implements TareaRepository{
                     .addParameter("id_estado", tarea.getId_estado())
                     .addParameter("id_tarea", tarea.getId())
                     .executeUpdate();
+            return tarea;
         } catch (Exception e) {
             System.out.println("Error al actualizar la tarea: " + e.getMessage());
         }

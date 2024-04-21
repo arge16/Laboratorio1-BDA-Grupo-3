@@ -43,6 +43,9 @@ public class Tarea_HabilidadService {
         return tareaHabilidadRepository.delete(id, actualUser);
     }
 
+    public Boolean deleteAllTareaHabilidadByTarea(Long id_tarea, String actualUser){
+        return tareaHabilidadRepository.deleteAllByTarea(id_tarea,actualUser);
+    }
 
 
 }

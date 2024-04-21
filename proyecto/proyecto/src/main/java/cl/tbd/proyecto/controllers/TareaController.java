@@ -55,8 +55,6 @@ public class TareaController {
             @RequestHeader(value = "Authorization",required = false) String token){
 
         String actualUser= usuarioService.getUser(token);
-
-
         List<String> numerosCadenas = Arrays.asList(id_habilidades.get("id_habilidades").asText().split(","));
         List<Long> numerosLong = numerosCadenas.stream()
                 .map(Long::parseLong)
@@ -84,9 +82,7 @@ public class TareaController {
             @RequestBody TareaEntity tarea,
             @RequestHeader(value = "Authorization",required = false) String token) {
 
-        String actualUser= usuarioService.getUser(token);
-
-
+        String actualUser = usuarioService.getUser(token);
         TareaEntity updatedTarea = tareaService.updateTarea(tarea,actualUser);
         if (updatedTarea != null) {
             return ResponseEntity.ok(updatedTarea);

@@ -69,8 +69,6 @@ public class HabilidadController {
             @RequestHeader(value = "Authorization",required = false) String token) {
 
         String actualUser= usuarioService.getUser(token);
-
-
         if(habilidadService.deleteHabilidad(id,actualUser)) {
             return ResponseEntity.ok("deleted");
         }
@@ -82,6 +80,13 @@ public class HabilidadController {
             @RequestParam("id") Long id_emergencia,
             @RequestHeader(value = "Authorization", required = false) String token){
         return ResponseEntity.ok(habilidadService.findHabilidadesByEmergencia(id_emergencia));
+    }
+
+    @GetMapping("/byTarea")
+    public ResponseEntity<?> getHabilidadesByTarea(
+            @RequestParam("id") Long id_tarea,
+            @RequestHeader(value = "Authorization", required = false) String token){
+        return ResponseEntity.ok(habilidadService.findHabilidadesByTarea(id_tarea));
     }
 
 }

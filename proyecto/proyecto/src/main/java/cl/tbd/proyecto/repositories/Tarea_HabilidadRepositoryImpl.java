@@ -102,4 +102,11 @@ public class Tarea_HabilidadRepositoryImpl implements Tarea_HabilidadRepository{
         String sqlDeleteQuery = "DELETE FROM tarea_habilidad WHERE id_tarea_habilidad = :id";
         return deleteSql(id, actualUser, sqlDeleteQuery, sql2o, usuarioRepository);
     }
+
+    @Override
+    public Boolean deleteAllByTarea(Long id_tarea, String actualUser){
+        String sqlDeleteQuery = "DELETE FROM tarea_habilidad WHERE id_tarea = :id";
+        return deleteSql(id_tarea, actualUser, sqlDeleteQuery, sql2o, usuarioRepository);
+    }
+
 }

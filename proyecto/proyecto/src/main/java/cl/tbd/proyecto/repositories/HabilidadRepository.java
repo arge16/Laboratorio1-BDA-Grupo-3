@@ -8,7 +8,8 @@ public interface HabilidadRepository {
 
     List<HabilidadEntity> findAll();
     List<HabilidadEntity> findAllPagination(int size, int page);
-    public List<HabilidadEntity> findHabilidadesByEmergencia(Long id_emergencia);
+    List<HabilidadEntity> findHabilidadesByEmergencia(Long id_emergencia);
+    List<HabilidadEntity> findHabilidadesByTarea(Long id_tarea);
     HabilidadEntity create(HabilidadEntity habilidad, String actualUser);
     HabilidadEntity findById(Long id);
     HabilidadEntity update(HabilidadEntity habilidad, String actualUser);

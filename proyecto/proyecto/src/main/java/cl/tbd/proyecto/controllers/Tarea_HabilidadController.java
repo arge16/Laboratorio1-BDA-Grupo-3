@@ -74,4 +74,16 @@ public class Tarea_HabilidadController {
         }
         return ResponseEntity.badRequest().build();
     }
+
+    @DeleteMapping("/byTarea")
+    public ResponseEntity<?> deleteTareaHabilidadByTarea(
+            @RequestParam("id_tarea") Long id,
+            @RequestHeader(value = "Authorization",required = false) String token) {
+
+        String actualUser= usuarioService.getUser(token);
+        if(tareaHabilidadService.deleteAllTareaHabilidadByTarea(id, actualUser)) {
+            return ResponseEntity.ok("deleted");
+        }
+        return ResponseEntity.badRequest().build();
+    }
 }
