@@ -1,10 +1,10 @@
 // http-common.js
 
-const baseURL = 'https://6620338e3bf790e070af44b2.mockapi.io/'
+const baseURL = 'http://localhost:8090/'
 
-export async function fetchData(endpoint) {
+export async function fetchData(endpoint, options = {}) {
   try {
-    const response = await fetch(`${baseURL}${endpoint}`)
+    const response = await fetch(`${baseURL}${endpoint}`, options)
     if (!response.ok) {
       throw new Error('Error al obtener los datos')
     }

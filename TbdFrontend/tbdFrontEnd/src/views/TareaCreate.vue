@@ -7,6 +7,7 @@ let data = ref({
   emergencia: '',
   habilidades: []
 })
+
 const submitForm = () => {
   console.log('Form submitted:', data.value)
 }

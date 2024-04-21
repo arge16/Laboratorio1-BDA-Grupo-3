@@ -1,4 +1,5 @@
 <script setup>
+import authService from '@/services/auth.service'
 import Multiselect from '@vueform/multiselect'
 import { onBeforeMount, onBeforeUnmount, ref } from 'vue'
 onBeforeMount(() => {
@@ -13,9 +14,15 @@ const logging = ref(true)
 const rut = ref(0)
 const password = ref('')
 const showPassword = ref(false)
+
+const handleLogin = () => {
+  authService.login(rut, password).then((response) => console.log(response))
+}
+
 const togglePassword = () => {
   showPassword.value = !showPassword.value
 }
+
 function insertarPunto(numero) {
   let cleanNum = numero.replace(/[^\dk]/gi, '')
   if (cleanNum.length > 9) {
@@ -49,8 +56,8 @@ const handleRut = (event) => {
   <footer class="bg-dark text-light fixed-bottom" @click="changeForm" style="cursor: pointer">
     <div class="row">
       <div class="text-md-center">
-        <p v-if="!logging">Si aun no tiene cuenta y desea registrarse Clickee aqui</p>
-        <p v-else>Si Desea iniciar sesion, clickee aqui</p>
+        <p v-if="logging">Si aun no tiene cuenta y desea registrarse Clickee aqui</p>
+        <p v-else>Si desea iniciar sesion, clickee aqui</p>
       </div>
     </div>
   </footer>
@@ -95,7 +102,9 @@ const handleRut = (event) => {
           </div>
         </div>
         <div class="column pb-4 d-flex align-items-center justify-content-center">
-          <button type="button" class="btn btn-primary btn-lg btn-block">Ingresar</button>
+          <button type="button" @click="handleLogin" class="btn btn-primary btn-lg btn-block">
+            Ingresar
+          </button>
         </div>
       </div>
     </div>

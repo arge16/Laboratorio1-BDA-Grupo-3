@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS "estado_tarea";
 DROP TABLE IF EXISTS "estado_emergencia";
 DROP TABLE IF EXISTS "eme_habilidad";
 DROP TABLE IF EXISTS "emergencia";
+DROP TABLE IF EXISTS "estado";
 DROP TABLE IF EXISTS "habilidad";
 DROP TABLE IF EXISTS "institucion";
 DROP TABLE IF EXISTS "voluntario";
