@@ -20,7 +20,8 @@ export async function postData(endpoint, data) {
     const response = await fetch(`${baseURL}${endpoint}`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: `${localStorage.getItem('token')}`
       },
       body: JSON.stringify(data)
     })
@@ -38,7 +39,8 @@ export async function putData(endpoint, data) {
     const response = await fetch(`${baseURL}${endpoint}`, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       },
       body: JSON.stringify(data)
     })
@@ -57,7 +59,8 @@ export async function deleteData(endpoint) {
     const response = await fetch(`${baseURL}${endpoint}`, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       }
     })
     if (!response.ok) {

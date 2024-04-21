@@ -35,8 +35,8 @@ public class Tarea_HabilidadService {
     public Tarea_HabilidadEntity updateTareaHabilidades(Tarea_HabilidadEntity tareaHabilidad, String actualUser) {
         return tareaHabilidadRepository.update(tareaHabilidad, actualUser);
     }
-    public Tarea_HabilidadEntity createTareaHabilidadesByValues(Long id_tarea, Long id_Habilidad) {
-        return tareaHabilidadRepository.createByValues(id_tarea,id_Habilidad);
+    public Tarea_HabilidadEntity createTareaHabilidadesByValues(Long id_tarea, Long id_Habilidad, String actualUser) {
+        return tareaHabilidadRepository.createByValues(id_tarea,id_Habilidad, actualUser);
     }
 
     public Boolean deleteTareaHabilidad(Long id, String actualUser){

@@ -48,13 +48,13 @@ public class TareaService {
     }
 
     public TareaEntity updateTarea(TareaEntity tarea, String actualUser) { return tareaRepository.update(tarea,actualUser);}
-    public Tarea_HabilidadEntity addHabilidadToTarea(TareaEntity tarea, Long id_habilidad){
-        return tareaHabilidadService.createTareaHabilidadesByValues(tarea.getId(), id_habilidad);
+    public Tarea_HabilidadEntity addHabilidadToTarea(TareaEntity tarea, Long id_habilidad, String actualUser){
+        return tareaHabilidadService.createTareaHabilidadesByValues(tarea.getId(), id_habilidad, actualUser);
     }
 
-    public List<Tarea_HabilidadEntity> addHabilidadesToTarea(TareaEntity tarea, List<Long> id_habilidades){
+    public List<Tarea_HabilidadEntity> addHabilidadesToTarea(TareaEntity tarea, List<Long> id_habilidades, String actualUser){
         List<Tarea_HabilidadEntity> tareaHabilidadEntities = new ArrayList<>();
-        id_habilidades.forEach(habilidad -> tareaHabilidadEntities.add(addHabilidadToTarea(tarea,habilidad)));
+        id_habilidades.forEach(habilidad -> tareaHabilidadEntities.add(addHabilidadToTarea(tarea,habilidad,actualUser)));
         return tareaHabilidadEntities;
     }
 

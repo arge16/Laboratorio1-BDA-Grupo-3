@@ -49,7 +49,7 @@ public class TareaController {
 
 
     @PutMapping("/addHabilidades")
-    public ResponseEntity<?> getHabilidadesByEmergencia(
+    public ResponseEntity<?> addHabilidadesToTarea(
             @RequestParam("id_tarea") Long id_tarea,
             @RequestBody JsonNode id_habilidades,
             @RequestHeader(value = "Authorization",required = false) String token){
@@ -60,7 +60,7 @@ public class TareaController {
                 .map(Long::parseLong)
                 .toList();
 
-        return ResponseEntity.ok( tareaService.addHabilidadesToTarea(tareaService.getTareaByID(id_tarea), numerosLong) );
+        return ResponseEntity.ok( tareaService.addHabilidadesToTarea(tareaService.getTareaByID(id_tarea), numerosLong,actualUser) );
     }
 
     @PostMapping("")
