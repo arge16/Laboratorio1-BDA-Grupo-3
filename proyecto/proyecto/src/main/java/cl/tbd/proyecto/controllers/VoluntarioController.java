@@ -39,6 +39,16 @@ public class VoluntarioController {
         String actualUser = usuarioService.getUser(token);
         return ResponseEntity.ok(voluntarioService.getAllVoluntariosByTarea(id_tarea));
     }
+
+    @GetMapping("/id")
+    public ResponseEntity<?> getVoluntarioById(
+            @RequestParam(value = "id") Long id,
+            @RequestHeader(value = "Authorization") String token
+    ){
+        String actualUser = usuarioService.getUser(token);
+        return ResponseEntity.ok(voluntarioService.getvoluntarioByID(id));
+    }
+
     @PostMapping("")
     public ResponseEntity<?> postVoluntario(
             @RequestBody VoluntarioEntity voluntario,

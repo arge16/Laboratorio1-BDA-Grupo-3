@@ -26,6 +26,9 @@ public class InstitucionService{
         return institucionRepository.findAllPagination(size, page);
     }
 
+    public InstitucionEntity getInstitucionById(Long id){
+        return institucionRepository.findById(id);
+    }
     public InstitucionEntity createInstitucion(InstitucionEntity institucion, String actualUser){
         return institucionRepository.create(institucion, actualUser);
     }

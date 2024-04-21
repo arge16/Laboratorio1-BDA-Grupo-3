@@ -32,6 +32,16 @@ public class Tarea_HabilidadController {
         return ResponseEntity.ok(tareaHabilidadService.getAllTareaHabilidades());
     }
 
+    @GetMapping("/id")
+    public ResponseEntity<?> getTarea_habilidadById(
+            @RequestParam(value = "id") Long id,
+            @RequestHeader(value = "Authorization") String token
+    ){
+        String actualUser = usuarioService.getUser(token);
+        return ResponseEntity.ok(tareaHabilidadService.getTareaHabilidadById(id));
+    }
+
+
     @PostMapping("")
     public ResponseEntity<?> postTareaHabilidad(
             @RequestBody Tarea_HabilidadEntity tareaHabilidad,

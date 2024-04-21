@@ -24,6 +24,10 @@ public class Eme_HabilidadService {
     public List<Eme_HabilidadEntity> getPageEmeHabilidades(int size, int page){
         return emeHabilidadRepository.findAllPagination(size, page);
     }
+    public  Eme_HabilidadEntity getEme_habilidadById(Long id){
+        return emeHabilidadRepository.findById(id);
+    }
+
 
     public List<HabilidadEntity> findHabilidadesByEmergencia(Long id_emergencia){
         return emeHabilidadRepository.findHabilidadesByEmergencia(id_emergencia);
@@ -41,6 +45,7 @@ public class Eme_HabilidadService {
     public Eme_HabilidadEntity updateEmeHabilidad(Eme_HabilidadEntity eme_habilidad,String actualUser) {
         return emeHabilidadRepository.update(eme_habilidad,actualUser);
     }
+
 
 
 }

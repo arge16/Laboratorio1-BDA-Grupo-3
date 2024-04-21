@@ -32,6 +32,15 @@ public class InstitucionController {
         return ResponseEntity.ok(institucionService.getAllInstituciones());
     }
 
+    @GetMapping("/id")
+    public ResponseEntity<?> getInstitucionById(
+            @RequestParam(value = "id") Long id,
+            @RequestHeader(value = "Authorization") String token
+    ){
+        String actualUser = usuarioService.getUser(token);
+        return ResponseEntity.ok(institucionService.getInstitucionById(id));
+    }
+
     @PostMapping("")
     public ResponseEntity<?> postInstitucion(
             @RequestBody InstitucionEntity institucion,

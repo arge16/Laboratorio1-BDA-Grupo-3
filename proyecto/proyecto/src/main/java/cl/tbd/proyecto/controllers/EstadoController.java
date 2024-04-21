@@ -33,6 +33,16 @@ public class EstadoController {
         return ResponseEntity.ok(estadoService.getAllEstados());
     }
 
+    @GetMapping("/id")
+    public ResponseEntity<?> getEstadoById(
+            @RequestParam(value = "id") Long id,
+            @RequestHeader(value = "Authorization") String token
+    ){
+        String actualUser = usuarioService.getUser(token);
+        return ResponseEntity.ok(estadoService.getEstadoById(id));
+    }
+
+
     @PostMapping("")
     public ResponseEntity<?> postEstadoEmergencia(
             @RequestBody EstadoEntity estado,

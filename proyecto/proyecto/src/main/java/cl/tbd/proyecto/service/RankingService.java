@@ -25,7 +25,9 @@ public class RankingService {
     public List<RankingEntity> getPageRankings(int size, int page){
         return rankingRepository.findAllPagination(size, page);
     }
-
+    public RankingEntity getRankingById(Long id){
+        return rankingRepository.findById(id);
+    }
     public RankingEntity createRanking(RankingEntity ranking, String actualUser) {
         return rankingRepository.create(ranking, actualUser);
     }

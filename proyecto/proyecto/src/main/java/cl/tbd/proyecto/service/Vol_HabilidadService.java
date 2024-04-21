@@ -20,6 +20,9 @@ public class Vol_HabilidadService {
     public List<Vol_HabilidadEntity> getPageVolHabilidades(int size, int page){
         return volHabilidadRepository.findAllPagination(size, page);
     }
+    public Vol_HabilidadEntity getVolHabilidadById(Long id){
+        return volHabilidadRepository.findById(id);
+    }
 
     public Vol_HabilidadEntity createVolHabilidades(Vol_HabilidadEntity volHabilidad, String actualUser) {
         return volHabilidadRepository.create(volHabilidad, actualUser);

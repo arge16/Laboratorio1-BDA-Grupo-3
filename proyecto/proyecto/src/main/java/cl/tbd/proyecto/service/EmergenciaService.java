@@ -49,4 +49,7 @@ public class EmergenciaService {
         return emergenciaRepository.update(emergencia, actualUser);
     }
 
+    public EmergenciaEntity getEmergenciaById(Long id){
+        return emergenciaRepository.findById(id);
+    }
 }

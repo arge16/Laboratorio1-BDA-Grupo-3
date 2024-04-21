@@ -32,6 +32,15 @@ public class RankingController {
         return ResponseEntity.ok(rankingService.getAllRankings());
     }
 
+    @GetMapping("/id")
+    public ResponseEntity<?> getRankingById(
+            @RequestParam(value = "id") Long id,
+            @RequestHeader(value = "Authorization") String token
+    ){
+        String actualUser = usuarioService.getUser(token);
+        return ResponseEntity.ok(rankingService.getRankingById(id));
+    }
+
     @PostMapping("")
     public ResponseEntity<?> postRanking(
             @RequestBody RankingEntity ranking,

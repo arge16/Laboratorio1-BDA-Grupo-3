@@ -44,6 +44,14 @@ public class Eme_HabilidadController {
 
         return ResponseEntity.ok(emeHabilidadService.findHabilidadesByEmergencia(id_emergencia));
     }
+    @GetMapping("/id")
+    public ResponseEntity<?> getEme_HabilidadById(
+            @RequestParam(value = "id_eme_hab") Long id,
+            @RequestHeader(value = "Authorization") String token
+    ){
+        String actualUser = usuarioService.getUser(token);
+        return ResponseEntity.ok(emeHabilidadService.getEme_habilidadById(id));
+    }
 
 
     @PostMapping("")
@@ -90,6 +98,7 @@ public class Eme_HabilidadController {
         }
         return ResponseEntity.badRequest().build();
     }
+
 
 
 

@@ -17,6 +17,10 @@ public class EstadoService {
         return estadoRepository.findAll();
     }
 
+    public EstadoEntity getEstadoById(Long id){
+        return estadoRepository.findById(id);
+    }
+
     public List<EstadoEntity> getPageEstados(int size, int page){
         return estadoRepository.findAllPagination(size, page);
     }
@@ -32,4 +36,6 @@ public class EstadoService {
     public EstadoEntity updateEstado(EstadoEntity estado, String actualUser) {
         return estadoRepository.update(estado, actualUser);
     }
+
+
 }

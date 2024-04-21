@@ -29,6 +29,10 @@ public class HabilidadService{
         return habilidadRepository.findAllPagination(size, page);
     }
 
+    public HabilidadEntity getHabilidadById(Long id){
+        return habilidadRepository.findById(id);
+    }
+
     public List<HabilidadEntity> findHabilidadesByEmergencia(Long id_emergencia){
         return habilidadRepository.findHabilidadesByEmergencia(id_emergencia);
     }

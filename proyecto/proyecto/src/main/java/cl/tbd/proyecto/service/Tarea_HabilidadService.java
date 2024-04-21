@@ -28,6 +28,10 @@ public class Tarea_HabilidadService {
         return tareaHabilidadRepository.findAllPagination(size, page);
     }
 
+    public Tarea_HabilidadEntity getTareaHabilidadById(Long id){
+        return tareaHabilidadRepository.findById(id);
+    }
+
     public Tarea_HabilidadEntity createTareaHabilidades(Tarea_HabilidadEntity tareaHabilidad, String actualUser) {
         return tareaHabilidadRepository.create(tareaHabilidad, actualUser);
     }

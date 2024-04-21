@@ -32,6 +32,15 @@ public class HabilidadController {
         return ResponseEntity.ok(habilidadService.getAllHabilidades());
     }
 
+    @GetMapping("/id")
+    public ResponseEntity<?> getHabilidadById(
+            @RequestParam(value = "id") Long id,
+            @RequestHeader(value = "Authorization") String token
+    ){
+        String actualUser = usuarioService.getUser(token);
+        return ResponseEntity.ok(habilidadService.getHabilidadById(id));
+    }
+
     @PostMapping("")
     public ResponseEntity<?> postHabilidad(
             @RequestBody HabilidadEntity habilidad,

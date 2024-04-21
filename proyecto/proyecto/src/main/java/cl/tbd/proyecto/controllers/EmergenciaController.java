@@ -19,6 +19,15 @@ public class EmergenciaController {
     @Autowired
     UsuarioService usuarioService;
 
+    @GetMapping("/id")
+    public ResponseEntity<?> getEmergenciaByid(
+             @RequestParam(value = "id") Long id,
+             @RequestHeader(value = "Authorization", required = false) String token
+    ){
+        String actualUser = usuarioService.getUser(token);
+        return ResponseEntity.ok(emergenciaService.getEmergenciaById(id));
+    }
+
     @GetMapping("")
     public ResponseEntity<?> getAllEmergencias(
             @RequestParam(value = "size", required = false) Integer size,

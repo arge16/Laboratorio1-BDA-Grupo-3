@@ -32,6 +32,16 @@ public class Vol_HabilidadController {
         }
         return ResponseEntity.ok(volHabilidadService.getAllVolHabilidades());
     }
+
+    @GetMapping("/id")
+    public ResponseEntity<?> getVolHabilidadById(
+            @RequestParam(value = "id") Long id,
+            @RequestHeader(value = "Authorization") String token
+    ){
+        String actualUser = usuarioService.getUser(token);
+        return ResponseEntity.ok(volHabilidadService.getVolHabilidadById(id));
+    }
+
     @PostMapping("")
     public ResponseEntity<?> postVolHabilidades(
             @RequestBody Vol_HabilidadEntity volHabilidad,
