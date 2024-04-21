@@ -2,7 +2,7 @@
 import NavBar from '@/components/NavBar.vue'
 import Multiselect from '@vueform/multiselect'
 import { useRoute } from 'vue-router'
-import { ref, onBeforeMount } from 'vue'
+import { ref, onBeforeMount, onMounted } from 'vue'
 import tareasService from '@/services/tareas.service'
 import estadosService from '@/services/estados.service'
 import habilidadesService from '@/services/habilidades.service'
@@ -23,6 +23,14 @@ const habilidades = ref([])
 onBeforeMount(() => {
   tareasService.getTareaById(id.value).then((response) => {
     tarea.value = response
+    habilidadesService.getHabilidadesByEmergency(response.id_emergencia).then((response) => {
+      allHabilidades.value = response
+      allHabilidades.value.map((hability) => {
+        hability.value = hability.id
+        hability.label = hability.descripcion
+      })
+      //console.log(allHabilidades.value)
+    })
   })
   emergenciasService.getEmergencias().then((response) => {
     allEmergencias.value = response
@@ -39,19 +47,15 @@ onBeforeMount(() => {
     })
     console.log(estados.value)
   })
-  habilidadesService.getHabilidades().then((response) => {
-    allHabilidades.value = response
-    allHabilidades.value.map((hability) => {
-      hability.value = hability.id
-      hability.label = hability.descripcion
-    })
-    //console.log(allHabilidades.value)
-  })
   tareasService.getHabilidadesByTarea(id.value).then((response) => {
     response.map((hability) => {
       habilidades.value.push(hability.id)
     })
   })
+})
+
+onMounted(() => {
+  console.log(tarea.value)
 })
 
 const tarea = ref({
@@ -71,7 +75,8 @@ const onPut = () => {
   // actualizar
   habtareaService.deleteHabTarea(tarea.value.id)
   tareasService.putHabilidadUpdate(tarea.value)
-  tareasService.addHabilidades(tarea.value.id, { id_habilidades: habilidades.value.toString() })
+  if (habilidades.value.length > 0)
+    tareasService.addHabilidades(tarea.value.id, { id_habilidades: habilidades.value.toString() })
   onEdit()
 }
 </script>

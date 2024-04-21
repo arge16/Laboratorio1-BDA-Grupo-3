@@ -4,9 +4,14 @@ import cl.tbd.proyecto.controllers.DTO.LoginDTO;
 import cl.tbd.proyecto.entities.UsuarioEntity;
 import cl.tbd.proyecto.service.UsuarioService;
 import cl.tbd.proyecto.utils.JwtUtils;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @CrossOrigin("*")
@@ -19,9 +24,10 @@ public class AuthController {
     JwtUtils jwtUtils;
 
     @PostMapping("/login")
-    public String login(@RequestBody LoginDTO request) {
-
-        return  usuarioService.login(request);
+    public ResponseEntity<?> login(@RequestBody LoginDTO request) {
+        Map<String, String> response = new HashMap<>();
+        response.put("Authorization", usuarioService.login(request));
+        return  ResponseEntity.ok(response);
     }
 
     @GetMapping("/activeUser")

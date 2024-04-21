@@ -1,4 +1,5 @@
 <script setup>
+import router from '@/router'
 import authService from '@/services/auth.service'
 import Multiselect from '@vueform/multiselect'
 import { onBeforeMount, onBeforeUnmount, ref } from 'vue'
@@ -11,12 +12,24 @@ onBeforeUnmount(() => {
 })
 
 const logging = ref(true)
-const rut = ref(0)
 const password = ref('')
 const showPassword = ref(false)
 
+const login = ref({
+  username: '',
+  password: ''
+})
+
+const handleRut = (event) => {
+  event.target.value = insertarPunto(event.target.value)
+  login.value.username = event.target.value
+}
+
 const handleLogin = () => {
-  authService.login(rut, password).then((response) => console.log(response))
+  authService.login(login.value).then((response) => {
+    localStorage.setItem('token', response.Authorization)
+    router.push('home')
+  })
 }
 
 const togglePassword = () => {
@@ -41,10 +54,6 @@ function insertarPunto(numero) {
 const changeForm = (event) => {
   event.preventDefault()
   logging.value = !logging.value
-}
-
-const handleRut = (event) => {
-  event.target.value = insertarPunto(event.target.value)
 }
 </script>
 
@@ -85,7 +94,7 @@ const handleRut = (event) => {
               <input
                 class="form-control rounded-end-0"
                 :type="showPassword ? 'text' : 'password'"
-                v-model="password"
+                v-model="login.password"
                 style="font-size: 20px"
               />
               <div class="input-group-append">
