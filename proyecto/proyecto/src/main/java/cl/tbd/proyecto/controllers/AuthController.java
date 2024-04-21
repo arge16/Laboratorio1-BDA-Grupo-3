@@ -41,7 +41,11 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody UsuarioEntity usuario, String actualUser){
-        return ResponseEntity.ok(usuarioService.registerUser(usuario, actualUser));
+        UsuarioEntity user;
+        if( (user = usuarioService.registerUser(usuario, actualUser)) == null){
+            return ResponseEntity.badRequest().body("El Correo ya esta en uso");
+        }
+        return ResponseEntity.ok(user);
     }
 
 }

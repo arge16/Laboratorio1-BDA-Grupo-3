@@ -21,7 +21,7 @@ public class UsuarioService {
         // Verificar si el usuario ya está registrado
         UsuarioEntity existingUser = usuarioRepository.findByUsername(usuario.getUsername());
         if (existingUser != null) {
-            throw new RuntimeException("El nombre de usuario ya está en uso.");
+            return null;
         }
         // Hashear la contraseña antes de guardar el usuario
         String hashedPassword = EncryptUtils.hashPassword(usuario.getPassword());

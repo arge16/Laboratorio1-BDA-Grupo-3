@@ -1,7 +1,7 @@
 SET datestyle = 'ISO, DMY';
-insert into roles (id, name) values (1, 'coordinador');
-insert into roles (id, name) values (2, 'voluntario');
-insert into usuarios (id, username, password, email, rol_id) values (1, 'jcrasswell0', 'qU6#qkBAjIIL', 'sskitral0@cisco.com', '2');
+insert into roles (name) values ('coordinador');
+insert into roles (name) values ('voluntario');
+insert into usuarios (username, password, email, rol_id) values ('jcrasswell0', 'qU6#qkBAjIIL', 'sskitral0@cisco.com', '2');
 insert into usuarios (id, username, password, email, rol_id) values (2, 'mlettsom1', 'iV3{yv|)sbCBqno', 'gbaulch1@bizjournals.com', '1');
 insert into usuarios (id, username, password, email, rol_id) values (3, 'misakowicz2', 'mC9/pKa0yEY', 'fnotley2@indiegogo.com', '1');
 insert into usuarios (id, username, password, email, rol_id) values (4, 'ctomalin3', 'qS8{kbN`k', 'tdagger3@gov.uk', '2');

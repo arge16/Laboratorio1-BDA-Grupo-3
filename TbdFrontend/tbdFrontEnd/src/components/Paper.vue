@@ -1,9 +1,12 @@
 <script setup>
 import router from '@/router'
 import authService from '@/services/auth.service'
+import voluntariosService from '@/services/voluntarios.service'
 import Multiselect from '@vueform/multiselect'
+import { Alert } from 'bootstrap'
 import { onBeforeMount, onBeforeUnmount, ref } from 'vue'
 onBeforeMount(() => {
+  localStorage.removeItem('token')
   document.body.classList = 'login'
 })
 
@@ -11,18 +14,41 @@ onBeforeUnmount(() => {
   document.body.classList = ''
 })
 
-const logging = ref(true)
+const logging = ref(false)
 const password = ref('')
 const showPassword = ref(false)
+const error = ref(false)
 
 const login = ref({
   username: '',
   password: ''
 })
 
+const register = ref({
+  username: '',
+  password: '',
+  email: '',
+  rolId: 2
+})
+const newVoluntario = ref({
+  nombre: '',
+  edad: 0,
+  direccion: '',
+  genero: '',
+  email: '',
+  telefono: '',
+  rut: '',
+  userId: 0
+})
+
+const clearError = () => {
+  error.value = false
+}
+
 const handleRut = (event) => {
   event.target.value = insertarPunto(event.target.value)
-  login.value.username = event.target.value
+  if (logging.value) login.value.username = event.target.value
+  else register.value.username = event.target.value
 }
 
 const handleLogin = () => {
@@ -30,6 +56,26 @@ const handleLogin = () => {
     localStorage.setItem('token', response.Authorization)
     router.push('home')
   })
+}
+
+const handleRegister = () => {
+  authService
+    .register(register.value)
+    .then((response) => {
+      console.log(response)
+      newVoluntario.value.userId = response.id
+      newVoluntario.value.rut = response.username
+      newVoluntario.value.email = response.email
+      voluntariosService
+        .postVoluntario(newVoluntario.value)
+        .then((response) => {
+          console.log(response)
+        })
+        .catch(error.value)
+    })
+    .catch((catchedError) => {
+      error.value = true
+    })
 }
 
 const togglePassword = () => {
@@ -58,6 +104,24 @@ const changeForm = (event) => {
 </script>
 
 <template>
+  <transition name="bounce">
+    <div
+      v-if="error"
+      class="alert alert-danger mx-auto alert-dismissible carousel-fade show fixed-top text-center py-2 mt-3"
+      style="width: 30%; min-width: 400px; min-height: 40px"
+      role="alert"
+    >
+      <strong class="col-10">Error!</strong> Rut o Correo registrados previamente!
+      <button
+        type="btn"
+        class="btn btn-close col-1"
+        style="padding-top: 2%"
+        @click="clearError"
+        data-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
+  </transition>
   <link
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
     rel="stylesheet"
@@ -126,13 +190,30 @@ const changeForm = (event) => {
           id="reg"
           class="form-group text-white d-flex row align-content-around justify-content-around"
         >
-          <div>
-            <label class="h4 mx-2 white regInput" for="rut">RUT</label>
-            <input type="text" class="form-control expand" id="rut" @input="handleRut" />
+          <div class="d-flex">
+            <div class="col">
+              <label class="h4 mx-2 white regInput" for="rut">RUT</label>
+              <input
+                type="text"
+                style="width: 90%"
+                class="form-control expand"
+                id="rut"
+                @input="handleRut"
+              />
+            </div>
+            <div class="col">
+              <label class="h4 mx-2 white regInput" for="rut">Nombre</label>
+              <input
+                type="text"
+                v-model="newVoluntario.nombre"
+                class="form-control expand"
+                id="name"
+              />
+            </div>
           </div>
           <div>
             <label class="h4 mx-2 regInput" for="email">Email</label>
-            <input type="email" class="form-control" id="email" />
+            <input type="email" v-model="register.email" class="form-control" id="email" />
           </div>
           <div>
             <label class="h4 mx-2" for="pass">Contraseña</label>
@@ -140,7 +221,7 @@ const changeForm = (event) => {
               <input
                 class="form-control rounded-end-0"
                 :type="showPassword ? 'text' : 'password'"
-                v-model="password"
+                v-model="register.password"
                 placeholder="Ingresa tu contraseña"
               />
               <div class="input-group-append">
@@ -158,12 +239,19 @@ const changeForm = (event) => {
           <div class="d-flex">
             <div class="col">
               <label class="h4 mx-2" for="edad">Edad</label>
-              <input id="edad" style="width: 90%" type="number" class="form-control expand" />
+              <input
+                id="edad"
+                v-model="newVoluntario.edad"
+                style="width: 90%"
+                type="number"
+                class="form-control expand"
+              />
             </div>
             <div class="col">
               <label class="h4 mx-2" for="pass">Genero</label>
               <Multiselect
                 class="text-black multiGenero"
+                v-model="newVoluntario.genero"
                 :can-clear="false"
                 :options="[
                   { value: 'Masculino', label: 'Masculino' },
@@ -173,17 +261,30 @@ const changeForm = (event) => {
               />
             </div>
           </div>
-          <div>
-            <label class="h4 mx-2" for="pass">Celular</label>
-            <div class="input-group" style="height: fit-content">
-              <div class="input-group-prepend">
-                <span class="input-group-text" style="border-radius: 6px 0px 0px 6px">+56 9</span>
+          <div class="d-flex">
+            <div class="col">
+              <label class="h4 mx-2" for="pass">Celular</label>
+              <div class="input-group" style="height: fit-content; width: 90%">
+                <div class="input-group-prepend" style="width: 50px">
+                  <span class="input-group-text" style="border-radius: 6px 0px 0px 6px">+56</span>
+                </div>
+                <input
+                  type="text"
+                  v-model="newVoluntario.telefono"
+                  class="form-control"
+                  placeholder="912345678"
+                />
               </div>
-              <input type="text" class="form-control expand" placeholder="12345678" />
+            </div>
+            <div class="col">
+              <label class="h4 mx-2" for="edad">Dirección</label>
+              <input id="edad" v-model="newVoluntario.direccion" class="form-control" />
             </div>
           </div>
           <div class="row">
-            <button type="submit" class="btn btn-primary btn-block my-3">Registrarse</button>
+            <button type="submit" @click="handleRegister" class="btn btn-primary btn-block my-3">
+              Registrarse
+            </button>
           </div>
         </div>
       </div>
@@ -229,6 +330,10 @@ const changeForm = (event) => {
   --ms-option-bg-selected-pointed: rgb(180, 40, 48);
   --ms-tag-bg: rgba(199, 50, 60, 1);
   --ms-ring-color: rgba(255, 0, 204, 0.25);
+}
+
+.alert {
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
 }
 
 .container {
@@ -302,7 +407,13 @@ const changeForm = (event) => {
   height: 85%;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 620px) {
+  .background {
+    width: 90vw;
+  }
+}
+
+@media screen and (max-width: 1200px) {
   .regForm {
     position: absolute;
     top: 15%;
