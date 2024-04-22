@@ -14,7 +14,7 @@ const router = createRouter({
     {
       path: '/tarea/new',
       name: 'newTarea',
-      component: () => import('../views/AboutView.vue')
+      component: () => import('../views/TareaCreate.vue')
     },
     {
       path: '/tarea/:id',

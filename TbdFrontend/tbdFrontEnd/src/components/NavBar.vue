@@ -1,4 +1,20 @@
-<script setup></script>
+<script setup>
+import authService from '@/services/auth.service'
+import { onBeforeMount, ref } from 'vue'
+
+const initials = ref('')
+
+onBeforeMount(() => {
+  authService
+    .getName()
+    .then((response) => {
+      initials.value = response.activeUser.substring(0, 3).toUpperCase()
+    })
+    .catch(() => {
+      initials.value = ''
+    })
+})
+</script>
 
 <template>
   <nav class="navbar fixed-top">
@@ -6,7 +22,7 @@
       <div />
       <span class="text">Mi Aplicación</span>
       <div class="profile-circle">
-        <span class="initials">AB</span>
+        <span class="initials">{{ initials }}</span>
       </div>
     </div>
   </nav>

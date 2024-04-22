@@ -2,7 +2,9 @@ package cl.tbd.proyecto.service;
 
 import cl.tbd.proyecto.controllers.DTO.LoginDTO;
 import cl.tbd.proyecto.entities.UsuarioEntity;
+import cl.tbd.proyecto.entities.VoluntarioEntity;
 import cl.tbd.proyecto.repositories.UsuarioRepository;
+import cl.tbd.proyecto.repositories.VoluntarioRepository;
 import cl.tbd.proyecto.utils.JwtUtils;
 import cl.tbd.proyecto.utils.EncryptUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,9 @@ public class UsuarioService {
 
     @Autowired
     UsuarioRepository usuarioRepository;
+
+    @Autowired
+    VoluntarioRepository voluntarioRepository;
 
     @Autowired
     JwtUtils jwtUtils;
@@ -45,7 +50,7 @@ public class UsuarioService {
         if (token != null && token.startsWith("Bearer ")) {
             String jwtToken = token.substring(7);
             if (jwtUtils.validateToken(jwtToken)) {
-                return jwtUtils.extractUsername(jwtToken);
+                return voluntarioRepository.findByRut(jwtUtils.extractUsername(jwtToken)).getNombre();
             }
         }
         return null;

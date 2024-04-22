@@ -27,25 +27,31 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody LoginDTO request) {
         Map<String, String> response = new HashMap<>();
         response.put("Authorization", usuarioService.login(request));
-        return  ResponseEntity.ok(response);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/activeUser")
-    public String getUserProfile(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<?> getUserProfile(@RequestHeader("Authorization") String token) {
         String user = usuarioService.getUser(token);
         if (user != null){
-            return "El usuario activo es: " + user;
+            Map<String, String> response = new HashMap<>();
+            response.put("activeUser", user);
+            return ResponseEntity.ok(response);
         }
-        return "Token inválido";
+        return ResponseEntity.badRequest().body("El token no es valido");
     }
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody UsuarioEntity usuario, String actualUser){
-        UsuarioEntity user;
-        if( (user = usuarioService.registerUser(usuario, actualUser)) == null){
+        LoginDTO loginPostReg = new LoginDTO(usuario.getUsername(), usuario.getPassword());
+        if( usuarioService.registerUser(usuario, actualUser) == null){
             return ResponseEntity.badRequest().body("El Correo ya esta en uso");
         }
-        return ResponseEntity.ok(user);
+        Map<String, String> response = new HashMap<>();
+        response.put("userId", usuario.getId().toString());
+        response.put("Authorization", usuarioService.login(loginPostReg));
+
+        return ResponseEntity.ok(response);
     }
 
 }

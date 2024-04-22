@@ -4,7 +4,11 @@ const baseURL = 'http://localhost:8090/api/'
 
 export async function fetchData(endpoint) {
   try {
-    const response = await fetch(`${baseURL}${endpoint}`)
+    const response = await fetch(`${baseURL}${endpoint}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    })
     if (!response.ok) {
       throw new Error('Error al obtener los datos')
     }
@@ -21,7 +25,7 @@ export async function postData(endpoint, data) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `${localStorage.getItem('token')}`
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       },
       body: JSON.stringify(data)
     })

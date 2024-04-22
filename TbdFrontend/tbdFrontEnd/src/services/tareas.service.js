@@ -7,6 +7,9 @@ export default {
   async getTareaById(id) {
     return fetchData(`tarea/id?id=${id}`)
   },
+  async postTarea(data) {
+    return postData('tarea', data)
+  },
   async getHabilidadesByTarea(id) {
     return fetchData(`habilidad/byTarea?id=${id}`)
   },

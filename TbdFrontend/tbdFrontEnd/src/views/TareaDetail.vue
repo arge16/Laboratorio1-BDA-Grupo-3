@@ -47,17 +47,16 @@ onBeforeMount(() => {
     })
     console.log(estados.value)
   })
+})
+
+onMounted(() => {
   tareasService.getHabilidadesByTarea(id.value).then((response) => {
     response.map((hability) => {
       habilidades.value.push(hability.id)
     })
   })
-})
-
-onMounted(() => {
   console.log(tarea.value)
 })
-
 const tarea = ref({
   id: '',
   descripcion: '',

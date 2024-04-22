@@ -71,6 +71,19 @@ public class VoluntarioRepositoryImpl implements VoluntarioRepository {
     }
 
     @Override
+    public VoluntarioEntity findByRut(String rut) {
+        String sqlQuery = "SELECT * FROM voluntario WHERE rut = :rut";
+        try (Connection con = sql2o.open()) {
+            return con.createQuery(sqlQuery)
+                    .addParameter("rut", rut)
+                    .executeAndFetchFirst(VoluntarioEntity.class);
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+            return null;
+        }
+    }
+
+    @Override
     public VoluntarioEntity create(VoluntarioEntity voluntario, String actualUser) {
         String sqlInsertQuery = "INSERT INTO voluntario (user_id, nombre, edad, direccion, genero, email, telefono,rut) " +
                 "VALUES(:user_id, :nombre, :edad, :direccion, :genero, :email, :telefono, :rut)";

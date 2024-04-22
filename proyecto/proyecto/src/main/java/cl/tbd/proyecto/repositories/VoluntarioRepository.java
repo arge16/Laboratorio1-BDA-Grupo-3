@@ -12,6 +12,9 @@ public interface VoluntarioRepository {
 
     VoluntarioEntity findById(Long id);
 
+    VoluntarioEntity findByRut(String rut);
+
+
     VoluntarioEntity create(VoluntarioEntity voluntario, String actualUser);
 
 

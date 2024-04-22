@@ -54,7 +54,7 @@ const handleRut = (event) => {
 const handleLogin = () => {
   authService.login(login.value).then((response) => {
     localStorage.setItem('token', response.Authorization)
-    router.push('home')
+    router.push('/tarea/new')
   })
 }
 
@@ -62,18 +62,21 @@ const handleRegister = () => {
   authService
     .register(register.value)
     .then((response) => {
-      console.log(response)
-      newVoluntario.value.userId = response.id
-      newVoluntario.value.rut = response.username
-      newVoluntario.value.email = response.email
+      newVoluntario.value.userId = response.userId
+      newVoluntario.value.rut = register.value.username
+      newVoluntario.value.email = register.value.email
+      console.log(newVoluntario)
       voluntariosService
         .postVoluntario(newVoluntario.value)
-        .then((response) => {
-          console.log(response)
+        .then((responseVol) => {
+          localStorage.setItem('token', response.Authorization)
+          router.push('/tarea/new').catch((error) => {
+            console.log(error)
+          })
         })
         .catch(error.value)
     })
-    .catch((catchedError) => {
+    .catch(() => {
       error.value = true
     })
 }
