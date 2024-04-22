@@ -49,6 +49,7 @@ export default {
         this.columna2Visible = true
         this.columna3Visible = false
         this.itemSeleccionado2 = null
+        this.voluntarios = null
       }
     }
   }

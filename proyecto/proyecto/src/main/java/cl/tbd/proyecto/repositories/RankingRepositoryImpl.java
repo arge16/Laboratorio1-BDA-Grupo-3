@@ -72,7 +72,7 @@ public class RankingRepositoryImpl implements RankingRepository {
 
     @Override
     public List<VoluntarioDTO> getAllVoluntariosByTarea(long tarea_id){
-        String sqlQuery = "SELECT nombre, rut, participa FROM public.voluntario v INNER JOIN public.ranking r on v.id_voluntario = r.id_voluntario WHERE r.id_tarea = :id_tarea";
+        String sqlQuery = "SELECT nombre, rut, participa FROM public.voluntario v INNER JOIN public.ranking r on v.id_voluntario = r.id_voluntario WHERE r.id_tarea = :id_tarea ORDER BY participa DESC, nombre";
         try (Connection con = sql2o.open()) {
             return con.createQuery(sqlQuery)
                     .addParameter("id_tarea", tarea_id)

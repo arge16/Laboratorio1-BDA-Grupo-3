@@ -22,7 +22,7 @@ public class EmergenciaRepositoryImpl implements EmergenciaRepository{
     @Override
     public List<EmergenciaEntity> findAll() {
         try (Connection connection = sql2o.open()) {
-            String query = "SELECT * FROM emergencia";
+            String query = "SELECT * FROM emergencia ORDER BY id_estado DESC, nombre";
             return connection.createQuery(query).executeAndFetch(EmergenciaEntity.class);
         }
     }
