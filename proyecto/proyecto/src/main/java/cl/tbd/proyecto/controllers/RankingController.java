@@ -41,13 +41,31 @@ public class RankingController {
         return ResponseEntity.ok(rankingService.getRankingById(id));
     }
 
+    @GetMapping("/voltarea")
+    public ResponseEntity<?> countVolInTarea(
+            @RequestParam(value = "id_tarea") Long id_tarea,
+                        @RequestHeader(value = "Authorization") String token
+
+    ){
+        String actualUser = usuarioService.getUser(token);
+        return ResponseEntity.ok(rankingService.countVolInTarea(id_tarea));
+    }
+
+    @GetMapping("/volstarea")
+    public ResponseEntity<?> getAllVolsInTarea(
+            @RequestParam(value = "id_tarea") Long id_tarea,
+            @RequestHeader(value = "Authorization") String token
+    ){
+        String actualUser = usuarioService.getUser(token);
+        return ResponseEntity.ok(rankingService.findAllVolByTarea(id_tarea));
+    }
+
     @PostMapping("")
     public ResponseEntity<?> postRanking(
             @RequestBody RankingEntity ranking,
             @RequestHeader(value = "Authorization",required = false) String token) {
 
         String actualUser= usuarioService.getUser(token);
-
 
         RankingEntity rankingEntity = rankingService.createRanking(ranking, actualUser);
         if (rankingEntity!=null)
@@ -61,7 +79,6 @@ public class RankingController {
             @RequestHeader(value = "Authorization",required = false) String token) {
 
         String actualUser= usuarioService.getUser(token);
-
 
         RankingEntity updatedRanking = rankingService.updateRanking(ranking, actualUser);
         if (updatedRanking != null) {

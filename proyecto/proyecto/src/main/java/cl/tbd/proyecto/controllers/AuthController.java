@@ -32,7 +32,7 @@ public class AuthController {
 
     @GetMapping("/activeUser")
     public ResponseEntity<?> getUserProfile(@RequestHeader("Authorization") String token) {
-        String user = usuarioService.getUser(token);
+        String user = usuarioService.getRutByUser(token);
         if (user != null){
             Map<String, String> response = new HashMap<>();
             response.put("activeUser", user);

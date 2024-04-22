@@ -5,7 +5,7 @@ import emergenciasService from '@/services/emergencias.service'
 import habilidadesService from '@/services/habilidades.service'
 import tareasService from '@/services/tareas.service'
 import Multiselect from '@vueform/multiselect'
-import { onBeforeMount, onMounted, ref } from 'vue'
+import { onBeforeMount, ref } from 'vue'
 
 let data = ref({
   nombre: '',
@@ -41,7 +41,7 @@ onBeforeMount(() => {
 
 const onPost = () => {
   const tarea = {
-    id_estado: 1,
+    id_estado: 2,
     descripcion: data.value.nombre,
     id_emergencia: data.value.emergencia
   }

@@ -1,8 +1,10 @@
 package cl.tbd.proyecto.repositories;
 
+import cl.tbd.proyecto.controllers.DTO.VoluntarioDTO;
 import cl.tbd.proyecto.entities.Eme_HabilidadEntity;
 import cl.tbd.proyecto.entities.RankingEntity;
 import cl.tbd.proyecto.entities.Tarea_HabilidadEntity;
+import cl.tbd.proyecto.entities.VoluntarioEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.sql2o.Connection;
@@ -49,6 +51,32 @@ public class RankingRepositoryImpl implements RankingRepository {
             return con.createQuery(sqlQuery)
                     .addParameter("id_ranking", id_ranking)
                     .executeAndFetchFirst(RankingEntity.class);
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+            return null;
+        }
+    }
+
+    @Override
+    public int countVolInTarea(long tarea_id){
+        String sqlQuery = "SELECT count(*) from ranking where id_tarea = :tarea_id";
+        try (Connection con = sql2o.open()) {
+            return con.createQuery(sqlQuery)
+                    .addParameter("tarea_id", tarea_id)
+                    .executeScalar(Integer.class);
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+            return 0;
+        }
+    }
+
+    @Override
+    public List<VoluntarioDTO> getAllVoluntariosByTarea(long tarea_id){
+        String sqlQuery = "SELECT nombre, rut, participa FROM public.voluntario v INNER JOIN public.ranking r on v.id_voluntario = r.id_voluntario WHERE r.id_tarea = :id_tarea";
+        try (Connection con = sql2o.open()) {
+            return con.createQuery(sqlQuery)
+                    .addParameter("id_tarea", tarea_id)
+                    .executeAndFetch(VoluntarioDTO.class);
         } catch (Exception e) {
             System.out.println("Error: " + e);
             return null;

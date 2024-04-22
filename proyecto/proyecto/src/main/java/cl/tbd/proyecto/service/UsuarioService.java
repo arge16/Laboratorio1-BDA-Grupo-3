@@ -50,6 +50,16 @@ public class UsuarioService {
         if (token != null && token.startsWith("Bearer ")) {
             String jwtToken = token.substring(7);
             if (jwtUtils.validateToken(jwtToken)) {
+                return jwtUtils.extractUsername(jwtToken);
+            }
+        }
+        return null;
+    }
+
+    public String getRutByUser(String token){
+        if (token != null && token.startsWith("Bearer ")) {
+            String jwtToken = token.substring(7);
+            if (jwtUtils.validateToken(jwtToken)) {
                 return voluntarioRepository.findByRut(jwtUtils.extractUsername(jwtToken)).getNombre();
             }
         }

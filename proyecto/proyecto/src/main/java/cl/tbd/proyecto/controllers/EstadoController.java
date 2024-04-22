@@ -26,7 +26,6 @@ public class EstadoController {
 
         String actualUser= usuarioService.getUser(token);
 
-
         if(size!=null){
             return ResponseEntity.ok(estadoService.getPageEstados(size, Objects.requireNonNullElse(page, 1)));
         }

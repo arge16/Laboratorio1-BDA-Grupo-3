@@ -3,7 +3,6 @@ import router from '@/router'
 import authService from '@/services/auth.service'
 import voluntariosService from '@/services/voluntarios.service'
 import Multiselect from '@vueform/multiselect'
-import { Alert } from 'bootstrap'
 import { onBeforeMount, onBeforeUnmount, ref } from 'vue'
 onBeforeMount(() => {
   localStorage.removeItem('token')
@@ -14,8 +13,7 @@ onBeforeUnmount(() => {
   document.body.classList = ''
 })
 
-const logging = ref(false)
-const password = ref('')
+const logging = ref(true)
 const showPassword = ref(false)
 const error = ref(false)
 

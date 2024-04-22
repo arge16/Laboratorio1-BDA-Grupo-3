@@ -3,21 +3,7 @@ export default {
   data() {
     return {
       tareas: [],
-      items3: [
-        'Opción Final 1',
-        'Opción Final 2',
-        'Opción Final 3',
-        'Opción Final 3',
-        'Opción Final 3',
-        'Opción Final 3',
-        'Opción Final 3',
-        'Opción Final 3',
-        'Opción Final 3',
-        'Opción Final 3',
-        'Opción Final 3',
-        'Opción Final 3',
-        'Opción Final 3'
-      ],
+      voluntarios: [],
       columna2Visible: false,
       columna3Visible: false,
       itemSeleccionado1: null,
@@ -32,21 +18,23 @@ export default {
         this.columna2Visible = true
         this.itemSeleccionado2 = null
         this.columna3Visible = false
-        tareasService.getTareas().then((response) => {
-          const temporal = []
-          //console.log(item.id + ' ' + response)
-          response.forEach((element) => {
-            if (element.emergencia_id == item.id) {
-              temporal.push(element)
-              //console.log(element)
-            }
+        tareasService.getTareasByEmergencia(item.id).then((response) => {
+          this.tareas = response
+          this.tareas.forEach((tarea) => {
+            rankingService.counVolTarea(tarea.id).then((response) => (tarea.cantidad = response))
           })
-          this.tareas = temporal
+          console.log(this.tareas)
         })
       } else if (columna === 2) {
         this.itemSeleccionado2 = index
         this.columna3Visible = true
         this.itemSeleccionado3 = null
+        console.log(item)
+
+        rankingService.volsTarea(item.id).then((response) => {
+          this.voluntarios = response
+          console.log(this.voluntarios)
+        })
       } else {
         this.itemSeleccionado3 = index
       }
@@ -56,6 +44,7 @@ export default {
         this.columna2Visible = false
         this.columna3Visible = false
         this.itemSeleccionado1 = null
+        this.tareas = null
       } else if (columna === 2) {
         this.columna2Visible = true
         this.columna3Visible = false
@@ -68,17 +57,41 @@ export default {
 
 <script setup>
 import emergenciasService from '@/services/emergencias.service'
+import estadosService from '@/services/estados.service'
+import rankingService from '@/services/ranking.service'
 import tareasService from '@/services/tareas.service'
-import { ref } from 'vue'
+import { onBeforeMount, ref } from 'vue'
 const emergencias = ref([])
-emergenciasService.getEmergencias().then((response) => {
-  emergencias.value = response
+const allEstados = ref([])
+
+onBeforeMount(() => {
+  emergenciasService
+    .getEmergencias()
+    .then((response) => {
+      emergencias.value = response
+    })
+    .catch((error) => console.log('EL ERROR ES ' + error))
+
+  estadosService
+    .getEstados()
+    .then((response) => {
+      allEstados.value = response
+    })
+    .catch((error) => console.log('EL ERROR ES ' + error))
 })
+
+const getEstadoDesc = (id) => {
+  return allEstados.value.find((estado) => estado.id === id).descripcion
+}
+
+async function getVolByTarea(tarea_id) {
+  return await rankingService.counVolTarea(tarea_id).then((response) => response)
+}
 </script>
 
 <template>
   <div class="row">
-    <div class="col" :style="{ maxWidth: columna2Visible ? '300px' : '' }">
+    <div class="col" :style="{ maxWidth: columna2Visible ? '400px' : '60vw' }">
       <div class="card">
         <div class="card-header">
           <h3 class="card-title" @click="handleBack(1)">Emergencias</h3>
@@ -88,8 +101,9 @@ emergenciasService.getEmergencias().then((response) => {
             <thead class="sticky-top bg-white">
               <tr class>
                 <th class="idCol">ID</th>
-                <th>Nombre</th>
-                <th v-if="!columna2Visible">Estado</th>
+                <th class="idName">Nombre</th>
+                <th>Descripción</th>
+                <th v-if="!columna2Visible" class="idEstado">Estado</th>
               </tr>
             </thead>
             <tbody class="scroll">
@@ -100,8 +114,11 @@ emergenciasService.getEmergencias().then((response) => {
                 :class="{ 'table-primary': itemSeleccionado1 === index }"
               >
                 <th class="idCol">{{ item.id }}</th>
-                <td>{{ item.name }}</td>
-                <td v-if="!columna2Visible">{{ item.estado }}</td>
+                <td class="idName">{{ item.nombre }}</td>
+                <td>{{ item.descripcion }}</td>
+                <td v-if="!columna2Visible" class="idEstado">
+                  {{ getEstadoDesc(item.id_estado) }}
+                </td>
               </tr>
             </tbody>
           </table>
@@ -109,32 +126,40 @@ emergenciasService.getEmergencias().then((response) => {
       </div>
     </div>
     <transition name="bounce">
-      <div class="col" v-if="columna2Visible" :style="{ maxWidth: columna3Visible ? '300px' : '' }">
+      <div
+        class="col"
+        v-if="columna2Visible"
+        :style="{ maxWidth: columna3Visible ? '300px' : '50vw' }"
+      >
         <div class="card">
           <div class="card-header">
             <h3 class="card-title" @click="handleBack(2)">Tareas</h3>
           </div>
           <div class="card-body">
-            <table class="table scroll table-bordered">
+            <table class="table table-bordered">
               <thead>
                 <tr>
                   <th class="idCol">ID</th>
                   <th>Nombre</th>
-                  <th v-if="!columna3Visible">Cantidad voluntarios</th>
-                  <th v-if="!columna3Visible">Estado</th>
+                  <th v-if="!columna3Visible" class="idCantidad">Cantidad voluntarios</th>
+                  <th v-if="!columna3Visible" class="idEstado">Estado</th>
                 </tr>
               </thead>
               <tbody class="scroll">
                 <tr
                   v-for="(tarea, index) in tareas"
                   :key="index"
-                  @click="seleccionarItem(2, index)"
+                  @click="seleccionarItem(2, index, tarea)"
                   :class="{ 'table-primary': itemSeleccionado2 === index }"
                 >
                   <th class="idCol" scope="row">{{ tarea.id }}</th>
-                  <td>{{ tarea.nombre }}</td>
-                  <td v-if="!columna3Visible">{{ tarea.cantidadVol }}</td>
-                  <td v-if="!columna3Visible">{{ tarea.estado }}</td>
+                  <td>{{ tarea.descripcion }}</td>
+                  <td v-if="!columna3Visible" class="idCantidad">
+                    {{ tarea.cantidad }}
+                  </td>
+                  <td v-if="!columna3Visible" class="idEstado">
+                    {{ getEstadoDesc(tarea.id_estado) }}
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -152,16 +177,20 @@ emergenciasService.getEmergencias().then((response) => {
             <table class="table table-bordered">
               <thead>
                 <tr>
-                  <th class="idCol">RUT</th>
+                  <th>RUT</th>
                   <th>Nombre</th>
                   <th>Participa</th>
                 </tr>
               </thead>
               <tbody class="scroll">
-                <tr v-for="(item, index) in items3" :key="index" @click="seleccionarItem(3, index)">
-                  <th class="idCol" scope="row">{{ index + 1 }}</th>
-                  <td>{{ item }}</td>
-                  <td></td>
+                <tr
+                  v-for="(item, index) in voluntarios"
+                  :key="index"
+                  @click="seleccionarItem(3, index)"
+                >
+                  <th scope="row">{{ item.rut }}</th>
+                  <td>{{ item.nombre }}</td>
+                  <td>{{ item.participa }}</td>
                 </tr>
               </tbody>
             </table>
@@ -174,8 +203,20 @@ emergenciasService.getEmergencias().then((response) => {
 
 <style scoped>
 .idCol {
-  width: 50px;
+  width: 40px;
   text-align: end;
+}
+.idName {
+  width: 30%;
+  text-align: center;
+}
+.idEstado {
+  width: 15%;
+  text-align: center;
+}
+.idCantidad {
+  width: 20%;
+  text-align: center;
 }
 
 .card {

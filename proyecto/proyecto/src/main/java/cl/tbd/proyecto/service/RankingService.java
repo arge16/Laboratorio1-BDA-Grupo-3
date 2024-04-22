@@ -1,5 +1,6 @@
 package cl.tbd.proyecto.service;
 
+import cl.tbd.proyecto.controllers.DTO.VoluntarioDTO;
 import cl.tbd.proyecto.entities.HabilidadEntity;
 import cl.tbd.proyecto.entities.RankingEntity;
 import cl.tbd.proyecto.entities.VoluntarioEntity;
@@ -25,6 +26,15 @@ public class RankingService {
     public List<RankingEntity> getPageRankings(int size, int page){
         return rankingRepository.findAllPagination(size, page);
     }
+
+    public int countVolInTarea(long tarea_id){
+        return rankingRepository.countVolInTarea(tarea_id);
+    }
+
+    public List<VoluntarioDTO> findAllVolByTarea(long id_tarea){
+        return rankingRepository.getAllVoluntariosByTarea(id_tarea);
+    }
+
     public RankingEntity getRankingById(Long id){
         return rankingRepository.findById(id);
     }
